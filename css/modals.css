@@ -1577,8 +1577,263 @@
     }
 }
 
-/* Стили для поля ввода суммы кредита на мобильных устройствах */
+/* Мобильные стили для модального окна действий */
 @media (max-width: 480px) {
+    #action-modal .modal-content {
+        margin: 0 !important;
+        padding: 6px !important;
+        width: 94% !important;
+        max-width: 280px !important;
+        border-radius: 8px !important;
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+    }
+
+    #action-modal .modal-content h2 {
+        font-size: 1em !important;
+        margin: 4px 0 !important;
+        text-align: center !important;
+    }
+
+    #action-modal .close-btn {
+        top: 2px !important;
+        right: 2px !important;
+        width: 20px !important;
+        height: 20px !important;
+        line-height: 20px !important;
+        font-size: 16px !important;
+    }
+
+    #action-modal .category-card {
+        min-height: 32px !important;
+        height: 32px !important;
+        padding: 4px 6px !important;
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        text-align: left !important;
+        gap: 6px !important;
+        border-radius: 6px !important;
+        margin: 0 !important;
+        background: #333 !important;
+        border: 1px solid #444 !important;
+        color: white !important;
+    }
+
+    #action-modal .category-card i {
+        font-size: 1em !important;
+        margin: 0 !important;
+        min-width: 16px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #4CAF50 !important;
+    }
+
+    #action-modal .category-card h3 {
+        font-size: 0.85em !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+        color: white !important;
+        font-weight: 500 !important;
+    }
+
+    #action-modal .category-card p {
+        display: none !important;
+    }
+
+    #action-modal .asset-categories {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 3px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+
+    #action-modal .category-card:active {
+        transform: scale(0.98) !important;
+        background: #444 !important;
+    }
+
+    #action-modal .category-card.active {
+        background: #444 !important;
+        border-color: #4CAF50 !important;
+    }
+
+    /* Дополнительные стили для лучшей адаптации на мобильных */
+    #action-modal .modal-content {
+        max-height: 80vh !important;
+        overflow-y: auto !important;
+    }
+
+    #action-modal .wallet-info {
+        margin: 8px 0 !important;
+        padding: 8px !important;
+        background: #2a2a2a !important;
+        border-radius: 6px !important;
+        text-align: center !important;
+    }
+
+    #action-modal .wallet-info .balance {
+        font-size: 1.2em !important;
+        font-weight: bold !important;
+        color: #4CAF50 !important;
+    }
+
+    #action-modal .action-buttons {
+        margin-top: 8px !important;
+        gap: 6px !important;
+    }
+
+    #action-modal .action-buttons button {
+        width: 100% !important;
+        height: 40px !important;
+        margin: 2px 0 !important;
+        font-size: 14px !important;
+        border-radius: 6px !important;
+    }
+}
+
+/* Мобильные стили для модального окна продажи */
+@media (max-width: 480px) {
+    #sell-modal .modal-content {
+        margin: 0 !important;
+        padding: 6px !important;
+        width: 94% !important;
+        max-width: 280px !important;
+        border-radius: 8px !important;
+        position: absolute !important;
+        left: 50% !important;
+        top: 50% !important;
+        transform: translate(-50%, -50%) !important;
+    }
+
+    #sell-modal .modal-content h2 {
+        font-size: 1em !important;
+        margin: 4px 0 !important;
+        text-align: center !important;
+    }
+
+    #sell-modal .close-btn {
+        top: 2px !important;
+        right: 2px !important;
+        width: 20px !important;
+        height: 20px !important;
+        line-height: 20px !important;
+        font-size: 16px !important;
+    }
+
+    #sell-modal .asset-type-btn {
+        min-height: 32px !important;
+        height: 32px !important;
+        padding: 4px 6px !important;
+        flex-direction: row !important;
+        justify-content: flex-start !important;
+        align-items: center !important;
+        text-align: left !important;
+        gap: 6px !important;
+        border-radius: 6px !important;
+        margin: 0 !important;
+        background: #333 !important;
+        border: 1px solid #444 !important;
+        color: white !important;
+    }
+
+    #sell-modal .asset-type-btn i {
+        font-size: 1em !important;
+        margin: 0 !important;
+        min-width: 16px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        color: #4CAF50 !important;
+    }
+
+    #sell-modal .asset-type-btn h3 {
+        font-size: 0.85em !important;
+        margin: 0 !important;
+        line-height: 1 !important;
+        color: white !important;
+        font-weight: 500 !important;
+    }
+
+    #sell-modal .asset-type-btn p {
+        display: none !important;
+    }
+
+    #sell-modal .asset-type-selector {
+        display: grid !important;
+        grid-template-columns: 1fr !important;
+        gap: 3px !important;
+        padding: 0 !important;
+        margin: 0 !important;
+        width: 100% !important;
+    }
+
+    #sell-modal .asset-type-btn:active {
+        transform: scale(0.98) !important;
+        background: #444 !important;
+    }
+
+    #sell-modal .asset-type-btn.active {
+        background: #444 !important;
+        border-color: #4CAF50 !important;
+    }
+
+    /* Дополнительные стили для лучшей адаптации на мобильных */
+    #sell-modal .modal-content {
+        max-height: 80vh !important;
+        overflow-y: auto !important;
+    }
+
+    #sell-modal .assets-list {
+        margin: 4px 0 !important;
+        max-height: 60vh !important;
+        overflow-y: auto !important;
+    }
+
+    #sell-modal .asset-card {
+        padding: 8px !important;
+        margin: 2px 0 !important;
+        border-radius: 6px !important;
+    }
+
+    #sell-modal .sell-controls {
+        margin-top: 8px !important;
+        padding: 8px !important;
+    }
+
+    #sell-modal .sell-controls button {
+        width: 100% !important;
+        height: 36px !important;
+        margin: 2px 0 !important;
+        font-size: 14px !important;
+    }
+}
+
+/* Общие мобильные стили для всех модальных окон */
+@media (max-width: 480px) {
+    /* Предотвращаем горизонтальный скролл */
+    body {
+        overflow-x: hidden !important;
+    }
+
+    /* Убеждаемся, что модальные окна не выходят за пределы экрана */
+    .modal {
+        padding: 0 !important;
+        margin: 0 !important;
+    }
+
+    .modal-content {
+        box-sizing: border-box !important;
+        word-wrap: break-word !important;
+        overflow-wrap: break-word !important;
+    }
+
+    /* Стили для поля ввода суммы кредита на мобильных устройствах */
     .loan-amount {
         width: 100%;
         height: 40px;
