@@ -281,9 +281,10 @@ document.addEventListener('DOMContentLoaded', function() {
 
     function forceReflow(element) {
         // Принудительное обновление отображения
-        element.style.display = 'none';
-        element.offsetHeight; // Принудительный reflow
         element.style.display = '';
+        element.style.visibility = 'visible';
+        element.style.opacity = '1';
+        element.offsetHeight; // Принудительный reflow
         
         // Дополнительное обновление через RAF для iOS
         requestAnimationFrame(() => {
@@ -774,9 +775,10 @@ document.addEventListener('DOMContentLoaded', function() {
         const inputs = modal.querySelectorAll('input');
         inputs.forEach(input => {
             // Принудительно обновляем отображение каждого поля
-            input.style.display = 'none';
-            input.offsetHeight; // Принудительный reflow
             input.style.display = '';
+            input.style.visibility = 'visible';
+            input.style.opacity = '1';
+            input.offsetHeight; // Принудительный reflow
         });
     }
 
