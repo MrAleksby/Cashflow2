@@ -112,7 +112,8 @@ window.loadData = function() {
                 liability: [],
                 children: [],
                 history: [],
-                monthsCount: 0
+                monthsCount: 0,
+                taxRate: 0.25 // Устанавливаем по умолчанию 25%
             };
             window.cash = 0;
             
@@ -193,7 +194,8 @@ window.loadData = function() {
             liability: [],
             children: [],
             history: [],
-            monthsCount: 0
+            monthsCount: 0,
+            taxRate: 0.25 // Устанавливаем по умолчанию 25%
         };
         window.cash = 0;
         
