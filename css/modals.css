@@ -547,6 +547,33 @@
         margin-bottom: 0.3rem;
     }
     
+    /* Специальные стили для модального окна покупки бизнеса */
+    .business-inputs {
+        padding: 0.4rem;
+        margin-bottom: 0.4rem;
+    }
+    
+    .business-inputs .input-group {
+        margin-bottom: 0.3rem;
+    }
+    
+    .business-inputs label {
+        font-size: 0.8rem;
+        margin-bottom: 0.1rem;
+    }
+    
+    .business-inputs input {
+        padding: 0.3rem;
+        font-size: 0.85rem;
+        height: 32px;
+    }
+    
+    .buy-business-btn {
+        margin: 0.3rem 0;
+        font-size: 0.85rem;
+        height: 34px;
+    }
+    
     /* Дополнительная оптимизация для модального окна */
     .modal-content {
         padding: 0.3rem;
@@ -1057,24 +1084,28 @@
 
 .business-inputs {
     background: #fff;
-    padding: 1rem;
+    padding: 0.6rem;
     border-radius: 8px;
-    margin-bottom: 1rem;
+    margin-bottom: 0.6rem;
     border: 1px solid #e0e0e0;
 }
 
 .business-inputs .input-group {
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
 }
 
 .business-inputs label {
     color: #333;
     font-weight: 500;
+    font-size: 0.9rem;
+    margin-bottom: 0.2rem;
 }
 
 .business-inputs input {
     color: #333;
     background: #fff;
+    padding: 0.4rem;
+    font-size: 0.9rem;
 }
 
 .business-inputs input::placeholder {
@@ -1083,14 +1114,14 @@
 
 .buy-business-btn {
     width: 100%;
-    height: 48px;
-    margin: 20px 0;
+    height: 40px;
+    margin: 0.6rem 0;
     padding: 0;
     border: none;
     border-radius: 8px;
     background: #4CAF50;
     color: white;
-    font-size: 16px;
+    font-size: 0.95rem;
     font-weight: bold;
     text-align: center;
     cursor: pointer;
@@ -1110,12 +1141,12 @@
 
 @media (max-width: 480px) {
     .buy-business-btn {
-        margin: 16px 0;
-        font-size: 15px;
-        height: 44px;
+        margin: 0.4rem 0;
+        font-size: 0.9rem;
+        height: 36px;
         width: 100%;
         max-width: none;
-        padding: 0 16px;
+        padding: 0 0.8rem;
         box-sizing: border-box;
     }
 }
@@ -2164,5 +2195,32 @@
     .type-group h4 {
         font-size: 0.8em !important;
         margin-bottom: 0.2rem !important;
+    }
+    
+    /* Экстремальная оптимизация для бизнеса */
+    .business-inputs {
+        padding: 0.2rem !important;
+        margin-bottom: 0.2rem !important;
+    }
+    
+    .business-inputs .input-group {
+        margin-bottom: 0.1rem !important;
+    }
+    
+    .business-inputs label {
+        font-size: 0.7rem !important;
+        margin-bottom: 0.02rem !important;
+    }
+    
+    .business-inputs input {
+        padding: 0.2rem !important;
+        font-size: 0.75rem !important;
+        height: 28px !important;
+    }
+    
+    .buy-business-btn {
+        margin: 0.2rem 0 !important;
+        font-size: 0.8rem !important;
+        height: 30px !important;
     }
 } 
