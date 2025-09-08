@@ -253,7 +253,8 @@ const originalRenderSummary = function() {
         windowDataTaxRate: window.data.taxRate,
         finalTaxRate: taxRate,
         totalIncome: totalIncome,
-        calculatedTax: tax
+        calculatedTax: tax,
+        taxPercentage: Math.round(taxRate * 100) + '%'
     });
 
     // Обновляем или создаем запись о налогах в расходах

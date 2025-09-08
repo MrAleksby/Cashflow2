@@ -74,6 +74,10 @@ window.startNewGameWithTaxRate = function(taxRate) {
         console.log('GameState not available when setting tax rate');
     }
     
+    // Также обновляем window.data.taxRate для совместимости
+    window.data.taxRate = taxRate / 100;
+    console.log('Tax rate set in window.data:', taxRate / 100);
+    
     // Тщательная очистка localStorage
     localStorage.clear();
     localStorage.removeItem('appData');
@@ -167,6 +171,7 @@ window.loadData = function() {
         // Синхронизируем с GameState если он доступен
         if (window.gameState) {
             window.gameState.setTaxRate(window.data.taxRate || 0.25);
+            console.log('Tax rate synced with GameState on load:', window.data.taxRate || 0.25);
         }
 
         // Обновляем все отображения
