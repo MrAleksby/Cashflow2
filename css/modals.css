@@ -635,7 +635,6 @@
     
     /* Специальные стили для форм действий */
     .category-card .action-form {
-        display: block !important;
         margin-top: 0.6rem;
         padding-top: 0.6rem;
     }
@@ -1802,7 +1801,6 @@
     }
 
     .category-card .action-form {
-        display: block !important;
         padding: 12px 0;
     }
 
@@ -2421,7 +2419,6 @@
     
     /* Экстремальная оптимизация для форм действий */
     .category-card .action-form {
-        display: block !important;
         margin-top: 0.4rem !important;
         padding-top: 0.4rem !important;
     }
