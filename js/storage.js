@@ -66,6 +66,11 @@ window.startNewGameWithTaxRate = function(taxRate) {
     };
     window.cash = 0;
     
+    // Устанавливаем налоговую ставку в GameState
+    if (window.gameState) {
+        window.gameState.setTaxRate(taxRate / 100);
+    }
+    
     // Тщательная очистка localStorage
     localStorage.clear();
     localStorage.removeItem('appData');
@@ -155,6 +160,11 @@ window.loadData = function() {
         // Загружаем баланс
         const savedCash = localStorage.getItem('cash');
         window.cash = savedCash ? parseFloat(savedCash) : 0;
+
+        // Синхронизируем с GameState если он доступен
+        if (window.gameState) {
+            window.gameState.setTaxRate(window.data.taxRate || 0.25);
+        }
 
         // Обновляем все отображения
             if (typeof window.renderAll === 'function') window.renderAll();

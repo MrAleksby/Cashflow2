@@ -243,7 +243,7 @@ const originalRenderSummary = function() {
     const totalIncome = salary + passiveIncome;
 
     // Рассчитываем налог (используем выбранную пользователем ставку)
-    const taxRate = window.data.taxRate || 0.25; // По умолчанию 25%
+    const taxRate = window.gameState ? window.gameState.getTaxRate() : (window.data.taxRate || 0.25); // По умолчанию 25%
     const taxableIncome = Math.max(0, totalIncome);
     const tax = Math.round(taxableIncome * taxRate);
 

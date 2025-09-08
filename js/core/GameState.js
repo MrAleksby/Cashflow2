@@ -17,7 +17,8 @@ class GameState {
             job: {
                 title: '',
                 salary: 0
-            }
+            },
+            taxRate: 0.25 // По умолчанию 25%
         };
         
         // Слушатели событий для обновления UI
@@ -562,7 +563,8 @@ class GameState {
                     children: state.data?.children || [],
                     history: state.data?.history || [],
                     monthsCount: state.data?.monthsCount || 0,
-                    job: state.data?.job || { title: '', salary: 0 }
+                    job: state.data?.job || { title: '', salary: 0 },
+                    taxRate: state.data?.taxRate || 0.25
                 };
                 
                 // Синхронизируем с window.cash для обратной совместимости
@@ -594,7 +596,8 @@ class GameState {
             children: [],
             history: [],
             monthsCount: 0,
-            job: { title: '', salary: 0 }
+            job: { title: '', salary: 0 },
+            taxRate: 0.25 // По умолчанию 25%
         };
         
         // Синхронизируем с window.cash для обратной совместимости
@@ -615,6 +618,24 @@ class GameState {
      */
     setAutoSave(enabled) {
         this._autoSave = enabled;
+    }
+
+    /**
+     * Установить налоговую ставку
+     */
+    setTaxRate(rate) {
+        this._data.taxRate = rate;
+        this._notifyListeners('taxRateChanged', { rate });
+        if (this._autoSave) {
+            this.save();
+        }
+    }
+
+    /**
+     * Получить налоговую ставку
+     */
+    getTaxRate() {
+        return this._data.taxRate || 0.25;
     }
 }
 
