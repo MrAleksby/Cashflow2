@@ -103,19 +103,41 @@ window.loadData = function() {
         // Проверяем наличие параметров clear или nocache в URL
         const urlParams = new URLSearchParams(window.location.search);
         if (urlParams.has('clear') || urlParams.has('nocache')) {
-            // Если есть параметр clear или nocache, убеждаемся что все очищено
-            localStorage.clear();
-            window.data = {
-                income: [],
-                expense: [],
-                asset: [],
-                liability: [],
-                children: [],
-                history: [],
-                monthsCount: 0,
-                taxRate: 0.25 // Устанавливаем по умолчанию 25%
-            };
-            window.cash = 0;
+            // Если есть параметр clear или nocache, загружаем сохраненные данные
+            const savedData = localStorage.getItem('appData');
+            if (savedData) {
+                window.data = JSON.parse(savedData);
+                // Проверяем и инициализируем все необходимые массивы
+                if (!Array.isArray(window.data.income)) window.data.income = [];
+                if (!Array.isArray(window.data.expense)) window.data.expense = [];
+                if (!Array.isArray(window.data.asset)) window.data.asset = [];
+                if (!Array.isArray(window.data.liability)) window.data.liability = [];
+                if (!Array.isArray(window.data.children)) window.data.children = [];
+                if (!Array.isArray(window.data.history)) window.data.history = [];
+                if (typeof window.data.monthsCount === 'undefined') window.data.monthsCount = 0;
+                if (typeof window.data.taxRate === 'undefined') window.data.taxRate = 0.25; // 25% по умолчанию
+            } else {
+                // Если данных нет, инициализируем пустые данные
+                window.data = {
+                    income: [],
+                    expense: [],
+                    asset: [],
+                    liability: [],
+                    children: [],
+                    history: [],
+                    monthsCount: 0,
+                    taxRate: 0.25 // Устанавливаем по умолчанию 25%
+                };
+            }
+            
+            const savedCash = localStorage.getItem('cash');
+            window.cash = savedCash ? parseFloat(savedCash) : 0;
+            
+            // Синхронизируем с GameState если он доступен
+            if (window.gameState) {
+                window.gameState.setTaxRate(window.data.taxRate || 0.25);
+                console.log('Tax rate synced with GameState on clear load:', window.data.taxRate || 0.25);
+            }
             
             // Принудительно очищаем контейнер истории
             const historyContainer = document.getElementById('history-container');
