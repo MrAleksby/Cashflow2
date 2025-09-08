@@ -433,27 +433,78 @@
 /* Мобильные стили */
 @media (max-width: 480px) {
     .modal {
-        padding: var(--spacing-md);
+        padding: var(--spacing-sm);
     }
     
     .modal-content {
-        padding: var(--spacing-lg);
+        padding: var(--spacing-md);
         border-radius: var(--border-radius);
         max-width: 100%;
         margin: 0;
     }
     
     .close-btn {
-        top: var(--spacing-sm);
-        right: var(--spacing-sm);
-        width: 28px;
-        height: 28px;
-        font-size: 18px;
+        top: var(--spacing-xs);
+        right: var(--spacing-xs);
+        width: 24px;
+        height: 24px;
+        font-size: 16px;
     }
     
     .modal-title {
-        font-size: 1.3em;
-        margin-bottom: var(--spacing-md);
+        font-size: 1.2em;
+        margin-bottom: var(--spacing-sm);
+    }
+    
+    /* Специальные стили для модального окна покупки акций */
+    .stock-inputs {
+        padding: 0.4rem;
+        margin-bottom: 0.4rem;
+    }
+    
+    .stock-inputs .input-group {
+        margin-bottom: 0.3rem;
+    }
+    
+    .stock-inputs label {
+        font-size: 0.8rem;
+        margin-bottom: 0.1rem;
+    }
+    
+    .stock-inputs input {
+        padding: 0.3rem;
+        font-size: 0.85rem;
+    }
+    
+    .quick-price-buttons,
+    .quick-sell-price-buttons {
+        gap: 2px;
+        margin-bottom: 4px;
+    }
+    
+    .quick-price-btn,
+    .quick-sell-price-btn {
+        padding: 3px 4px;
+        font-size: 10px;
+        min-width: 25px;
+        max-width: 40px;
+    }
+    
+    .custom-price-input input {
+        padding: 6px;
+        font-size: 13px;
+    }
+    
+    .buy-stock-btn {
+        padding: 0.5rem;
+        margin-top: 0.4rem;
+        font-size: 0.9rem;
+    }
+    
+    .total-price {
+        margin-top: 0.4rem;
+        padding-top: 0.3rem;
+        font-size: 0.9rem;
     }
 
     #action-modal .modal-content h2,
@@ -690,41 +741,41 @@
 /* Стили для ввода цен акций */
 .stock-inputs {
     background: #fff;
-    padding: 1rem;
+    padding: 0.6rem;
     border-radius: 8px;
-    margin-bottom: 1rem;
+    margin-bottom: 0.6rem;
     border: 1px solid #e0e0e0;
 }
 
 .stock-inputs .input-group {
-    margin-bottom: 0.8rem;
+    margin-bottom: 0.5rem;
 }
 
 .stock-inputs label {
     display: block;
-    margin-bottom: 0.3rem;
+    margin-bottom: 0.2rem;
     color: #333;
-    font-size: 0.9rem;
+    font-size: 0.85rem;
     font-weight: 500;
 }
 
 .stock-inputs input {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.4rem;
     border: 1px solid #ced4da;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 0.9rem;
     color: #333;
     background: #fff;
 }
 
 .total-price {
-    margin-top: 1rem;
-    padding-top: 0.8rem;
+    margin-top: 0.6rem;
+    padding-top: 0.5rem;
     border-top: 1px solid #dee2e6;
     font-weight: 500;
     color: #2c3e50;
-    font-size: 1.1rem;
+    font-size: 1rem;
 }
 
 /* Стили для спекулятивных акций */
@@ -783,13 +834,13 @@
 
 .buy-stock-btn {
     width: 100%;
-    padding: 0.8rem;
-    margin-top: 1rem;
+    padding: 0.6rem;
+    margin-top: 0.6rem;
     background: #4CAF50;
     color: white;
     border: none;
     border-radius: 4px;
-    font-size: 1rem;
+    font-size: 0.95rem;
     font-weight: 500;
     cursor: pointer;
     transition: background-color 0.2s ease;
@@ -809,25 +860,25 @@
 .quick-sell-price-buttons {
     display: flex;
     flex-wrap: wrap;
-    gap: 4px;
-    margin-bottom: 10px;
+    gap: 3px;
+    margin-bottom: 6px;
 }
 
 .quick-price-btn,
 .quick-sell-price-btn {
-    padding: 6px 8px;
+    padding: 4px 6px;
     background: #f8f9fa;
     border: 1px solid #dee2e6;
     border-radius: 4px;
-    font-size: 12px;
+    font-size: 11px;
     font-weight: 500;
     color: #495057;
     cursor: pointer;
     transition: all 0.2s ease;
-    min-width: 35px;
+    min-width: 30px;
     text-align: center;
     flex: 1;
-    max-width: 60px;
+    max-width: 50px;
 }
 
 .quick-price-btn:hover,
@@ -852,15 +903,15 @@
 /* Поле для ручного ввода цены */
 .custom-price-input,
 .custom-sell-price-input {
-    margin-top: 10px;
+    margin-top: 6px;
 }
 
 .custom-price-input input {
     width: 100%;
-    padding: 10px;
+    padding: 8px;
     border: 2px solid #e0e0e0;
     border-radius: 6px;
-    font-size: 16px;
+    font-size: 14px;
     text-align: center;
 }
 
