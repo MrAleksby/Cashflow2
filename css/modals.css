@@ -1617,7 +1617,7 @@
     border-top: 1px solid #444;
     width: 100%;
     position: relative;
-    z-index: 2;
+    z-index: 10;
     background: #333;
     border-radius: 8px;
     padding: 12px;
@@ -1662,7 +1662,7 @@
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     position: relative;
-    z-index: 3;
+    z-index: 11;
 }
 
 .category-card button:hover {
@@ -1682,6 +1682,8 @@
     background: #444;
     border-color: #4CAF50;
     transform: scale(1);
+    z-index: 15;
+    position: relative;
 }
 
 /* Стили для списка детей */
@@ -1995,6 +1997,17 @@
     #action-modal .category-card.active {
         background: #444 !important;
         border-color: #4CAF50 !important;
+        z-index: 20 !important;
+        position: relative !important;
+    }
+    
+    #action-modal .category-card.active .action-form {
+        z-index: 25 !important;
+        position: relative !important;
+        background: #333 !important;
+        border-radius: 8px !important;
+        padding: 12px !important;
+        margin-top: 8px !important;
     }
 
     /* Дополнительные стили для лучшей адаптации на мобильных */
