@@ -69,6 +69,9 @@ window.startNewGameWithTaxRate = function(taxRate) {
     // Устанавливаем налоговую ставку в GameState
     if (window.gameState) {
         window.gameState.setTaxRate(taxRate / 100);
+        console.log('Tax rate set in GameState:', taxRate / 100);
+    } else {
+        console.log('GameState not available when setting tax rate');
     }
     
     // Тщательная очистка localStorage

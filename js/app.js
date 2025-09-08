@@ -246,6 +246,15 @@ const originalRenderSummary = function() {
     const taxRate = window.gameState ? window.gameState.getTaxRate() : (window.data.taxRate || 0.25); // По умолчанию 25%
     const taxableIncome = Math.max(0, totalIncome);
     const tax = Math.round(taxableIncome * taxRate);
+    
+    // Отладочная информация
+    console.log('Tax calculation debug:', {
+        gameStateTaxRate: window.gameState ? window.gameState.getTaxRate() : 'GameState not available',
+        windowDataTaxRate: window.data.taxRate,
+        finalTaxRate: taxRate,
+        totalIncome: totalIncome,
+        calculatedTax: tax
+    });
 
     // Обновляем или создаем запись о налогах в расходах
     if (window.data && Array.isArray(window.data.expense)) {
