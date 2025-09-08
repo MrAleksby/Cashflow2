@@ -1915,9 +1915,9 @@
 @media (max-width: 480px) {
     #action-modal .modal-content {
         margin: 0 !important;
-        padding: 6px !important;
-        width: 94% !important;
-        max-width: 280px !important;
+        padding: 8px !important;
+        width: 96% !important;
+        max-width: 320px !important;
         border-radius: 8px !important;
         position: absolute !important;
         left: 50% !important;
@@ -1941,14 +1941,14 @@
     }
 
     #action-modal .category-card {
-        min-height: 32px !important;
-        height: 32px !important;
-        padding: 4px 6px !important;
+        min-height: 40px !important;
+        height: auto !important;
+        padding: 6px 8px !important;
         flex-direction: row !important;
         justify-content: flex-start !important;
         align-items: center !important;
         text-align: left !important;
-        gap: 6px !important;
+        gap: 8px !important;
         border-radius: 6px !important;
         margin: 0 !important;
         background: #333 !important;
@@ -1957,9 +1957,9 @@
     }
 
     #action-modal .category-card i {
-        font-size: 1em !important;
+        font-size: 1.1em !important;
         margin: 0 !important;
-        min-width: 16px !important;
+        min-width: 18px !important;
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
@@ -1967,9 +1967,9 @@
     }
 
     #action-modal .category-card h3 {
-        font-size: 0.85em !important;
+        font-size: 0.9em !important;
         margin: 0 !important;
-        line-height: 1 !important;
+        line-height: 1.2 !important;
         color: white !important;
         font-weight: 500 !important;
     }
@@ -1981,7 +1981,7 @@
     #action-modal .asset-categories {
         display: grid !important;
         grid-template-columns: 1fr !important;
-        gap: 3px !important;
+        gap: 6px !important;
         padding: 0 !important;
         margin: 0 !important;
         width: 100% !important;
@@ -1999,7 +1999,7 @@
 
     /* Дополнительные стили для лучшей адаптации на мобильных */
     #action-modal .modal-content {
-        max-height: 80vh !important;
+        max-height: 95vh !important;
         overflow-y: auto !important;
     }
 
@@ -2024,9 +2024,9 @@
 
     #action-modal .action-buttons button {
         width: 100% !important;
-        height: 40px !important;
-        margin: 2px 0 !important;
-        font-size: 14px !important;
+        height: 44px !important;
+        margin: 4px 0 !important;
+        font-size: 15px !important;
         border-radius: 6px !important;
     }
 }
