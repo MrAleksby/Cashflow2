@@ -625,6 +625,12 @@ class GameState {
      */
     setTaxRate(rate) {
         this._data.taxRate = rate;
+        
+        // Синхронизируем с window.data для совместимости
+        if (window.data) {
+            window.data.taxRate = rate;
+        }
+        
         this._notifyListeners('taxRateChanged', { rate });
         if (this._autoSave) {
             this.save();
@@ -635,6 +641,10 @@ class GameState {
      * Получить налоговую ставку
      */
     getTaxRate() {
+        // Сначала проверяем window.data, потом GameState
+        if (window.data && typeof window.data.taxRate !== 'undefined') {
+            return window.data.taxRate;
+        }
         return this._data.taxRate || 0.25;
     }
 }
