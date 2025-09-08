@@ -40,6 +40,13 @@ window.showTaxRateModal = function() {
     taxRateButtons.forEach(button => {
         button.onclick = function() {
             const selectedRate = parseInt(this.dataset.rate);
+            console.log('Tax rate button clicked:', this.dataset.rate, 'Parsed:', selectedRate);
+            
+            if (isNaN(selectedRate)) {
+                console.error('Invalid tax rate from button:', this.dataset.rate);
+                return;
+            }
+            
             window.startNewGameWithTaxRate(selectedRate);
         };
     });
@@ -47,6 +54,14 @@ window.showTaxRateModal = function() {
 
 // Функция начала новой игры с выбранной налоговой ставкой
 window.startNewGameWithTaxRate = function(taxRate) {
+    // Проверяем, что taxRate корректный
+    if (typeof taxRate !== 'number' || isNaN(taxRate)) {
+        console.error('Invalid tax rate received:', taxRate);
+        return;
+    }
+    
+    console.log('Starting new game with tax rate:', taxRate);
+    
     // Закрываем модальное окно
     const modal = document.getElementById('tax-rate-modal');
     if (modal) {
@@ -78,6 +93,12 @@ window.startNewGameWithTaxRate = function(taxRate) {
     window.data.taxRate = taxRate / 100;
     console.log('Tax rate set in window.data:', taxRate / 100);
     console.log('Selected tax rate:', taxRate, 'Converted to decimal:', taxRate / 100);
+    
+    // Проверяем, что taxRate корректный
+    if (typeof taxRate !== 'number' || isNaN(taxRate)) {
+        console.error('Invalid tax rate:', taxRate);
+        return;
+    }
     
     // Тщательная очистка localStorage
     localStorage.clear();
