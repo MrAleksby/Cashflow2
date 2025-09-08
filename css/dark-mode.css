@@ -1,21 +1,33 @@
 @media (prefers-color-scheme: dark) {
+    :root {
+        --text-color: #e9ecef;
+        --text-color-light: #adb5bd;
+        --text-color-muted: #6c757d;
+        --background-color: #1a1a1a;
+        --card-background: #2d2d2d;
+        --border-color: #495057;
+        --border-color-light: #343a40;
+        --shadow-color: rgba(0, 0, 0, 0.3);
+        --shadow-color-hover: rgba(0, 0, 0, 0.4);
+    }
+    
     body { 
-        background: #222; 
+        background: var(--background-color); 
     }
     
     .container { 
-        background: #2c2c2c; 
-        color: #fff; 
+        background: var(--card-background); 
+        color: var(--text-color); 
     }
     
     .block { 
-        background: #333; 
+        background: var(--card-background); 
     }
     
     input, select, textarea {
-        color: #fff !important;
-        background: #222 !important;
-        border-color: #444;
+        color: var(--text-color) !important;
+        background: var(--card-background) !important;
+        border-color: var(--border-color);
     }
     
     input::placeholder {
@@ -40,19 +52,26 @@
     }
     
     .modal-content {
-        background: #222;
-        color: #fff;
+        background: var(--card-background);
+        color: var(--text-color);
+        border-color: var(--border-color);
     }
     
     .close-btn {
-        color: #aaa;
+        color: var(--text-color-muted);
+        background: var(--border-color-light);
+    }
+    
+    .close-btn:hover {
+        background: var(--danger-color);
+        color: white;
     }
     
     .modal-form select,
     .modal-form input {
-        background: #333;
-        color: #fff;
-        border-color: #444;
+        background: var(--card-background);
+        color: var(--text-color);
+        border-color: var(--border-color);
     }
 
     /* Общие стили для всех списков активов в темном режиме */
@@ -186,43 +205,43 @@
 
     /* Стили для категорий активов в темном режиме */
     .category-card {
-        background: #333 !important;
-        border-color: #444 !important;
-        color: #fff !important;
+        background: var(--card-background) !important;
+        border-color: var(--border-color) !important;
+        color: var(--text-color) !important;
     }
 
     .category-card:hover {
-        background: #444 !important;
-        border-color: #1976d2 !important;
+        border-color: var(--primary-color) !important;
+        box-shadow: var(--shadow-md) !important;
     }
 
     .category-card.active {
-        background: #1a237e !important;
-        border-color: #3f51b5 !important;
+        border-color: var(--primary-color) !important;
+        background: rgba(76, 175, 80, 0.1) !important;
     }
 
     .category-card p {
-        color: #bbb !important;
+        color: var(--text-color-light) !important;
     }
 
     /* Стили для селекторов типа в темном режиме */
     .type-group {
-        background: #333 !important;
-        border-color: #444 !important;
+        background: var(--card-background) !important;
+        border-color: var(--border-color) !important;
     }
 
     .type-group h4 {
-        color: #fff !important;
+        color: var(--text-color) !important;
     }
 
     .type-btn {
-        background: #222 !important;
-        color: #fff !important;
-        border-color: #444 !important;
+        background: var(--card-background) !important;
+        color: var(--text-color) !important;
+        border-color: var(--border-color) !important;
     }
 
     .type-btn:hover {
-        background: #444 !important;
+        background: var(--border-color-light) !important;
     }
     
     #main-buy-dropdown, 
@@ -231,21 +250,21 @@
     #main-stock-dropdown, 
     #main-action-sum-dropdown, 
     #main-action-regular-expense-dropdown {
-        background: #222 !important;
-        color: #fff !important;
-        border-color: #1976d2 !important;
+        background: var(--card-background) !important;
+        color: var(--text-color) !important;
+        border-color: var(--primary-color) !important;
     }
     
     #main-buy-dropdown div, 
     #main-sell-dropdown div, 
     #main-action-dropdown div {
-        background: #222 !important;
-        color: #fff !important;
+        background: var(--card-background) !important;
+        color: var(--text-color) !important;
     }
     
     #main-buy-dropdown .main-buy-option, 
     #main-sell-dropdown .main-sell-option, 
     #main-action-dropdown .main-action-option {
-        color: #90caf9 !important;
+        color: var(--primary-light) !important;
     }
 } 

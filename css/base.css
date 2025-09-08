@@ -1,15 +1,49 @@
 :root {
+    /* Основные цвета */
     --primary-color: #4CAF50;
+    --primary-dark: #388e3c;
+    --primary-light: #81c784;
     --secondary-color: #2196F3;
-    --danger-color: #f44336;
-    --warning-color: #ff9800;
+    --secondary-dark: #1976d2;
+    --secondary-light: #64b5f6;
+    
+    /* Семантические цвета */
     --success-color: #4CAF50;
+    --warning-color: #ff9800;
+    --danger-color: #f44336;
+    --info-color: #2196F3;
+    
+    /* Нейтральные цвета */
     --text-color: #333;
     --text-color-light: #666;
-    --background-color: #f5f5f5;
-    --card-background: #fff;
-    --border-color: #e0e0e0;
-    --shadow-color: rgba(0, 0, 0, 0.1);
+    --text-color-muted: #999;
+    --background-color: #f8f9fa;
+    --card-background: #ffffff;
+    --border-color: #e9ecef;
+    --border-color-light: #f1f3f4;
+    --shadow-color: rgba(0, 0, 0, 0.08);
+    --shadow-color-hover: rgba(0, 0, 0, 0.12);
+    
+    /* Размеры */
+    --border-radius: 12px;
+    --border-radius-small: 8px;
+    --border-radius-large: 16px;
+    --spacing-xs: 4px;
+    --spacing-sm: 8px;
+    --spacing-md: 16px;
+    --spacing-lg: 24px;
+    --spacing-xl: 32px;
+    
+    /* Тени */
+    --shadow-sm: 0 2px 4px var(--shadow-color);
+    --shadow-md: 0 4px 12px var(--shadow-color);
+    --shadow-lg: 0 8px 24px var(--shadow-color);
+    --shadow-hover: 0 4px 16px var(--shadow-color-hover);
+    
+    /* Переходы */
+    --transition-fast: 0.15s ease;
+    --transition-normal: 0.25s ease;
+    --transition-slow: 0.35s ease;
 }
 
 body {
@@ -22,6 +56,7 @@ body {
     overflow-x: hidden;
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
+    line-height: 1.6;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -32,16 +67,23 @@ h1, h2, h3, h4, h5, h6 {
 
 input, select, textarea {
     width: 100%;
-    padding: 10px;
-    margin: 8px 0;
+    padding: var(--spacing-md);
+    margin: var(--spacing-sm) 0;
     border: 1px solid var(--border-color);
-    border-radius: 8px;
+    border-radius: var(--border-radius-small);
     box-sizing: border-box;
-    color: #222 !important;
-    background: #fff !important;
+    color: var(--text-color) !important;
+    background: var(--card-background) !important;
     font-size: 16px !important;
     -webkit-appearance: none;
     appearance: none;
+    transition: border-color var(--transition-fast), box-shadow var(--transition-fast);
+}
+
+input:focus, select:focus, textarea:focus {
+    outline: none;
+    border-color: var(--primary-color);
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.1);
 }
 
 input::placeholder {
@@ -53,6 +95,8 @@ label {
     font-size: 0.9rem;
     color: var(--text-color);
     font-weight: 500;
+    margin-bottom: var(--spacing-xs);
+    display: block;
 }
 
 button, a {

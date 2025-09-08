@@ -1,10 +1,11 @@
 .container {
     max-width: 600px;
     margin: 0 auto;
-    background: #fff;
-    padding: 10px 0 30px 0;
-    border-radius: 0 0 10px 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    background: var(--card-background);
+    padding: var(--spacing-md) 0 var(--spacing-xl) 0;
+    border-radius: 0 0 var(--border-radius) var(--border-radius);
+    box-shadow: var(--shadow-md);
+    border: 1px solid var(--border-color-light);
 }
 
 .header-row {
@@ -12,29 +13,35 @@
     flex-direction: row;
     align-items: center;
     justify-content: center;
-    gap: 24px;
-    margin: 24px 16px;
+    gap: var(--spacing-lg);
+    margin: var(--spacing-lg) var(--spacing-md);
 }
 
 #top-cash-value {
     font-size: 1.1em;
     font-weight: bold;
-    color: #388e3c;
-    background: #e8f5e9;
-    border: 2px solid #4CAF50;
-    border-radius: 8px;
-    padding: 6px 12px;
-    box-shadow: 0 2px 8px rgba(76,175,80,0.15);
+    color: var(--primary-dark);
+    background: rgba(76, 175, 80, 0.1);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius-small);
+    padding: var(--spacing-sm) var(--spacing-md);
+    box-shadow: var(--shadow-sm);
     display: flex;
     align-items: center;
-    gap: 8px;
-    height: 36px;
-    min-width: 100px;
+    gap: var(--spacing-sm);
+    height: 40px;
+    min-width: 120px;
+    transition: all var(--transition-normal);
+}
+
+#top-cash-value:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-1px);
 }
 
 #top-cash-value i {
     font-size: 1em;
-    color: #4CAF50;
+    color: var(--primary-color);
 }
 
 #top-cash-amount {
@@ -53,19 +60,25 @@
     width: 64px;
     object-fit: cover;
     border-radius: 50%;
-    box-shadow: 0 2px 12px rgba(0,0,0,0.10);
-    margin-left: 8px;
+    box-shadow: var(--shadow-md);
+    margin-left: var(--spacing-sm);
+    transition: all var(--transition-normal);
+}
+
+.logo-img:hover {
+    transform: scale(1.05);
+    box-shadow: var(--shadow-lg);
 }
 
 .dropdowns-wrap {
     position: relative;
     width: 95%;
-    margin: 18px auto;
+    margin: var(--spacing-lg) auto;
 }
 
 #action-btns-wrap {
     display: flex;
-    gap: 10px;
+    gap: var(--spacing-md);
     width: 100%;
     margin: 0;
     position: relative;
@@ -73,7 +86,7 @@
 }
 
 #bottom-nav {
-    transition: height 0.2s;
+    transition: height var(--transition-fast);
     touch-action: manipulation;
     user-select: none;
 }
@@ -83,12 +96,12 @@
     min-height: 0;
     padding: 0;
     border-radius: 0;
-    transition: background 0.15s, color 0.15s;
+    transition: background var(--transition-fast), color var(--transition-fast);
 }
 
 .nav-btn.active {
-    background: linear-gradient(90deg, #e8f5e9 60%, #fff 100%);
-    box-shadow: 0 -2px 8px rgba(56,142,60,0.08);
+    background: linear-gradient(90deg, rgba(76, 175, 80, 0.1) 60%, var(--card-background) 100%);
+    box-shadow: 0 -2px 8px rgba(76, 175, 80, 0.15);
     font-weight: bold;
 }
 

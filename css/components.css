@@ -1,40 +1,99 @@
 .card {
     background: var(--card-background);
-    border-radius: 8px;
-    padding: 20px;
-    margin-bottom: 20px;
-    box-shadow: 0 2px 4px var(--shadow-color);
+    border-radius: var(--border-radius);
+    padding: var(--spacing-lg);
+    margin-bottom: var(--spacing-lg);
+    box-shadow: var(--shadow-sm);
+    border: 1px solid var(--border-color-light);
+    transition: box-shadow var(--transition-normal), transform var(--transition-normal);
+}
+
+.card:hover {
+    box-shadow: var(--shadow-md);
+    transform: translateY(-2px);
 }
 
 .btn {
-    display: inline-block;
-    padding: 10px 20px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    padding: var(--spacing-md) var(--spacing-lg);
     border: none;
-    border-radius: 4px;
+    border-radius: var(--border-radius-small);
     cursor: pointer;
     font-size: 16px;
-    transition: all 0.3s ease;
+    font-weight: 500;
+    transition: all var(--transition-normal);
     text-align: center;
+    text-decoration: none;
+    min-height: 44px;
+    -webkit-tap-highlight-color: transparent;
+    touch-action: manipulation;
+}
+
+.btn:hover {
+    transform: translateY(-1px);
+    box-shadow: var(--shadow-hover);
+}
+
+.btn:active {
+    transform: translateY(0);
+}
+
+.btn:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    transform: none;
 }
 
 .btn-primary {
-    background-color: var(--primary-color);
+    background: linear-gradient(135deg, var(--primary-color), var(--primary-dark));
     color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-primary:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--primary-color));
 }
 
 .btn-secondary {
-    background-color: var(--secondary-color);
+    background: linear-gradient(135deg, var(--secondary-color), var(--secondary-dark));
     color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-secondary:hover {
+    background: linear-gradient(135deg, var(--secondary-dark), var(--secondary-color));
 }
 
 .btn-danger {
-    background-color: var(--danger-color);
+    background: linear-gradient(135deg, var(--danger-color), #d32f2f);
     color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-danger:hover {
+    background: linear-gradient(135deg, #d32f2f, var(--danger-color));
 }
 
 .btn-warning {
-    background-color: var(--warning-color);
+    background: linear-gradient(135deg, var(--warning-color), #f57c00);
     color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-warning:hover {
+    background: linear-gradient(135deg, #f57c00, var(--warning-color));
+}
+
+.btn-success {
+    background: linear-gradient(135deg, var(--success-color), var(--primary-dark));
+    color: white;
+    box-shadow: var(--shadow-sm);
+}
+
+.btn-success:hover {
+    background: linear-gradient(135deg, var(--primary-dark), var(--success-color));
 }
 
 .action-btn {
@@ -108,13 +167,25 @@ th {
     width: max-content;
     min-width: 160px;
     max-width: 95vw;
-    margin-top: 8px;
+    margin-top: var(--spacing-sm);
     z-index: 1000;
-    background: #fff;
-    border: 1px solid #1976d2;
-    border-radius: 10px;
-    box-shadow: 0 2px 8px rgba(0,0,0,0.10);
+    background: var(--card-background);
+    border: 2px solid var(--primary-color);
+    border-radius: var(--border-radius);
+    box-shadow: var(--shadow-lg);
     overflow: hidden;
+    animation: dropdownSlideIn var(--transition-fast) ease-out;
+}
+
+@keyframes dropdownSlideIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 .dropdown.active {
@@ -123,17 +194,20 @@ th {
 
 .dropdown-content {
     width: 100%;
-    padding: 8px 0;
+    padding: var(--spacing-sm) 0;
 }
 
 .dropdown-option {
-    padding: 12px 16px;
+    padding: var(--spacing-md) var(--spacing-lg);
     cursor: pointer;
-    transition: background-color 0.2s;
+    transition: background-color var(--transition-fast);
+    color: var(--text-color);
+    font-weight: 500;
 }
 
 .dropdown-option:hover {
-    background-color: #f5f5f5;
+    background-color: rgba(76, 175, 80, 0.1);
+    color: var(--primary-dark);
 }
 
 /* Utility classes */
@@ -164,26 +238,33 @@ th {
     bottom: env(safe-area-inset-bottom, 0);
     left: 0;
     right: 0;
-    background: #ffffff;
-    box-shadow: 0 -1px 8px rgba(0, 0, 0, 0.08);
+    background: var(--card-background);
+    box-shadow: 0 -2px 12px var(--shadow-color);
     display: flex;
     justify-content: space-between;
-    padding: 8px 12px;
-    padding-bottom: calc(8px + env(safe-area-inset-bottom, 0));
+    padding: var(--spacing-sm) var(--spacing-md);
+    padding-bottom: calc(var(--spacing-sm) + env(safe-area-inset-bottom, 0));
     z-index: 1000;
+    border-top: 1px solid var(--border-color-light);
 }
 
 .nav-item {
     display: flex;
     flex-direction: column;
     align-items: center;
-    padding: 6px 8px;
+    padding: var(--spacing-sm) var(--spacing-sm);
     color: var(--text-color-light);
     text-decoration: none;
     font-size: 0.7rem;
     min-width: 48px;
     max-width: 72px;
-    border-radius: 6px;
+    border-radius: var(--border-radius-small);
+    transition: all var(--transition-fast);
+}
+
+.nav-item:hover {
+    background: rgba(76, 175, 80, 0.05);
+    color: var(--primary-color);
 }
 
 .nav-item i {
@@ -194,7 +275,8 @@ th {
 
 .nav-item.active {
     color: var(--primary-color);
-    background: #E8F5E9;
+    background: rgba(76, 175, 80, 0.1);
+    font-weight: 600;
 }
 
 /* Добавляем отступ для контента */
@@ -205,11 +287,11 @@ th {
 @media (max-width: 480px) {
     .action-btn {
         font-size: 1em;
-        padding: 10px 0;
+        padding: var(--spacing-md) 0;
     }
 
     .nav-item {
-        padding: 4px 6px;
+        padding: var(--spacing-xs) var(--spacing-sm);
         font-size: 0.65rem;
     }
 
@@ -221,15 +303,17 @@ th {
 /* Стили для тёмной темы */
 @media (prefers-color-scheme: dark) {
     .bottom-nav {
-        background: #1a1a1a;
-        box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.3);
+        background: var(--card-background);
+        box-shadow: 0 -2px 12px var(--shadow-color);
+        border-top-color: var(--border-color);
     }
 
     .nav-item {
-        color: #999;
+        color: var(--text-color-light);
     }
 
     .nav-item.active {
-        color: #6FCF97;
+        color: var(--primary-color);
+        background: rgba(76, 175, 80, 0.15);
     }
 } 

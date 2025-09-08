@@ -6,16 +6,16 @@
 
 @media (max-width: 768px) {
     .container {
-        padding: 10px;
+        padding: var(--spacing-md);
     }
     
     .card {
-        padding: 15px;
+        padding: var(--spacing-md);
     }
     
     .btn {
         width: 100%;
-        margin-bottom: 10px;
+        margin-bottom: var(--spacing-md);
     }
     
     .dropdown {
@@ -33,12 +33,12 @@
     .add-form input[type="text"], 
     .add-form input[type="number"] {
         font-size: 1.1em;
-        padding: 14px;
+        padding: var(--spacing-md);
     }
     
     .add-form button {
         font-size: 1.2em;
-        padding: 14px 18px;
+        padding: var(--spacing-md) var(--spacing-lg);
     }
     
     #bottom-nav {
@@ -63,8 +63,8 @@
     }
     
     .block {
-        margin: 10px 2vw;
-        padding: 12px 6px;
+        margin: var(--spacing-md) 2vw;
+        padding: var(--spacing-md) var(--spacing-sm);
     }
     
     label {
@@ -104,13 +104,13 @@
     /* Стили для модальных окон на мобильных */
     .modal-content {
         width: 95vw;
-        margin: 10px auto;
-        padding: 15px;
+        margin: var(--spacing-md) auto;
+        padding: var(--spacing-md);
         max-height: 90vh;
     }
 
     .modal {
-        padding: 10px;
+        padding: var(--spacing-md);
     }
 
     .action-card.small {
@@ -119,31 +119,32 @@
     }
 
     .input-group input {
-        height: 40px; /* Увеличиваем высоту полей ввода для удобства */
+        height: 44px; /* Увеличиваем высоту полей ввода для удобства */
         font-size: 16px; /* Оптимальный размер шрифта для мобильных */
+        padding: var(--spacing-md);
     }
 
     .action-info button,
     .modal-buttons button {
-        height: 44px; /* Увеличиваем высоту кнопок */
+        height: 48px; /* Увеличиваем высоту кнопок */
         font-size: 16px;
-        margin-top: 10px;
+        margin-top: var(--spacing-md);
     }
 
     /* Увеличиваем отступы между элементами */
     .action-cards-container {
-        gap: 15px;
+        gap: var(--spacing-md);
     }
 
     /* Стили для истории операций на мобильных устройствах */
     .history-item {
-        padding: 12px 8px;
+        padding: var(--spacing-md) var(--spacing-sm);
     }
 
     .history-info {
         display: flex;
         flex-direction: column;
-        gap: 4px;
+        gap: var(--spacing-xs);
     }
 
     .history-type {
@@ -167,7 +168,7 @@
     /* Стили для кнопки закрытия */
     .close-btn {
         font-size: 24px;
-        padding: 10px;
+        padding: var(--spacing-md);
     }
 }
 
@@ -178,7 +179,7 @@
     }
     
     .block { 
-        margin: 12px 2vw; 
+        margin: var(--spacing-md) 2vw; 
     }
     
     #bottom-nav {
@@ -215,7 +216,7 @@
 /* Специфичные стили для очень маленьких экранов */
 @media (max-width: 320px) {
     .modal-content {
-        padding: 10px;
+        padding: var(--spacing-md);
     }
 
     .action-card h3 {
