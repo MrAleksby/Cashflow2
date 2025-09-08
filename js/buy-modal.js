@@ -104,22 +104,7 @@ const ASSET_CATEGORIES = {
     },
     business: {
         title: 'Бизнес',
-        items: [
-            {
-                id: 'business1',
-                name: 'Автомойка',
-                price: 25000,
-                monthlyIncome: 1500,
-                description: 'Действующий бизнес'
-            },
-            {
-                id: 'business2',
-                name: 'Кофейня',
-                price: 35000,
-                monthlyIncome: 2000,
-                description: 'Популярное место'
-            }
-        ]
+        items: []
     },
     preciousmetals: {
         title: 'Драгоценные металлы',
