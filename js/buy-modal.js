@@ -706,15 +706,7 @@ const ASSET_CATEGORIES = {
                 window.cash -= downPayment;
             }
 
-            // Добавляем в активы
-            if (!window.data.asset) window.data.asset = [];
-            window.data.asset.push({
-                id: `misc-${Date.now()}`,
-                name: name,
-                type: 'misc',
-                value: price,
-                isTransferred: price === 0
-            });
+            // НЕ добавляем в активы - только в пассивы и расходы
 
             // Если есть остаток после первого взноса, добавляем в пассивы
             const remainingDebt = price - downPayment;
@@ -748,9 +740,8 @@ const ASSET_CATEGORIES = {
                 date: new Date().toISOString()
             });
 
-            // Обновляем отображение
+            // Обновляем отображение (НЕ обновляем активы)
             window.renderCash();
-            window.renderAll();
             window.renderLiability();
             window.renderExpense();
             window.renderSummary();
