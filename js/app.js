@@ -254,7 +254,9 @@ const originalRenderSummary = function() {
         finalTaxRate: taxRate,
         totalIncome: totalIncome,
         calculatedTax: tax,
-        taxPercentage: Math.round(taxRate * 100) + '%'
+        taxPercentage: Math.round(taxRate * 100) + '%',
+        windowDataExists: !!window.data,
+        gameStateExists: !!window.gameState
     });
 
     // Обновляем или создаем запись о налогах в расходах

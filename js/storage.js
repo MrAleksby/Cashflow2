@@ -77,6 +77,7 @@ window.startNewGameWithTaxRate = function(taxRate) {
     // Также обновляем window.data.taxRate для совместимости
     window.data.taxRate = taxRate / 100;
     console.log('Tax rate set in window.data:', taxRate / 100);
+    console.log('Selected tax rate:', taxRate, 'Converted to decimal:', taxRate / 100);
     
     // Тщательная очистка localStorage
     localStorage.clear();
@@ -161,8 +162,10 @@ window.loadData = function() {
         
         // Загружаем основные данные
         const savedData = localStorage.getItem('appData');
+        console.log('Loading data from localStorage:', savedData);
         if (savedData) {
             window.data = JSON.parse(savedData);
+            console.log('Parsed data taxRate:', window.data.taxRate);
             
             // Проверяем и инициализируем все необходимые массивы
             if (!Array.isArray(window.data.income)) window.data.income = [];
