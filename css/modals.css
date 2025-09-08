@@ -357,13 +357,7 @@
     line-height: 1.4;
 }
 
-.category-card .action-form {
-    display: none;
-    width: 100%;
-    margin-top: 0.8rem;
-    padding-top: 0.8rem;
-    border-top: 1px solid #444;
-}
+/* Удален дублирующийся стиль - используется основной стиль ниже */
 
 .category-card .input-group {
     display: flex;
@@ -1612,6 +1606,7 @@
 
 /* Стили для форм в карточках действий */
 .category-card .action-form {
+    display: none;
     margin-top: 15px;
     padding-top: 15px;
     border-top: 1px solid #444;

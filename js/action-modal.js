@@ -702,16 +702,17 @@ document.addEventListener('DOMContentLoaded', function() {
                     // Инициализируем все поля ввода в форме
                     const inputs = form.querySelectorAll('input');
                     inputs.forEach(input => {
-                        // Сбрасываем стили и состояние
-                        input.style.display = 'none';
-                        input.offsetHeight;
+                        // Убеждаемся, что поля ввода видны
                         input.style.display = '';
+                        input.style.visibility = 'visible';
+                        input.style.opacity = '1';
                         
                         // Устанавливаем обработчики для обновления отображения
                         input.addEventListener('input', () => {
-                            input.style.display = 'none';
-                            input.offsetHeight;
+                            // Просто обновляем отображение без скрытия
                             input.style.display = '';
+                            input.style.visibility = 'visible';
+                            input.style.opacity = '1';
                         });
                     });
                 }
