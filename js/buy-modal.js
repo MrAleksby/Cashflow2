@@ -277,7 +277,12 @@ const ASSET_CATEGORIES = {
                                     <option value="30 Видеоавтоматов">30 Видеоавтоматов</option>
                                     <option value="Сеть бутербродных">Сеть бутербродных</option>
                                     <option value="Партнер в клинике">Партнер в клинике</option>
+                                    <option value="custom">Другой (свободная форма)</option>
                                 </select>
+                            </div>
+                            <div class="input-group custom-business-name" style="display: none;">
+                                <label>Название бизнеса:</label>
+                                <input type="text" class="custom-business-input" placeholder="Введите название вашего бизнеса">
                             </div>
                             <div class="input-group">
                                 <label>Цена ($):</label>
@@ -315,6 +320,8 @@ const ASSET_CATEGORIES = {
         const cashflowInput = form.querySelector('.business-cashflow');
         const buyButton = form.querySelector('.buy-business-btn');
         const nameInput = form.querySelector('.business-name');
+        const customNameInput = form.querySelector('.custom-business-input');
+        const customNameGroup = form.querySelector('.custom-business-name');
 
         // Данные для каждого типа бизнеса (цена и доход)
         const businessData = {
@@ -362,6 +369,17 @@ const ASSET_CATEGORIES = {
 
         // Добавляем обработчик для автоматического заполнения при выборе бизнеса
         nameInput.addEventListener('change', fillBusinessData);
+        
+        // Добавляем обработчик для показа/скрытия поля ввода собственного названия
+        nameInput.addEventListener('change', function() {
+            if (this.value === 'custom') {
+                customNameGroup.style.display = 'block';
+                customNameInput.focus();
+            } else {
+                customNameGroup.style.display = 'none';
+                customNameInput.value = '';
+            }
+        });
 
         // Обработчик покупки бизнеса
         buyButton.addEventListener('click', handleBusinessPurchase);
@@ -376,11 +394,20 @@ const ASSET_CATEGORIES = {
         });
 
         function handleBusinessPurchase() {
-            const name = nameInput.value;
+            let name = nameInput.value;
             const price = parseFloat(priceInput.value) || 0;
             const downPayment = parseFloat(downPaymentInput.value) || 0;
             const liability = Math.max(0, price - downPayment); // Автоматически рассчитываем пассив
             const cashflow = parseFloat(cashflowInput.value) || 0;
+
+            // Если выбрана свободная форма, используем введенное название
+            if (name === 'custom') {
+                name = customNameInput.value.trim();
+                if (!name) {
+                    alert('Введите название вашего бизнеса!');
+                    return;
+                }
+            }
 
             // Валидация
             if (!name) {
