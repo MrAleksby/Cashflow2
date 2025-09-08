@@ -458,53 +458,69 @@
     
     /* Специальные стили для модального окна покупки акций */
     .stock-inputs {
-        padding: 0.4rem;
-        margin-bottom: 0.4rem;
-    }
-    
-    .stock-inputs .input-group {
+        padding: 0.3rem;
         margin-bottom: 0.3rem;
     }
     
+    .stock-inputs .input-group {
+        margin-bottom: 0.2rem;
+    }
+    
     .stock-inputs label {
-        font-size: 0.8rem;
-        margin-bottom: 0.1rem;
+        font-size: 0.75rem;
+        margin-bottom: 0.05rem;
     }
     
     .stock-inputs input {
-        padding: 0.3rem;
-        font-size: 0.85rem;
+        padding: 0.25rem;
+        font-size: 0.8rem;
+        height: 32px;
     }
     
     .quick-price-buttons,
     .quick-sell-price-buttons {
-        gap: 2px;
-        margin-bottom: 4px;
+        gap: 1px;
+        margin-bottom: 3px;
     }
     
     .quick-price-btn,
     .quick-sell-price-btn {
-        padding: 3px 4px;
-        font-size: 10px;
-        min-width: 25px;
-        max-width: 40px;
+        padding: 2px 3px;
+        font-size: 9px;
+        min-width: 20px;
+        max-width: 35px;
+        height: 24px;
     }
     
     .custom-price-input input {
-        padding: 6px;
-        font-size: 13px;
+        padding: 4px;
+        font-size: 12px;
+        height: 28px;
     }
     
     .buy-stock-btn {
-        padding: 0.5rem;
-        margin-top: 0.4rem;
-        font-size: 0.9rem;
+        padding: 0.4rem;
+        margin-top: 0.3rem;
+        font-size: 0.85rem;
+        height: 36px;
     }
     
     .total-price {
-        margin-top: 0.4rem;
-        padding-top: 0.3rem;
-        font-size: 0.9rem;
+        margin-top: 0.3rem;
+        padding-top: 0.2rem;
+        font-size: 0.85rem;
+    }
+    
+    /* Дополнительная оптимизация для модального окна */
+    .modal-content {
+        padding: 0.5rem;
+        max-height: 95vh;
+        overflow-y: auto;
+    }
+    
+    .modal-title {
+        font-size: 1.1em;
+        margin-bottom: 0.3rem;
     }
 
     #action-modal .modal-content h2,
@@ -2012,5 +2028,73 @@
 
     .loan-amount[type=number] {
         -moz-appearance: textfield;
+    }
+}
+
+/* Экстремальная оптимизация для очень маленьких экранов */
+@media (max-width: 360px) {
+    .modal-content {
+        padding: 0.3rem !important;
+        max-height: 98vh !important;
+    }
+    
+    .modal-title {
+        font-size: 1em !important;
+        margin-bottom: 0.2rem !important;
+    }
+    
+    /* Экстремальная оптимизация для покупки акций */
+    .stock-inputs {
+        padding: 0.2rem !important;
+        margin-bottom: 0.2rem !important;
+    }
+    
+    .stock-inputs .input-group {
+        margin-bottom: 0.1rem !important;
+    }
+    
+    .stock-inputs label {
+        font-size: 0.7rem !important;
+        margin-bottom: 0.02rem !important;
+    }
+    
+    .stock-inputs input {
+        padding: 0.2rem !important;
+        font-size: 0.75rem !important;
+        height: 28px !important;
+    }
+    
+    .quick-price-buttons,
+    .quick-sell-price-buttons {
+        gap: 0.5px !important;
+        margin-bottom: 2px !important;
+    }
+    
+    .quick-price-btn,
+    .quick-sell-price-btn {
+        padding: 1px 2px !important;
+        font-size: 8px !important;
+        min-width: 18px !important;
+        max-width: 30px !important;
+        height: 20px !important;
+    }
+    
+    .custom-price-input input {
+        padding: 3px !important;
+        font-size: 11px !important;
+        height: 24px !important;
+    }
+    
+    .buy-stock-btn {
+        padding: 0.3rem !important;
+        margin-top: 0.2rem !important;
+        font-size: 0.8rem !important;
+        height: 32px !important;
+    }
+    
+    .total-price {
+        margin-top: 0.2rem !important;
+        padding-top: 0.1rem !important;
+        font-size: 0.8rem !important;
     }
 } 
