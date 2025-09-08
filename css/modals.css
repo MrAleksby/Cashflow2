@@ -360,37 +360,37 @@
 .category-card .action-form {
     display: none;
     width: 100%;
-    margin-top: 15px;
-    padding-top: 15px;
+    margin-top: 0.6rem;
+    padding-top: 0.6rem;
     border-top: 1px solid #444;
 }
 
 .category-card .input-group {
     display: flex;
     flex-direction: column;
-    gap: 10px;
-    margin-bottom: 15px;
+    gap: 0.5rem;
+    margin-bottom: 0.6rem;
 }
 
 .category-card input {
     width: 100%;
-    padding: 12px;
+    padding: 0.6rem;
     background: #222;
     border: 1px solid #444;
     border-radius: 8px;
     color: white;
-    font-size: 16px;
+    font-size: 0.9rem;
     -webkit-appearance: none;
 }
 
 .category-card button {
     width: 100%;
-    padding: 12px;
+    padding: 0.6rem;
     background: #4CAF50;
     color: white;
     border: none;
     border-radius: 8px;
-    font-size: 1.1em;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: background-color 0.2s ease;
 }
@@ -637,6 +637,27 @@
         font-size: 0.85rem;
         height: 34px;
         padding: 0.4rem;
+    }
+    
+    /* Специальные стили для форм действий */
+    .category-card .action-form {
+        margin-top: 0.4rem;
+        padding-top: 0.4rem;
+    }
+    
+    .category-card .input-group {
+        gap: 0.3rem;
+        margin-bottom: 0.4rem;
+    }
+    
+    .category-card input {
+        padding: 0.4rem;
+        font-size: 0.85rem;
+    }
+    
+    .category-card button {
+        padding: 0.4rem;
+        font-size: 0.85rem;
     }
     
     /* Дополнительная оптимизация для модального окна */
@@ -1633,9 +1654,9 @@
     background: #4CAF50;
     color: white;
     border: none;
-    padding: 10px;
+    padding: 0.6rem;
     border-radius: 6px;
-    font-size: 1em;
+    font-size: 0.9rem;
     cursor: pointer;
     transition: all 0.2s ease;
     -webkit-tap-highlight-color: transparent;
@@ -2386,5 +2407,26 @@
     
     .asset-type-btn h3 {
         font-size: 0.8em !important;
+    }
+    
+    /* Экстремальная оптимизация для форм действий */
+    .category-card .action-form {
+        margin-top: 0.2rem !important;
+        padding-top: 0.2rem !important;
+    }
+    
+    .category-card .input-group {
+        gap: 0.2rem !important;
+        margin-bottom: 0.2rem !important;
+    }
+    
+    .category-card input {
+        padding: 0.3rem !important;
+        font-size: 0.8rem !important;
+    }
+    
+    .category-card button {
+        padding: 0.3rem !important;
+        font-size: 0.8rem !important;
     }
 } 
