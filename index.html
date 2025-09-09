@@ -53,7 +53,7 @@
                         <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px; padding: 4px 0;">
                             <span style="color: #7B1FA2; font-weight: 500;">Прошло месяцев:</span><span id="months-counter" style="color: #9C27B0; font-weight: 600;">0</span>
                         </div>
-                        <button id="payday-btn" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #9C27B0, #7B1FA2); color: white; border: none; border-radius: 12px; font-size: 1.3em; font-weight: 700; cursor: pointer; box-shadow: 0 6px 16px rgba(156, 39, 176, 0.4), 0 2px 4px rgba(63, 81, 181, 0.2); transition: all 0.3s ease; position: relative; overflow: hidden; text-transform: uppercase; letter-spacing: 1px;">PayDay</button>
+                        <button id="payday-btn" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #FFD700, #FFA500); color: #333; border: 2px solid #FFD700; border-radius: 12px; font-size: 1.3em; font-weight: 700; cursor: pointer; box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5), 0 2px 4px rgba(255, 165, 0, 0.3); transition: all 0.3s ease; position: relative; overflow: hidden; text-transform: uppercase; letter-spacing: 1px;">PayDay</button>
                     </div>
                 </div>
             </div>
@@ -230,21 +230,22 @@
         }
 
         #payday-btn:hover {
-            background: linear-gradient(135deg, #7B1FA2, #6A1B9A) !important;
+            background: linear-gradient(135deg, #FFA500, #FF8C00) !important;
             transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 20px rgba(156, 39, 176, 0.5), 0 4px 8px rgba(63, 81, 181, 0.3) !important;
+            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6), 0 4px 8px rgba(255, 165, 0, 0.4) !important;
+            border-color: #FF8C00 !important;
         }
 
         #payday-btn:active {
             transform: translateY(-1px) scale(0.98);
-            box-shadow: 0 4px 8px rgba(156, 39, 176, 0.4) !important;
+            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4) !important;
         }
 
         /* Анимация пульсации для привлечения внимания */
         @keyframes paydayPulse {
-            0% { box-shadow: 0 6px 16px rgba(156, 39, 176, 0.4), 0 2px 4px rgba(63, 81, 181, 0.2); }
-            50% { box-shadow: 0 6px 20px rgba(156, 39, 176, 0.6), 0 2px 6px rgba(63, 81, 181, 0.4); }
-            100% { box-shadow: 0 6px 16px rgba(156, 39, 176, 0.4), 0 2px 4px rgba(63, 81, 181, 0.2); }
+            0% { box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5), 0 2px 4px rgba(255, 165, 0, 0.3); }
+            50% { box-shadow: 0 8px 25px rgba(255, 215, 0, 0.7), 0 4px 8px rgba(255, 165, 0, 0.5); }
+            100% { box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5), 0 2px 4px rgba(255, 165, 0, 0.3); }
         }
 
         #payday-btn {

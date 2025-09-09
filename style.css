@@ -217,14 +217,14 @@
 .new-game-btn {
     background: linear-gradient(135deg, #9C27B0, #7B1FA2);
     color: white;
-    border: 2px solid rgba(156, 39, 176, 0.3);
+    border: 2px solid var(--gold-color);
     padding: 10px 20px;
     border-radius: 25px;
     cursor: pointer;
     font-weight: 700;
     font-size: 15px;
     transition: all 0.3s ease;
-    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3), 0 2px 4px rgba(63, 81, 181, 0.2);
+    box-shadow: var(--gold-shadow), 0 4px 12px rgba(156, 39, 176, 0.3);
     position: relative;
     overflow: hidden;
     text-transform: uppercase;
@@ -249,8 +249,8 @@
 .new-game-btn:hover {
     background: linear-gradient(135deg, #7B1FA2, #6A1B9A);
     transform: translateY(-2px) scale(1.05);
-    box-shadow: 0 6px 16px rgba(156, 39, 176, 0.4), 0 4px 8px rgba(63, 81, 181, 0.3);
-    border-color: rgba(156, 39, 176, 0.5);
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4), 0 6px 16px rgba(156, 39, 176, 0.4);
+    border-color: var(--gold-dark);
 }
 
 .new-game-btn:active {

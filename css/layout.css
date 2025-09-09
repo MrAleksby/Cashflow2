@@ -21,27 +21,46 @@
     font-size: 1.1em;
     font-weight: bold;
     color: var(--primary-dark);
-    background: rgba(156, 39, 176, 0.1);
-    border: 2px solid var(--primary-color);
+    background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(255, 215, 0, 0.05));
+    border: 2px solid var(--gold-color);
     border-radius: var(--border-radius-small);
     padding: var(--spacing-sm) var(--spacing-md);
-    box-shadow: var(--shadow-sm);
+    box-shadow: var(--gold-shadow), var(--shadow-sm);
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
     height: 40px;
     min-width: 120px;
     transition: all var(--transition-normal);
+    position: relative;
+    overflow: hidden;
+}
+
+#top-cash-value::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, transparent, rgba(255, 215, 0, 0.2), transparent);
+    transition: left 0.8s ease;
+}
+
+#top-cash-value:hover::before {
+    left: 100%;
 }
 
 #top-cash-value:hover {
-    box-shadow: var(--shadow-md);
+    box-shadow: var(--gold-shadow), var(--shadow-md);
     transform: translateY(-1px);
+    border-color: var(--gold-dark);
 }
 
 #top-cash-value i {
     font-size: 1em;
-    color: var(--primary-color);
+    color: var(--gold-color);
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
 }
 
 #top-cash-amount {

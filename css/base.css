@@ -13,6 +13,13 @@
     --danger-color: #f44336;
     --info-color: #3F51B5;
     
+    /* Золотые акценты для премиум-дизайна */
+    --gold-color: #FFD700;
+    --gold-dark: #FFA500;
+    --gold-light: #FFF8DC;
+    --gold-gradient: linear-gradient(135deg, #FFD700, #FFA500);
+    --gold-shadow: 0 4px 12px rgba(255, 215, 0, 0.3);
+    
     /* Нейтральные цвета */
     --text-color: #333;
     --text-color-light: #666;

@@ -54,9 +54,9 @@
     line-height: 36px;
     text-align: center;
     font-size: 18px;
-    color: #9C27B0;
-    background: linear-gradient(135deg, #f3e5f5, #e1bee7);
-    border: 2px solid rgba(156, 39, 176, 0.3);
+    color: var(--gold-color);
+    background: linear-gradient(135deg, rgba(255, 215, 0, 0.1), rgba(255, 165, 0, 0.05));
+    border: 2px solid var(--gold-color);
     border-radius: 50%;
     padding: 0;
     cursor: pointer;
@@ -65,15 +65,16 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    box-shadow: 0 4px 8px rgba(156, 39, 176, 0.2);
+    box-shadow: var(--gold-shadow);
+    text-shadow: 0 0 8px rgba(255, 215, 0, 0.5);
 }
 
 .close-btn:hover {
-    background: linear-gradient(135deg, #9C27B0, #7B1FA2);
-    color: white;
+    background: var(--gold-gradient);
+    color: #333;
     transform: scale(1.1) rotate(90deg);
-    box-shadow: 0 6px 12px rgba(156, 39, 176, 0.3);
-    border-color: #7B1FA2;
+    box-shadow: 0 6px 15px rgba(255, 215, 0, 0.4);
+    border-color: var(--gold-dark);
 }
 
 .close-btn:active {

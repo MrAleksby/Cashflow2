@@ -63,14 +63,14 @@
 /* Стили для кнопки Новая игра в темной теме */
 .new-game-btn {
     background: linear-gradient(135deg, #7B1FA2, #6A1B9A) !important;
-    border-color: rgba(156, 39, 176, 0.5) !important;
-    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.4), 0 2px 4px rgba(63, 81, 181, 0.3) !important;
+    border-color: var(--gold-color) !important;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3), 0 4px 12px rgba(156, 39, 176, 0.4) !important;
 }
 
 .new-game-btn:hover {
     background: linear-gradient(135deg, #6A1B9A, #4A148C) !important;
-    box-shadow: 0 6px 16px rgba(156, 39, 176, 0.5), 0 4px 8px rgba(63, 81, 181, 0.4) !important;
-    border-color: rgba(156, 39, 176, 0.7) !important;
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4), 0 6px 16px rgba(156, 39, 176, 0.5) !important;
+    border-color: var(--gold-color) !important;
 }
     
     .modal-content {
