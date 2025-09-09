@@ -232,32 +232,35 @@
 /* Мобильная оптимизация для кнопки Новая игра */
 @media (max-width: 480px) {
     .new-game-btn {
-        background: linear-gradient(135deg, #9C27B0, #7B1FA2) !important;
-        color: white !important;
-        border: 2px solid rgba(156, 39, 176, 0.3) !important;
-        padding: 12px 18px !important;
-        font-size: 14px !important;
-        border-radius: 20px !important;
-        min-height: 44px !important;
-        box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3), 0 2px 4px rgba(63, 81, 181, 0.2) !important;
+        padding: 12px !important;
+        font-size: 0 !important; /* Убираем текст */
+        border-radius: 50% !important; /* Делаем круглой */
+        min-height: 48px !important;
+        min-width: 48px !important;
+        width: 48px !important;
+        height: 48px !important;
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
     }
     
-    .new-game-btn:hover {
-        background: linear-gradient(135deg, #7B1FA2, #6A1B9A) !important;
-        transform: translateY(-2px) scale(1.05) !important;
-        box-shadow: 0 6px 16px rgba(156, 39, 176, 0.4), 0 4px 8px rgba(63, 81, 181, 0.3) !important;
-        border-color: rgba(156, 39, 176, 0.5) !important;
+    .new-game-btn::after {
+        content: "🔄" !important; /* Добавляем иконку обновления */
+        font-size: 20px !important;
+        line-height: 1 !important;
     }
 }
 
 @media (max-width: 320px) {
     .new-game-btn {
-        background: linear-gradient(135deg, #9C27B0, #7B1FA2) !important;
-        color: white !important;
-        border: 2px solid rgba(156, 39, 176, 0.3) !important;
-        padding: 10px 16px !important;
-        font-size: 13px !important;
-        letter-spacing: 0.3px !important;
-        box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3), 0 2px 4px rgba(63, 81, 181, 0.2) !important;
+        padding: 10px !important;
+        min-height: 44px !important;
+        min-width: 44px !important;
+        width: 44px !important;
+        height: 44px !important;
+    }
+    
+    .new-game-btn::after {
+        font-size: 18px !important;
     }
 } 
