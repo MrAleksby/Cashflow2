@@ -103,26 +103,6 @@
     font-size: 1em;
 }
 
-.modal-button {
-    width: 100%;
-    margin-top: 16px;
-    font-size: 1.1em;
-    padding: 10px 0;
-    border-radius: 8px;
-    background: #1976d2;
-    color: #fff;
-    border: none;
-    cursor: pointer;
-}
-
-.modal-button.gold {
-    background: linear-gradient(90deg,#FFD700,#B8860B);
-    font-weight: bold;
-}
-
-.modal-button.sell {
-    background: #ffb300;
-}
 
 /* Specific modal styles */
 #bankrupt-modal .modal-content {
@@ -357,7 +337,6 @@
     line-height: 1.4;
 }
 
-/* Удален дублирующийся стиль - используется основной стиль ниже */
 
 .category-card .input-group {
     display: flex;
@@ -1131,36 +1110,6 @@
     background: #fff;
 }
 
-.stock-type-selector {
-    padding: 20px;
-}
-
-.stock-type-selector h3 {
-    margin-bottom: 20px;
-    text-align: center;
-    color: #333;
-}
-
-/* Специальные стили для типов акций */
-.stock-type-selector .type-group:first-child {
-    background: #fff3e0; /* Оранжевый фон для спекулятивных акций */
-}
-
-.stock-type-selector .type-group:last-child {
-    background: #e8f5e9; /* Зеленый фон для дивидендных акций */
-}
-
-.stock-type-selector .type-btn {
-    border-left: 4px solid transparent;
-}
-
-.stock-type-selector .type-group:first-child .type-btn {
-    border-left-color: #ff9800; /* Оранжевая полоса для спекулятивных */
-}
-
-.stock-type-selector .type-group:last-child .type-btn {
-    border-left-color: #4CAF50; /* Зеленая полоса для дивидендных */
-}
 
 .business-inputs {
     background: #fff;
