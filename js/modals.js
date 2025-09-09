@@ -8,23 +8,16 @@
     }
   };
 
-  // Общая функция для закрытия любого модального окна
-  window.closeModal = function(modalId) {
-    const modal = document.getElementById(modalId);
-    if (modal) {
-      modal.classList.remove('active');
-    }
-  };
 
-  // Закрытие модального окна при клике вне его области
-  document.addEventListener('click', function(event) {
-    if (event.target.classList.contains('modal') && event.target.classList.contains('active')) {
-      event.target.classList.remove('active');
-    }
-  });
-
-  // Инициализация кнопок закрытия
+  // Инициализация обработчиков модальных окон
   document.addEventListener('DOMContentLoaded', function() {
+    // Закрытие модального окна при клике вне его области
+    document.addEventListener('click', function(event) {
+      if (event.target.classList.contains('modal') && event.target.classList.contains('active')) {
+        event.target.classList.remove('active');
+      }
+    });
+
     // Добавляем обработчики для всех кнопок закрытия
     document.querySelectorAll('.close-btn').forEach(function(btn) {
       btn.addEventListener('click', function() {
@@ -59,9 +52,5 @@
       });
     }
 
-    // Модальное окно банкротства - может быть вызвано программно
-    window.showBankruptModal = function() {
-      openModal('bankrupt-modal');
-    };
   });
 })(); 
