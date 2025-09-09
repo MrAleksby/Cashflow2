@@ -1,3 +1,27 @@
+// Вспомогательная функция для инициализации пустых данных
+function initializeEmptyData(taxRate = 0.25) {
+    return {
+        income: [],
+        expense: [],
+        asset: [],
+        liability: [],
+        children: [],
+        history: [],
+        monthsCount: 0,
+        taxRate: taxRate
+    };
+}
+
+// Вспомогательная функция для обновления всех отображений
+function updateAllDisplays() {
+    if (typeof window.renderAll === 'function') window.renderAll();
+    if (typeof window.renderIncome === 'function') window.renderIncome();
+    if (typeof window.renderExpense === 'function') window.renderExpense();
+    if (typeof window.renderCash === 'function') window.renderCash();
+    if (typeof window.renderSummary === 'function') window.renderSummary();
+    if (typeof window.renderHistory === 'function') window.renderHistory();
+}
+
 // Функция сохранения всех данных в localStorage
 window.saveData = function() {
     try {
@@ -69,16 +93,7 @@ window.startNewGameWithTaxRate = function(taxRate) {
     }
     
     // Полностью очищаем все данные
-    window.data = {
-        income: [],
-        expense: [],
-        asset: [],
-        liability: [],
-        children: [],
-        history: [],
-        monthsCount: 0,
-        taxRate: taxRate / 100 // Сохраняем как десятичную дробь (0.25 для 25%)
-    };
+    window.data = initializeEmptyData(taxRate / 100);
     window.cash = 0;
     
     // Устанавливаем налоговую ставку в GameState
@@ -93,12 +108,6 @@ window.startNewGameWithTaxRate = function(taxRate) {
     window.data.taxRate = taxRate / 100;
     console.log('Tax rate set in window.data:', taxRate / 100);
     console.log('Selected tax rate:', taxRate, 'Converted to decimal:', taxRate / 100);
-    
-    // Проверяем, что taxRate корректный
-    if (typeof taxRate !== 'number' || isNaN(taxRate)) {
-        console.error('Invalid tax rate:', taxRate);
-        return;
-    }
     
     // Тщательная очистка localStorage
     localStorage.clear();
@@ -140,16 +149,7 @@ window.loadData = function() {
                 if (typeof window.data.taxRate === 'undefined') window.data.taxRate = 0.25; // 25% по умолчанию
             } else {
                 // Если данных нет, инициализируем пустые данные
-                window.data = {
-                    income: [],
-                    expense: [],
-                    asset: [],
-                    liability: [],
-                    children: [],
-                    history: [],
-                    monthsCount: 0,
-                    taxRate: 0.25 // Устанавливаем по умолчанию 25%
-                };
+                window.data = initializeEmptyData(0.25);
             }
             
             const savedCash = localStorage.getItem('cash');
@@ -171,12 +171,7 @@ window.loadData = function() {
             window.history.replaceState({}, document.title, window.location.pathname);
             
             // Обновляем отображение
-            if (typeof window.renderAll === 'function') window.renderAll();
-            if (typeof window.renderIncome === 'function') window.renderIncome();
-            if (typeof window.renderExpense === 'function') window.renderExpense();
-            if (typeof window.renderCash === 'function') window.renderCash();
-            if (typeof window.renderSummary === 'function') window.renderSummary();
-            if (typeof window.renderHistory === 'function') window.renderHistory();
+            updateAllDisplays();
             
             return;
         }
@@ -199,16 +194,7 @@ window.loadData = function() {
             if (typeof window.data.taxRate === 'undefined') window.data.taxRate = 0.25; // 25% по умолчанию
         } else {
             // Инициализируем пустые данные если ничего не сохранено
-            window.data = {
-                income: [],
-                expense: [],
-                asset: [],
-                liability: [],
-                children: [],
-                history: [],
-                monthsCount: 0,
-                taxRate: 0.25 // 25% по умолчанию
-            };
+            window.data = initializeEmptyData(0.25);
         }
 
         // Загружаем баланс
@@ -222,27 +208,13 @@ window.loadData = function() {
         }
 
         // Обновляем все отображения
-            if (typeof window.renderAll === 'function') window.renderAll();
-            if (typeof window.renderIncome === 'function') window.renderIncome();
-            if (typeof window.renderExpense === 'function') window.renderExpense();
-            if (typeof window.renderCash === 'function') window.renderCash();
-            if (typeof window.renderSummary === 'function') window.renderSummary();
-        if (typeof window.renderHistory === 'function') window.renderHistory();
+        updateAllDisplays();
         
         console.log('Данные успешно загружены');
     } catch (error) {
         console.error('Ошибка при загрузке данных:', error);
         // В случае ошибки инициализируем пустые данные
-        window.data = {
-            income: [],
-            expense: [],
-            asset: [],
-            liability: [],
-            children: [],
-            history: [],
-            monthsCount: 0,
-            taxRate: 0.25 // Устанавливаем по умолчанию 25%
-        };
+        window.data = initializeEmptyData(0.25);
         window.cash = 0;
         
         // Принудительно очищаем контейнер истории
@@ -252,12 +224,7 @@ window.loadData = function() {
         }
         
         // Обновляем отображение
-        if (typeof window.renderAll === 'function') window.renderAll();
-        if (typeof window.renderIncome === 'function') window.renderIncome();
-        if (typeof window.renderExpense === 'function') window.renderExpense();
-        if (typeof window.renderCash === 'function') window.renderCash();
-        if (typeof window.renderSummary === 'function') window.renderSummary();
-        if (typeof window.renderHistory === 'function') window.renderHistory();
+        updateAllDisplays();
     }
 };
 
