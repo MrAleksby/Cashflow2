@@ -893,18 +893,21 @@
     width: 100%;
     padding: 0.6rem;
     margin-top: 0.6rem;
-    background: #9C27B0;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
     color: white;
     border: none;
-    border-radius: 4px;
+    border-radius: 8px;
     font-size: 0.95rem;
-    font-weight: 500;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
 }
 
 .buy-stock-btn:hover {
-    background: #7B1FA2;
+    background: linear-gradient(135deg, #45a049, #388e3c);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
 }
 
 .buy-stock-btn:disabled {
@@ -1067,7 +1070,7 @@
     padding: 0;
     border: none;
     border-radius: 8px;
-    background: #9C27B0;
+    background: linear-gradient(135deg, #4CAF50, #45a049);
     color: white;
     font-size: 0.95rem;
     font-weight: bold;
@@ -1079,6 +1082,14 @@
     position: relative;
     overflow: visible;
     line-height: 1;
+    box-shadow: 0 2px 8px rgba(76, 175, 80, 0.3);
+    transition: all 0.3s ease;
+}
+
+.buy-business-btn:hover {
+    background: linear-gradient(135deg, #45a049, #388e3c);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
 }
 
 .buy-business-btn span {
