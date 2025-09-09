@@ -1286,7 +1286,7 @@ const ASSET_CATEGORIES = {
                     const itemId = card.dataset.itemId;
                     const item = ASSET_CATEGORIES.realestate.items.find(i => i.id === itemId);
                     if (item) {
-                        showPropertyDetails(item, 'realestate');
+                        showAssetDetails(item, 'realestate');
                     }
                 });
             }
@@ -1555,119 +1555,6 @@ const ASSET_CATEGORIES = {
         }
     }
 
-    // Показ деталей выбранной недвижимости и процесс покупки
-    function showPropertyDetails(item, category) {
-        const content = modal.querySelector('.asset-categories');
-        const propertyInputs = content.querySelector(`[data-item-id="${item.id}"] .property-inputs`);
-        if (!propertyInputs) return;
-
-        // Получаем введенные значения
-        const price = parseFloat(propertyInputs.querySelector('.property-price').value) || 0;
-        const downPayment = parseFloat(propertyInputs.querySelector('.property-down-payment').value) || 0;
-        const mortgage = Math.max(0, price - downPayment); // Автоматически рассчитываем ипотеку
-        const cashflow = parseFloat(propertyInputs.querySelector('.property-cashflow').value) || 0;
-
-        // Получаем дополнительные значения в зависимости от типа
-        let additionalInfo = '';
-        if (item.type === 'land') {
-            const acres = parseFloat(propertyInputs.querySelector('.property-acres').value) || 0;
-            if (acres <= 0) {
-                alert('Укажите количество акров!');
-                return;
-            }
-            additionalInfo = `${acres} акров`;
-        }
-
-        // Проверяем введены ли все данные
-        if (price < 0) {
-            alert('Цена не может быть отрицательной!');
-            return;
-        }
-        if (downPayment < 0) {
-            alert('Первый взнос не может быть отрицательным!');
-            return;
-        }
-        if (downPayment > price) {
-            alert('Первый взнос не может быть больше цены недвижимости!');
-            return;
-        }
-
-        // Проверяем достаточно ли денег для первого взноса
-        if (downPayment > 0 && downPayment > window.cash) {
-            alert('Недостаточно средств для первого взноса!');
-            return;
-        }
-
-                    // Убираем подтверждение для быстрого UX
-
-        // Списываем деньги (только если есть первый взнос)
-        if (downPayment > 0) {
-            window.cash -= downPayment;
-        }
-
-        // Формируем название с дополнительной информацией
-        const fullName = additionalInfo ? `${item.name} (${additionalInfo})` : item.name;
-
-        // Добавляем актив
-        if (!window.data.asset) window.data.asset = [];
-        window.data.asset.push({
-            id: `${item.id}-${Date.now()}`,
-            name: fullName,
-            type: 'realestate',
-            value: price,
-            isTransferred: price === 0
-        });
-
-        // Добавляем ипотеку в пассивы
-        if (mortgage > 0) {
-            if (!window.data.liability) window.data.liability = [];
-            window.data.liability.push({
-                id: `mortgage-${item.id}-${Date.now()}`,
-                name: `Ипотека: ${fullName}`,
-                type: 'mortgage',
-                value: mortgage
-            });
-        }
-
-        // Добавляем денежный поток
-        if (!window.data.income) window.data.income = [];
-        window.data.income.push({
-            id: `${item.id}-income-${Date.now()}`,
-            name: `Денежный поток: ${fullName}`,
-            type: 'passive',
-            value: cashflow,
-            source: fullName
-        });
-
-        // Добавляем запись в историю
-        if (!window.data.history) window.data.history = [];
-        window.data.history.push({
-            type: 'buy',
-            assetName: fullName,
-            amount: downPayment,
-            date: new Date().toISOString()
-        });
-
-        // Обновляем отображение
-        window.renderCash();
-        window.renderAll();
-        window.renderLiability();
-        window.renderIncome();
-        window.renderSummary();
-        window.renderHistory();
-        autoSave();
-
-        // Очищаем поля ввода
-        propertyInputs.querySelector('.property-price').value = '';
-        propertyInputs.querySelector('.property-down-payment').value = '';
-        propertyInputs.querySelector('.property-cashflow').value = '';
-        if (item.type === 'land') {
-            propertyInputs.querySelector('.property-acres').value = '';
-        }
-
-        // Закрываем модальное окно
-        modal.classList.remove('active');
-    }
 
     // Возврат к выбору категорий
     function showCategories() {
@@ -1789,27 +1676,6 @@ const ASSET_CATEGORIES = {
         initializeBuyButtons();
     };
 
-    // Функция для настройки числового поля ввода
-    function setupNumericInput(input) {
-        if (!input) return;
-        
-        // Устанавливаем тип клавиатуры для числовых полей
-        input.setAttribute('inputmode', 'numeric');
-        input.setAttribute('pattern', '[0-9]*');
-        
-        // Добавляем обработчик события input для мгновенного обновления значения
-        input.addEventListener('input', function(e) {
-            // Удаляем все нецифровые символы
-            let value = e.target.value.replace(/[^0-9]/g, '');
-            
-            // Обновляем значение поля
-            e.target.value = value;
-            
-            // Принудительно обновляем отображение
-            input.blur();
-            input.focus();
-        });
-    }
 
     // Функция для обновления отображения ипотеки
     function updateMortgageDisplay() {
@@ -1841,8 +1707,7 @@ const ASSET_CATEGORIES = {
     }
 
     // Инициализируем обработчики при загрузке
-    const numericInputs = modal.querySelectorAll('input[type="number"]');
-    numericInputs.forEach(setupNumericInput);
+    // setupNumericInput удален - используется общая функция из других модулей
     
     // Обновляем отображение ипотеки при изменении контента модального окна
     const observer = new MutationObserver(() => {
