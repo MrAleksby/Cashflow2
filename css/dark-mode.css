@@ -43,12 +43,21 @@
     #summary-block h2, 
     #summary-block span, 
     #summary-block div {
-        color: #d0f8ce !important;
+        color: #e9ecef !important;
     }
     
     #summary-block {
-        background: #263238 !important;
-        border-color: #9C27B0 !important;
+        background: linear-gradient(135deg, #2d2d2d, #3a3a3a) !important;
+        border-color: rgba(156, 39, 176, 0.4) !important;
+        box-shadow: 0 4px 12px rgba(156, 39, 176, 0.2) !important;
+    }
+
+    #summary-block span[style*="color: #7B1FA2"] {
+        color: #BA68C8 !important;
+    }
+
+    #summary-block span[style*="color: #9C27B0"] {
+        color: #E1BEE7 !important;
     }
     
     .modal-content {

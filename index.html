@@ -26,28 +26,28 @@
                 <button id="main-action-btn" class="action-btn action">Действие</button>
                 </div>
             
-            <div class="block" id="summary-block" style="margin-top:32px; background:#e8f5e9; border:1px solid #b2dfdb;">
-                <div id="summary-list" style="margin-top:10px; font-size:1.2em; display:flex; flex-direction:column; gap:6px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span>Зарплата</span><span id="salary-value">0</span>
+            <div class="block" id="summary-block" style="margin-top:32px; background: linear-gradient(135deg, #f3e5f5, #e8eaf6); border: 2px solid rgba(156, 39, 176, 0.3); box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1);">
+                <div id="summary-list" style="margin-top:10px; font-size:1.2em; display:flex; flex-direction:column; gap:8px;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding: 4px 0;">
+                        <span style="color: #7B1FA2; font-weight: 500;">Зарплата</span><span id="salary-value" style="color: #9C27B0; font-weight: 600;">0</span>
                     </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span>Пассивный доход</span><span id="passive-value">0</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding: 4px 0;">
+                        <span style="color: #7B1FA2; font-weight: 500;">Пассивный доход</span><span id="passive-value" style="color: #9C27B0; font-weight: 600;">0</span>
                     </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span>Общий доход</span><span id="income-sum">0</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding: 4px 0;">
+                        <span style="color: #7B1FA2; font-weight: 500;">Общий доход</span><span id="income-sum" style="color: #9C27B0; font-weight: 600;">0</span>
                     </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center;">
-                        <span>Общий расход</span><span id="expense-sum">0</span>
+                    <div style="display:flex; justify-content:space-between; align-items:center; padding: 4px 0;">
+                        <span style="color: #7B1FA2; font-weight: 500;">Общий расход</span><span id="expense-sum" style="color: #9C27B0; font-weight: 600;">0</span>
                     </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; font-weight:bold; color:#388e3c;">
+                    <div style="display:flex; justify-content:space-between; align-items:center; font-weight:bold; color: white; background: linear-gradient(135deg, #9C27B0, #7B1FA2); padding: 8px 12px; border-radius: 8px; margin: 4px 0;">
                         <span>Поток</span><span id="cashflow">0</span>
                     </div>
-                    <div style="border-top: 1px solid #b2dfdb; margin-top: 10px; padding-top: 10px;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 10px;">
-                            <span>Прошло месяцев:</span><span id="months-counter">0</span>
+                    <div style="border-top: 2px solid rgba(156, 39, 176, 0.3); margin-top: 12px; padding-top: 12px;">
+                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px; padding: 4px 0;">
+                            <span style="color: #7B1FA2; font-weight: 500;">Прошло месяцев:</span><span id="months-counter" style="color: #9C27B0; font-weight: 600;">0</span>
                         </div>
-                        <button id="payday-btn" style="width: 100%; padding: 10px; background: #4CAF50; color: white; border: none; border-radius: 4px; font-size: 1.1em; cursor: pointer;">PayDay</button>
+                        <button id="payday-btn" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #9C27B0, #7B1FA2); color: white; border: none; border-radius: 12px; font-size: 1.3em; font-weight: 700; cursor: pointer; box-shadow: 0 6px 16px rgba(156, 39, 176, 0.4), 0 2px 4px rgba(63, 81, 181, 0.2); transition: all 0.3s ease; position: relative; overflow: hidden; text-transform: uppercase; letter-spacing: 1px;">PayDay</button>
                     </div>
                 </div>
             </div>
@@ -207,6 +207,58 @@
             padding-bottom: calc(65px + env(safe-area-inset-bottom, 20px));
         }
 
+        /* Стили для кнопки PayDay */
+        #payday-btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
+            transition: left 0.5s ease;
+        }
+
+        #payday-btn:hover::before {
+            left: 100%;
+        }
+
+        #payday-btn:hover {
+            background: linear-gradient(135deg, #7B1FA2, #6A1B9A) !important;
+            transform: translateY(-3px) scale(1.02);
+            box-shadow: 0 8px 20px rgba(156, 39, 176, 0.5), 0 4px 8px rgba(63, 81, 181, 0.3) !important;
+        }
+
+        #payday-btn:active {
+            transform: translateY(-1px) scale(0.98);
+            box-shadow: 0 4px 8px rgba(156, 39, 176, 0.4) !important;
+        }
+
+        /* Анимация пульсации для привлечения внимания */
+        @keyframes paydayPulse {
+            0% { box-shadow: 0 6px 16px rgba(156, 39, 176, 0.4), 0 2px 4px rgba(63, 81, 181, 0.2); }
+            50% { box-shadow: 0 6px 20px rgba(156, 39, 176, 0.6), 0 2px 6px rgba(63, 81, 181, 0.4); }
+            100% { box-shadow: 0 6px 16px rgba(156, 39, 176, 0.4), 0 2px 4px rgba(63, 81, 181, 0.2); }
+        }
+
+        #payday-btn {
+            animation: paydayPulse 2s ease-in-out infinite;
+        }
+
+        #payday-btn:hover {
+            animation: none;
+        }
+
+        /* Мобильная оптимизация для кнопки PayDay */
+        @media (max-width: 480px) {
+            #payday-btn {
+                padding: 16px !important;
+                font-size: 1.4em !important;
+                border-radius: 14px !important;
+                min-height: 56px !important;
+            }
+        }
+
         /* Оптимизация для маленьких экранов */
         @media (max-width: 320px) {
             .nav-item {
@@ -225,6 +277,11 @@
 
             .bottom-nav {
                 padding: 6px 8px;
+            }
+
+            #payday-btn {
+                padding: 14px !important;
+                font-size: 1.2em !important;
             }
         }
     </style>
