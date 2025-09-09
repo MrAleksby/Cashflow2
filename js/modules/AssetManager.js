@@ -365,268 +365,35 @@ class AssetManager {
      * Загрузить список акций для продажи
      */
     _loadStocksList() {
-        const listElement = document.getElementById('sell-stocks-list');
-        if (!listElement) {
-            console.log('❌ Элемент списка акций не найден');
-            return;
-        }
-
-        // Получаем данные об акциях
-        let assets = [];
-        if (window.data && window.data.asset) {
-            assets = window.data.asset || [];
-        } else if (window.gameState && window.gameState.data) {
-            assets = window.gameState.data.asset || [];
-        }
-
-        // Фильтруем только акции
-        const stocks = assets.filter(asset => 
-            asset.type === 'stocks' || 
-            ['MYT4U', 'ON2U', 'OK4U', 'GRO4US', '2BIGPOWER', 'CD'].includes(asset.name)
-        );
-
-        console.log('📊 Загружено акций для продажи:', stocks.length);
-
-        if (stocks.length === 0) {
-            listElement.innerHTML = '<div class="asset-item" style="text-align: center; padding: 20px; color: #666;">Нет доступных акций для продажи</div>';
-            return;
-        }
-
-        // Создаем HTML для списка акций
-        const html = stocks.map(stock => {
-            const totalValue = stock.quantity * stock.price;
-            return `
-                <div class="asset-item" data-asset-id="${stock.id}">
-                    <span>${stock.name} (${stock.quantity} шт. × $${stock.price.toFixed(1)} = $${totalValue})</span>
-                </div>
-            `;
-        }).join('');
-
-        listElement.innerHTML = html;
-
-        // Добавляем обработчики клика на акции
-        const stockItems = listElement.querySelectorAll('.asset-item');
-        stockItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const assetId = item.dataset.assetId;
-                this._selectAsset(assetId);
-            });
-        });
+        this._loadAssetsListByType('stocks', 'sell-stocks-list');
     }
 
     /**
      * Загрузить список недвижимости для продажи
      */
     _loadRealEstateList() {
-        const listElement = document.getElementById('sell-realestate-list');
-        if (!listElement) {
-            console.log('❌ Элемент списка недвижимости не найден');
-            return;
-        }
-
-        // Получаем данные о недвижимости
-        let assets = [];
-        if (window.data && window.data.asset) {
-            assets = window.data.asset || [];
-        } else if (window.gameState && window.gameState.data) {
-            assets = window.gameState.data.asset || [];
-        }
-
-        // Фильтруем только недвижимость
-        const realEstate = assets.filter(asset => asset.type === 'realestate');
-
-        console.log('📊 Загружено недвижимости для продажи:', realEstate.length);
-
-        if (realEstate.length === 0) {
-            listElement.innerHTML = '<div class="asset-item" style="text-align: center; padding: 20px; color: #666;">Нет доступной недвижимости для продажи</div>';
-            return;
-        }
-
-        // Создаем HTML для списка недвижимости
-        const html = realEstate.map(property => {
-            return `
-                <div class="asset-item" data-asset-id="${property.id}">
-                    <span>${property.name} - $${property.value.toFixed(0)}</span>
-                </div>
-            `;
-        }).join('');
-
-        listElement.innerHTML = html;
-
-        // Добавляем обработчики клика на недвижимость
-        const realEstateItems = listElement.querySelectorAll('.asset-item');
-        realEstateItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const assetId = item.dataset.assetId;
-                this._selectAsset(assetId);
-            });
-        });
+        this._loadAssetsListByType('realestate', 'sell-realestate-list');
     }
 
     /**
      * Загрузить список бизнеса для продажи
      */
     _loadBusinessList() {
-        const listElement = document.getElementById('sell-business-list');
-        if (!listElement) {
-            console.log('❌ Элемент списка бизнеса не найден');
-            return;
-        }
-
-        // Получаем данные о бизнесе
-        let assets = [];
-        if (window.data && window.data.asset) {
-            assets = window.data.asset || [];
-        } else if (window.gameState && window.gameState.data) {
-            assets = window.gameState.data.asset || [];
-        }
-
-        // Фильтруем только бизнес
-        const businesses = assets.filter(asset => asset.type === 'business');
-
-        console.log('📊 Загружено бизнеса для продажи:', businesses.length);
-
-        if (businesses.length === 0) {
-            listElement.innerHTML = '<div class="asset-item" style="text-align: center; padding: 20px; color: #666;">Нет доступного бизнеса для продажи</div>';
-            return;
-        }
-
-        // Создаем HTML для списка бизнеса
-        const html = businesses.map(business => {
-            return `
-                <div class="asset-item" data-asset-id="${business.id}">
-                    <span>${business.name} - $${business.value.toFixed(0)}</span>
-                </div>
-            `;
-        }).join('');
-
-        listElement.innerHTML = html;
-
-        // Добавляем обработчики клика на бизнес
-        const businessItems = listElement.querySelectorAll('.asset-item');
-        businessItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const assetId = item.dataset.assetId;
-                this._selectAsset(assetId);
-            });
-        });
+        this._loadAssetsListByType('business', 'sell-business-list');
     }
 
     /**
      * Загрузить список драгоценных металлов для продажи
      */
     _loadPreciousMetalsList() {
-        const listElement = document.getElementById('sell-preciousmetals-list');
-        if (!listElement) {
-            console.log('❌ Элемент списка драгоценных металлов не найден');
-            return;
-        }
-
-        // Получаем данные о драгоценных металлах
-        let assets = [];
-        if (window.data && window.data.asset) {
-            assets = window.data.asset || [];
-        } else if (window.gameState && window.gameState.data) {
-            assets = window.gameState.data.asset || [];
-        }
-
-        // Фильтруем только драгоценные металлы
-        const preciousMetals = assets.filter(asset => asset.type === 'preciousmetals');
-
-        console.log('📊 Загружено драгоценных металлов для продажи:', preciousMetals.length);
-
-        if (preciousMetals.length === 0) {
-            listElement.innerHTML = '<div class="asset-item" style="text-align: center; padding: 20px; color: #666;">Нет доступных драгоценных металлов для продажи</div>';
-            return;
-        }
-
-        // Создаем HTML для списка драгоценных металлов
-        const html = preciousMetals.map(metal => {
-            // Проверяем, есть ли у металла цена за единицу или общая стоимость
-            if (metal.price && metal.quantity) {
-                // Если есть цена за единицу и количество
-                const totalValue = metal.quantity * metal.price;
-                return `
-                    <div class="asset-item" data-asset-id="${metal.id}">
-                        <span>${metal.name} (${metal.quantity} ${metal.unit || 'г'} × $${metal.price.toFixed(1)} = $${totalValue.toFixed(0)})</span>
-                    </div>
-                `;
-            } else if (metal.value) {
-                // Если есть общая стоимость
-                return `
-                    <div class="asset-item" data-asset-id="${metal.id}">
-                        <span>${metal.name} - $${metal.value.toFixed(0)}</span>
-                    </div>
-                `;
-            } else {
-                // Если нет ни цены, ни стоимости
-                return `
-                    <div class="asset-item" data-asset-id="${metal.id}">
-                        <span>${metal.name}</span>
-                    </div>
-                `;
-            }
-        }).join('');
-
-        listElement.innerHTML = html;
-
-        // Добавляем обработчики клика на драгоценные металлы
-        const metalItems = listElement.querySelectorAll('.asset-item');
-        metalItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const assetId = item.dataset.assetId;
-                this._selectAsset(assetId);
-            });
-        });
+        this._loadAssetsListByType('preciousmetals', 'sell-preciousmetals-list');
     }
 
     /**
      * Загрузить список прочих активов для продажи
      */
     _loadMiscList() {
-        const listElement = document.getElementById('sell-misc-list');
-        if (!listElement) {
-            console.log('❌ Элемент списка прочих активов не найден');
-            return;
-        }
-
-        // Получаем данные о прочих активах
-        let assets = [];
-        if (window.data && window.data.asset) {
-            assets = window.data.asset || [];
-        } else if (window.gameState && window.gameState.data) {
-            assets = window.gameState.data.asset || [];
-        }
-
-        // Фильтруем только прочие активы
-        const miscAssets = assets.filter(asset => asset.type === 'misc');
-
-        console.log('📊 Загружено прочих активов для продажи:', miscAssets.length);
-
-        if (miscAssets.length === 0) {
-            listElement.innerHTML = '<div class="asset-item" style="text-align: center; padding: 20px; color: #666;">Нет доступных прочих активов для продажи</div>';
-            return;
-        }
-
-        // Создаем HTML для списка прочих активов
-        const html = miscAssets.map(asset => {
-            return `
-                <div class="asset-item" data-asset-id="${asset.id}">
-                    <span>${asset.name} - $${asset.value.toFixed(0)}</span>
-                </div>
-            `;
-        }).join('');
-
-        listElement.innerHTML = html;
-
-        // Добавляем обработчики клика на прочие активы
-        const miscItems = listElement.querySelectorAll('.asset-item');
-        miscItems.forEach(item => {
-            item.addEventListener('click', () => {
-                const assetId = item.dataset.assetId;
-                this._selectAsset(assetId);
-            });
-        });
+        this._loadAssetsListByType('misc', 'sell-misc-list');
     }
 
     /**
@@ -1635,6 +1402,74 @@ class AssetManager {
     }
 
     // === ВСПОМОГАТЕЛЬНЫЕ МЕТОДЫ ===
+
+    /**
+     * Получить данные активов из правильного источника
+     */
+    _getAssetsData() {
+        // Приоритет: сначала window.data (где реально сохраняются покупки), потом gameState
+        if (window.data && window.data.asset) {
+            return window.data.asset || [];
+        } else if (window.gameState && window.gameState.data) {
+            return window.gameState.data.asset || [];
+        }
+        return [];
+    }
+
+    /**
+     * Универсальный метод для загрузки списка активов по типу
+     */
+    _loadAssetsListByType(assetType, listElementId) {
+        const listElement = document.getElementById(listElementId);
+        if (!listElement) {
+            console.log(`❌ Элемент списка ${listElementId} не найден`);
+            return;
+        }
+
+        const assets = this._getAssetsData();
+        const filteredAssets = assets.filter(asset => {
+            if (assetType === 'stocks') {
+                return asset.type === 'stocks' || 
+                       ['MYT4U', 'ON2U', 'OK4U', 'GRO4US', '2BIGPOWER', 'CD'].includes(asset.name);
+            }
+            return asset.type === assetType;
+        });
+
+        console.log(`📊 Загружено ${assetType} для продажи:`, filteredAssets.length);
+
+        if (filteredAssets.length === 0) {
+            listElement.innerHTML = `<div class="asset-item" style="text-align: center; padding: 20px; color: #666;">Нет доступных ${assetType} для продажи</div>`;
+            return;
+        }
+
+        const html = filteredAssets.map(asset => {
+            let displayText = '';
+            if (assetType === 'stocks') {
+                const totalValue = asset.quantity * asset.price;
+                displayText = `${asset.name} (${asset.quantity} шт. × $${asset.price.toFixed(1)} = $${totalValue})`;
+            } else if (assetType === 'preciousmetals' && asset.price && asset.quantity) {
+                const totalValue = asset.quantity * asset.price;
+                displayText = `${asset.name} (${asset.quantity} ${asset.unit || 'г'} × $${asset.price.toFixed(1)} = $${totalValue.toFixed(0)})`;
+            } else {
+                displayText = `${asset.name} - $${asset.value?.toFixed(0) || '0'}`;
+            }
+            
+            return `<div class="asset-item" data-asset-id="${asset.id}">
+                <span>${displayText}</span>
+            </div>`;
+        }).join('');
+
+        listElement.innerHTML = html;
+
+        // Добавляем обработчики клика
+        const assetItems = listElement.querySelectorAll('.asset-item');
+        assetItems.forEach(item => {
+            item.addEventListener('click', () => {
+                const assetId = item.dataset.assetId;
+                this._selectAsset(assetId);
+            });
+        });
+    }
 
     /**
      * Получить ID списка активов для текущего типа
