@@ -525,26 +525,6 @@
         padding: 0.4rem;
     }
     
-    /* Специальные стили для модального окна покупки всякой всячины */
-    .misc-inputs {
-        padding: 0.4rem;
-        margin-bottom: 0.4rem;
-    }
-    
-    .misc-inputs .input-group {
-        margin-bottom: 0.3rem;
-    }
-    
-    .misc-inputs label {
-        font-size: 0.8rem;
-        margin-bottom: 0.1rem;
-    }
-    
-    .misc-inputs input {
-        padding: 0.3rem;
-        font-size: 0.85rem;
-        height: 32px;
-    }
     
     .buy-misc-btn {
         margin-top: 0.3rem;
