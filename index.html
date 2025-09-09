@@ -16,7 +16,7 @@
                 <i class="fas fa-wallet"></i>
                 <span id="top-cash-amount">0</span>
             </div>
-            <button id="new-game-btn" class="new-game-btn" onclick="window.resetGame()">Новая игра</button>
+            <button id="new-game-btn" class="new-game-btn" onclick="window.resetGame()" style="background: linear-gradient(135deg, #9C27B0, #7B1FA2) !important; color: white !important; border: 2px solid rgba(156, 39, 176, 0.3) !important;">Новая игра</button>
             <img src="logo.jpg" alt="Big Money Kids Logo" class="logo-img"/>
         </div>
         <div id="screen-cashflow" class="screen">
@@ -247,6 +247,24 @@
 
         #payday-btn:hover {
             animation: none;
+        }
+
+        /* Принудительные стили для кнопки Новая игра */
+        #new-game-btn,
+        button#new-game-btn,
+        .new-game-btn {
+            background: linear-gradient(135deg, #9C27B0, #7B1FA2) !important;
+            background-color: #9C27B0 !important;
+            color: white !important;
+            border: 2px solid rgba(156, 39, 176, 0.3) !important;
+            border-color: rgba(156, 39, 176, 0.3) !important;
+        }
+
+        #new-game-btn:hover,
+        button#new-game-btn:hover,
+        .new-game-btn:hover {
+            background: linear-gradient(135deg, #7B1FA2, #6A1B9A) !important;
+            background-color: #7B1FA2 !important;
         }
 
         /* Мобильная оптимизация для кнопки PayDay */

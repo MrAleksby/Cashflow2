@@ -258,6 +258,26 @@
     box-shadow: 0 2px 6px rgba(156, 39, 176, 0.3);
 }
 
+/* Принудительные стили для мобильных устройств */
+@media (max-width: 768px) {
+    .new-game-btn,
+    button.new-game-btn,
+    #new-game-btn {
+        background: linear-gradient(135deg, #9C27B0, #7B1FA2) !important;
+        background-color: #9C27B0 !important;
+        color: white !important;
+        border: 2px solid rgba(156, 39, 176, 0.3) !important;
+        border-color: rgba(156, 39, 176, 0.3) !important;
+    }
+    
+    .new-game-btn:hover,
+    button.new-game-btn:hover,
+    #new-game-btn:hover {
+        background: linear-gradient(135deg, #7B1FA2, #6A1B9A) !important;
+        background-color: #7B1FA2 !important;
+    }
+}
+
 .history-item {
     padding: 12px;
     border-bottom: 1px solid #e0e0e0;
