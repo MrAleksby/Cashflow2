@@ -245,9 +245,7 @@
     }
     
     .new-game-btn::after {
-        content: "🔄" !important; /* Добавляем иконку обновления */
-        font-size: 20px !important;
-        line-height: 1 !important;
+        content: "" !important; /* Убираем иконку, оставляем пустую кнопку */
     }
 }
 
@@ -261,6 +259,6 @@
     }
     
     .new-game-btn::after {
-        font-size: 18px !important;
+        content: "" !important; /* Убираем иконку и на маленьких экранах */
     }
 } 
