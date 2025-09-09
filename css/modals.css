@@ -500,26 +500,6 @@
         margin-bottom: 0.3rem;
     }
     
-    /* Специальные стили для модального окна покупки бизнеса */
-    .business-inputs {
-        padding: 0.4rem;
-        margin-bottom: 0.4rem;
-    }
-    
-    .business-inputs .input-group {
-        margin-bottom: 0.3rem;
-    }
-    
-    .business-inputs label {
-        font-size: 0.8rem;
-        margin-bottom: 0.1rem;
-    }
-    
-    .business-inputs input {
-        padding: 0.3rem;
-        font-size: 0.85rem;
-        height: 32px;
-    }
     
     .buy-business-btn {
         margin: 0.3rem 0;
@@ -537,25 +517,6 @@
         margin-bottom: 0.4rem;
     }
     
-    .precious-metal-inputs {
-        padding: 0.4rem;
-        margin-bottom: 0.4rem;
-    }
-    
-    .precious-metal-inputs .input-group {
-        margin-bottom: 0.3rem;
-    }
-    
-    .precious-metal-inputs label {
-        font-size: 0.8rem;
-        margin-bottom: 0.1rem;
-    }
-    
-    .precious-metal-inputs input {
-        padding: 0.3rem;
-        font-size: 0.85rem;
-        height: 32px;
-    }
     
     .buy-metal-btn {
         margin-top: 0.3rem;
