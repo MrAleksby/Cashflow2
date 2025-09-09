@@ -619,10 +619,6 @@
         font-size: 0.9rem;
     }
     
-    .category-card button {
-        padding: 0.6rem;
-        font-size: 0.9rem;
-    }
     
     /* Дополнительная оптимизация для модального окна */
     .modal-content {
@@ -1746,9 +1742,6 @@
         box-sizing: border-box;
     }
 
-    .category-card button {
-        width: 100%;
-    }
 
     .asset-categories {
         display: flex;
