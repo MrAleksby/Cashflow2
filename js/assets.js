@@ -24,21 +24,24 @@
     };
   }
 
+  // Вспомогательная функция для проверки данных
+  function checkDataArray(dataArray, listElement, totalElement, emptyMessage) {
+    if (!listElement) return false;
+    if (!window.data || !Array.isArray(dataArray) || dataArray.length === 0) {
+      listElement.innerHTML = `<li style="color:#888;">${emptyMessage}</li>`;
+      if (totalElement) totalElement.textContent = '0';
+      return false;
+    }
+    return true;
+  }
+
   // === ОТРИСОВКА АКТИВОВ ===
   const originalRenderAll = function() {
     var assetList = document.getElementById('asset-list');
     var assetTotal = document.getElementById('asset-total');
-    if (!assetList) return;
-    if (!window.data || !Array.isArray(window.data.asset)) {
-      assetList.innerHTML = '<li style="color:#888;">Нет активов</li>';
-      if (assetTotal) assetTotal.textContent = '0';
-      return;
-    }
-    if (window.data.asset.length === 0) {
-      assetList.innerHTML = '<li style="color:#888;">Нет активов</li>';
-      if (assetTotal) assetTotal.textContent = '0';
-      return;
-    }
+    
+    if (!checkDataArray(window.data.asset, assetList, assetTotal, 'Нет активов')) return;
+    
     var total = 0;
     assetList.innerHTML = window.data.asset.map(function(a) {
       let value = 0;
@@ -62,17 +65,9 @@
   const originalRenderIncome = function() {
     var incomeList = document.getElementById('income-list');
     var incomeTotal = document.getElementById('income-total');
-    if (!incomeList) return;
-    if (!window.data || !Array.isArray(window.data.income)) {
-      incomeList.innerHTML = '<li style="color:#888;">Нет доходов</li>';
-      if (incomeTotal) incomeTotal.textContent = '0';
-      return;
-    }
-    if (window.data.income.length === 0) {
-      incomeList.innerHTML = '<li style="color:#888;">Нет доходов</li>';
-      if (incomeTotal) incomeTotal.textContent = '0';
-      return;
-    }
+    
+    if (!checkDataArray(window.data.income, incomeList, incomeTotal, 'Нет доходов')) return;
+    
     var total = 0;
     incomeList.innerHTML = window.data.income.map(function(a) {
       total += Number(a.value) || 0;
@@ -85,17 +80,9 @@
   const originalRenderExpense = function() {
     var expenseList = document.getElementById('expense-list');
     var expenseTotal = document.getElementById('expense-total');
-    if (!expenseList) return;
-    if (!window.data || !Array.isArray(window.data.expense)) {
-      expenseList.innerHTML = '<li style="color:#888;">Нет расходов</li>';
-      if (expenseTotal) expenseTotal.textContent = '0';
-      return;
-    }
-    if (window.data.expense.length === 0) {
-      expenseList.innerHTML = '<li style="color:#888;">Нет расходов</li>';
-      if (expenseTotal) expenseTotal.textContent = '0';
-      return;
-    }
+    
+    if (!checkDataArray(window.data.expense, expenseList, expenseTotal, 'Нет расходов')) return;
+    
     var total = 0;
     expenseList.innerHTML = window.data.expense.map(function(a) {
       total += Number(a.value) || 0;
@@ -108,17 +95,9 @@
   const originalRenderLiability = function() {
     var liabilityList = document.getElementById('liability-list');
     var liabilityTotal = document.getElementById('liability-total');
-    if (!liabilityList) return;
-    if (!window.data || !Array.isArray(window.data.liability)) {
-      liabilityList.innerHTML = '<li style="color:#888;">Нет пассивов</li>';
-      if (liabilityTotal) liabilityTotal.textContent = '0';
-      return;
-    }
-    if (window.data.liability.length === 0) {
-      liabilityList.innerHTML = '<li style="color:#888;">Нет пассивов</li>';
-      if (liabilityTotal) liabilityTotal.textContent = '0';
-      return;
-    }
+    
+    if (!checkDataArray(window.data.liability, liabilityList, liabilityTotal, 'Нет пассивов')) return;
+    
     var total = 0;
     liabilityList.innerHTML = window.data.liability.map(function(a) {
       total += Number(a.value) || 0;
@@ -132,7 +111,6 @@
     var cashElem = document.getElementById('top-cash-amount');
     var modalWalletElem = document.getElementById('modal-action-wallet-amount');
     var cash = Number(window.cash);
-    if (isNaN(cash)) cash = 0;
     
     // Синхронизируем с gameState если он доступен
     if (window.gameState && window.gameState.cash !== cash) {
@@ -157,13 +135,4 @@
   if (!Array.isArray(window.data.expense)) window.data.expense = [];
   if (!Array.isArray(window.data.liability)) window.data.liability = [];
 
-  // Функция расчета дивидендов
-  window.calculateDividends = function(stockName, quantity) {
-    const dividendRates = {
-      '2BIGPOWER': 100,
-      'CD': 50
-    };
-    
-    return (dividendRates[stockName] || 0) * quantity;
-  };
 })(); 
