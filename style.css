@@ -258,26 +258,6 @@
     box-shadow: 0 2px 6px rgba(156, 39, 176, 0.3);
 }
 
-/* Принудительные стили для мобильных устройств */
-@media (max-width: 768px) {
-    .new-game-btn,
-    button.new-game-btn,
-    #new-game-btn {
-        background: linear-gradient(135deg, #9C27B0, #7B1FA2) !important;
-        background-color: #9C27B0 !important;
-        color: white !important;
-        border: 2px solid rgba(156, 39, 176, 0.3) !important;
-        border-color: rgba(156, 39, 176, 0.3) !important;
-    }
-    
-    .new-game-btn:hover,
-    button.new-game-btn:hover,
-    #new-game-btn:hover {
-        background: linear-gradient(135deg, #7B1FA2, #6A1B9A) !important;
-        background-color: #7B1FA2 !important;
-    }
-}
-
 .history-item {
     padding: 12px;
     border-bottom: 1px solid #e0e0e0;
@@ -875,8 +855,8 @@ button:hover {
 
 .stock-selector:focus {
     outline: none;
-    border-color: #4CAF50;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+    border-color: #9C27B0;
+    box-shadow: 0 0 5px rgba(156, 39, 176, 0.3);
 }
 
 .stock-selector optgroup {
@@ -925,8 +905,8 @@ button:hover {
 
 .realestate-selector:focus {
     outline: none;
-    border-color: #4CAF50;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+    border-color: #9C27B0;
+    box-shadow: 0 0 5px rgba(156, 39, 176, 0.3);
 }
 
 .realestate-selector optgroup {
@@ -975,8 +955,8 @@ button:hover {
 
 .business-name:focus {
     outline: none;
-    border-color: #4CAF50;
-    box-shadow: 0 0 5px rgba(76, 175, 80, 0.3);
+    border-color: #9C27B0;
+    box-shadow: 0 0 5px rgba(156, 39, 176, 0.3);
 }
 
 .business-name option {
@@ -1104,8 +1084,8 @@ button:hover {
     }
     
     .stock-selector:focus {
-        border-color: #4CAF50;
-        box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+        border-color: #9C27B0;
+        box-shadow: 0 0 8px rgba(156, 39, 176, 0.4);
     }
     
     /* Улучшение optgroup и option для мобильных */
@@ -1215,8 +1195,8 @@ button:hover {
     }
     
     .realestate-selector:focus {
-        border-color: #4CAF50;
-        box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+        border-color: #9C27B0;
+        box-shadow: 0 0 8px rgba(156, 39, 176, 0.4);
     }
     
     /* Улучшение optgroup и option для недвижимости на мобильных */
@@ -1297,8 +1277,8 @@ button:hover {
     }
     
     .business-name:focus {
-        border-color: #4CAF50;
-        box-shadow: 0 0 8px rgba(76, 175, 80, 0.4);
+        border-color: #9C27B0;
+        box-shadow: 0 0 8px rgba(156, 39, 176, 0.4);
     }
     
     .business-name option {
@@ -1349,7 +1329,7 @@ button:hover {
     background-color: #f0f8ff;
     transform: translateY(-1px);
     box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-    border-color: #4CAF50;
+    border-color: #9C27B0;
 }
 
 .unified-asset-item:last-child {
@@ -1385,7 +1365,7 @@ button:hover {
 }
 
 .asset-value {
-    background: linear-gradient(135deg, #4CAF50 0%, #45a049 100%);
+    background: linear-gradient(135deg, #9C27B0 0%, #7B1FA2 100%);
     color: white;
     padding: 10px 20px;
     border-radius: 25px;
@@ -1394,12 +1374,12 @@ button:hover {
     border: none;
     cursor: pointer;
     transition: all 0.2s ease;
-    box-shadow: 0 2px 6px rgba(76, 175, 80, 0.3);
+    box-shadow: 0 2px 6px rgba(156, 39, 176, 0.3);
 }
 
 .asset-value:hover {
     transform: scale(1.05);
-    box-shadow: 0 4px 12px rgba(76, 175, 80, 0.4);
+    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.4);
 }
 
 /* Мобильные стили */

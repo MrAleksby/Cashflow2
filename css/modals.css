@@ -194,7 +194,7 @@
 }
 
 .asset-income {
-    color: #388e3c;
+    color: #7B1FA2;
     font-weight: 500;
 }
 
@@ -364,17 +364,26 @@
 .category-card button {
     width: 100%;
     padding: 0.8rem;
-    background: #4CAF50;
+    background: linear-gradient(135deg, #9C27B0, #7B1FA2);
     color: white;
     border: none;
     border-radius: 8px;
     font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: background-color 0.2s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(156, 39, 176, 0.3);
+}
+
+.category-card button:hover {
+    background: linear-gradient(135deg, #7B1FA2, #6A1B9A);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.4);
 }
 
 .category-card button:active {
-    background: #388e3c;
+    background: linear-gradient(135deg, #6A1B9A, #4A148C);
+    transform: translateY(0);
 }
 
 /* Планшеты */
@@ -690,7 +699,7 @@
         padding: 0;
         border: none;
         border-radius: 4px;
-        background: #4CAF50;
+        background: #9C27B0;
         color: white;
         cursor: pointer;
     }
@@ -736,7 +745,7 @@
 
 .asset-item.selected {
     background-color: #E8F5E9;
-    border-left: 3px solid #4CAF50;
+    border-left: 3px solid #9C27B0;
 }
 
 /* Стили для мобильных устройств */
@@ -765,7 +774,7 @@
 
 /* Стили для выбранной карточки */
 .asset-card.selected {
-    border-color: #4CAF50;
+    border-color: #9C27B0;
     background: #f1f8e9;
 }
 
@@ -827,12 +836,12 @@
 
 /* Стили для спекулятивных акций */
 .asset-card[data-type="speculative"] {
-    border-left: 4px solid #ff9800;
+    border-left: 4px solid #E91E63;
 }
 
 /* Стили для акций с дивидендами */
 .asset-card[data-type="dividend"] {
-    border-left: 4px solid #4CAF50;
+    border-left: 4px solid #9C27B0;
 }
 
 .stock-inputs.dividend {
@@ -858,7 +867,7 @@
 
 .stock-inputs .price-select:focus {
     outline: none;
-    border-color: #4CAF50;
+    border-color: #9C27B0;
     box-shadow: 0 0 0 2px rgba(76, 175, 80, 0.1);
 }
 
@@ -883,7 +892,7 @@
     width: 100%;
     padding: 0.6rem;
     margin-top: 0.6rem;
-    background: #4CAF50;
+    background: #9C27B0;
     color: white;
     border: none;
     border-radius: 4px;
@@ -894,7 +903,7 @@
 }
 
 .buy-stock-btn:hover {
-    background: #388e3c;
+    background: #7B1FA2;
 }
 
 .buy-stock-btn:disabled {
@@ -1057,7 +1066,7 @@
     padding: 0;
     border: none;
     border-radius: 8px;
-    background: #4CAF50;
+    background: #9C27B0;
     color: white;
     font-size: 0.95rem;
     font-weight: bold;
@@ -1373,7 +1382,7 @@
 
 .asset-type-btn i {
     font-size: 1.8em;
-    color: #4CAF50;
+    color: #9C27B0;
     margin-bottom: 0.6rem;
 }
 
@@ -1393,12 +1402,12 @@
 .asset-type-btn:hover {
     transform: translateY(-2px);
     box-shadow: 0 4px 8px rgba(0,0,0,0.2);
-    border-color: #4CAF50;
+    border-color: #9C27B0;
 }
 
 .asset-type-btn.active {
     background: #444;
-    border-color: #4CAF50;
+    border-color: #9C27B0;
 }
 
 @media (max-width: 480px) {
@@ -1441,7 +1450,7 @@
     .asset-type-btn:active {
         transform: scale(0.98);
         background: #1b5e20;
-        border-color: #4CAF50;
+        border-color: #9C27B0;
     }
 }
 
@@ -1504,14 +1513,16 @@
 
 .category-card button {
     width: 100%;
-    background: #4CAF50;
+    background: linear-gradient(135deg, #9C27B0, #7B1FA2);
     color: white;
     border: none;
     padding: 0.8rem;
-    border-radius: 6px;
+    border-radius: 8px;
     font-size: 1rem;
+    font-weight: 600;
     cursor: pointer;
-    transition: all 0.2s ease;
+    transition: all 0.3s ease;
+    box-shadow: 0 2px 8px rgba(156, 39, 176, 0.3);
     -webkit-tap-highlight-color: transparent;
     touch-action: manipulation;
     position: relative;
@@ -1519,7 +1530,9 @@
 }
 
 .category-card button:hover {
-    background: #388e3c;
+    background: linear-gradient(135deg, #7B1FA2, #6A1B9A);
+    transform: translateY(-1px);
+    box-shadow: 0 4px 12px rgba(156, 39, 176, 0.4);
 }
 
 .category-card button.btn-danger {
@@ -1533,7 +1546,7 @@
 
 .category-card.active {
     background: #444;
-    border-color: #4CAF50;
+    border-color: #9C27B0;
     transform: scale(1);
     z-index: 15;
     position: relative;
@@ -1606,7 +1619,7 @@
 }
 
 .wallet-balance span {
-    color: #4CAF50;
+    color: #9C27B0;
     font-weight: bold;
 }
 
@@ -1721,7 +1734,7 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        color: #4CAF50 !important;
+        color: #9C27B0 !important;
     }
 
     #buy-modal .category-card h3 {
@@ -1752,7 +1765,7 @@
 
     #buy-modal .category-card.active {
         background: #444 !important;
-        border-color: #4CAF50 !important;
+        border-color: #9C27B0 !important;
     }
 }
 
@@ -1808,7 +1821,7 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        color: #4CAF50 !important;
+        color: #9C27B0 !important;
     }
 
     #action-modal .category-card h3 {
@@ -1839,7 +1852,7 @@
 
     #action-modal .category-card.active {
         background: #444 !important;
-        border-color: #4CAF50 !important;
+        border-color: #9C27B0 !important;
         z-index: 20 !important;
         position: relative !important;
     }
@@ -1870,7 +1883,7 @@
     #action-modal .wallet-info .balance {
         font-size: 1.2em !important;
         font-weight: bold !important;
-        color: #4CAF50 !important;
+        color: #9C27B0 !important;
     }
 
     #action-modal .action-buttons {
@@ -1939,7 +1952,7 @@
         display: flex !important;
         align-items: center !important;
         justify-content: center !important;
-        color: #4CAF50 !important;
+        color: #9C27B0 !important;
     }
 
     #sell-modal .asset-type-btn h3 {
@@ -1970,7 +1983,7 @@
 
     #sell-modal .asset-type-btn.active {
         background: #444 !important;
-        border-color: #4CAF50 !important;
+        border-color: #9C27B0 !important;
     }
 
     /* Дополнительные стили для лучшей адаптации на мобильных */
@@ -2038,7 +2051,7 @@
 
     .loan-amount:focus {
         outline: none;
-        border-color: #2196F3;
+        border-color: #3F51B5;
     }
 
     /* Убираем стрелки для числового поля */
