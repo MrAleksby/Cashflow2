@@ -52,19 +52,22 @@
     }
     
     .modal-content {
-        background: var(--card-background);
+        background: linear-gradient(145deg, #2d2d2d, #3a3a3a);
         color: var(--text-color);
-        border-color: var(--border-color);
+        border-color: rgba(156, 39, 176, 0.3);
+        box-shadow: 0 20px 40px rgba(156, 39, 176, 0.2), 0 8px 16px rgba(63, 81, 181, 0.15);
     }
     
     .close-btn {
-        color: var(--text-color-muted);
-        background: var(--border-color-light);
+        color: #9C27B0;
+        background: linear-gradient(135deg, #3a3a3a, #4a4a4a);
+        border: 2px solid rgba(156, 39, 176, 0.4);
     }
-    
+
     .close-btn:hover {
-        background: var(--danger-color);
+        background: linear-gradient(135deg, #9C27B0, #7B1FA2);
         color: white;
+        border-color: #7B1FA2;
     }
     
     .modal-form select,
