@@ -1,17 +1,17 @@
 :root {
-    /* Основные цвета */
-    --primary-color: #4CAF50;
-    --primary-dark: #388e3c;
-    --primary-light: #81c784;
-    --secondary-color: #2196F3;
-    --secondary-dark: #1976d2;
-    --secondary-light: #64b5f6;
+    /* Основные цвета - Сезон 5: Фиолетовая роскошь */
+    --primary-color: #9C27B0;
+    --primary-dark: #7B1FA2;
+    --primary-light: #BA68C8;
+    --secondary-color: #3F51B5;
+    --secondary-dark: #303F9F;
+    --secondary-light: #7986CB;
     
     /* Семантические цвета */
     --success-color: #4CAF50;
     --warning-color: #ff9800;
     --danger-color: #f44336;
-    --info-color: #2196F3;
+    --info-color: #3F51B5;
     
     /* Нейтральные цвета */
     --text-color: #333;

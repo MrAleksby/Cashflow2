@@ -21,7 +21,7 @@
     font-size: 1.1em;
     font-weight: bold;
     color: var(--primary-dark);
-    background: rgba(76, 175, 80, 0.1);
+    background: rgba(156, 39, 176, 0.1);
     border: 2px solid var(--primary-color);
     border-radius: var(--border-radius-small);
     padding: var(--spacing-sm) var(--spacing-md);
@@ -100,8 +100,8 @@
 }
 
 .nav-btn.active {
-    background: linear-gradient(90deg, rgba(76, 175, 80, 0.1) 60%, var(--card-background) 100%);
-    box-shadow: 0 -2px 8px rgba(76, 175, 80, 0.15);
+    background: linear-gradient(90deg, rgba(156, 39, 176, 0.1) 60%, var(--card-background) 100%);
+    box-shadow: 0 -2px 8px rgba(156, 39, 176, 0.15);
     font-weight: bold;
 }
 

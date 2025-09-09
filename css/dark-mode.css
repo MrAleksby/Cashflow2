@@ -48,7 +48,7 @@
     
     #summary-block {
         background: #263238 !important;
-        border-color: #388e3c !important;
+        border-color: #9C27B0 !important;
     }
     
     .modal-content {
@@ -217,7 +217,7 @@
 
     .category-card.active {
         border-color: var(--primary-color) !important;
-        background: rgba(76, 175, 80, 0.1) !important;
+        background: rgba(156, 39, 176, 0.1) !important;
     }
 
     .category-card p {
