@@ -46,113 +46,12 @@ const cancelSellBtn = document.getElementById('cancel-sell-btn');
 let selectedAsset = null;
 let currentAssetType = 'stocks';
 
-// Открытие модального окна продажи
-function openSellStockModal() {
-    sellModal.style.display = 'block';
-    currentAssetType = 'stocks';
-    updateAssetTypeButtons();
-    loadStockList();
-}
 
-// Закрытие модального окна
-function closeSellStockModal() {
-    sellModal.style.display = 'none';
-    selectedAsset = null;
-    selectedStockInfo.style.display = 'none';
-    selectedRealEstateInfo.style.display = 'none';
-    selectedBusinessInfo.style.display = 'none';
-    selectedPreciousMetalsInfo.style.display = 'none';
-    selectedMiscInfo.style.display = 'none';
-    sellAssetBtn.disabled = true;
-}
 
-// Обновление кнопок выбора типа актива
-function updateAssetTypeButtons() {
-    const buttons = document.querySelectorAll('.asset-type-btn');
-    buttons.forEach(btn => {
-        btn.classList.toggle('active', btn.dataset.type === currentAssetType);
-    });
-}
 
 // Загрузка списка акций
-function loadStockList() {
-    stockList.innerHTML = '';
-    const assets = window.data.asset || [];
-    
-    // Фильтруем только акции из активов
-    const stocks = assets.filter(asset => 
-        ['MYT4U', 'ON2U', 'OK4U', 'GRO4US', '2BIGPOWER', 'CD'].includes(asset.name)
-    );
-    
-    if (stocks.length === 0) {
-        stockList.innerHTML = '<div class="asset-item">Нет доступных акций для продажи</div>';
-        return;
-    }
-    
-    stocks.forEach(stock => {
-        const stockItem = document.createElement('div');
-        stockItem.className = 'asset-item';
-        const totalValue = stock.quantity * stock.price;
-        stockItem.innerHTML = `
-            <span>${stock.name} (${stock.quantity} шт. × $${stock.price.toFixed(1)} = $${totalValue})</span>
-        `;
-        
-        stockItem.addEventListener('click', () => selectAsset(stock, 'stocks'));
-        stockList.appendChild(stockItem);
-    });
-}
 
-// Загрузка списка недвижимости
-function loadRealEstateList() {
-    realEstateList.innerHTML = '';
-    const assets = window.data.asset || [];
-    
-    // Фильтруем только недвижимость
-    const realEstate = assets.filter(asset => asset.type === 'realestate');
-    
-    if (realEstate.length === 0) {
-        realEstateList.innerHTML = '<div class="asset-item">Нет доступной недвижимости для продажи</div>';
-        return;
-    }
-    
-    realEstate.forEach(property => {
-        const propertyItem = document.createElement('div');
-        propertyItem.className = 'asset-item';
-        propertyItem.innerHTML = `
-            <span>${property.name}</span>
-            <span>$${property.value}</span>
-        `;
-        
-        propertyItem.addEventListener('click', () => selectAsset(property, 'realestate'));
-        realEstateList.appendChild(propertyItem);
-    });
-}
 
-// Загрузка списка бизнесов
-function loadBusinessList() {
-    businessList.innerHTML = '';
-    const assets = window.data.asset || [];
-    
-    // Фильтруем только бизнесы
-    const businesses = assets.filter(asset => asset.type === 'business');
-    
-    if (businesses.length === 0) {
-        businessList.innerHTML = '<div class="asset-item">Нет доступных бизнесов для продажи</div>';
-        return;
-    }
-    
-    businesses.forEach(business => {
-        const businessItem = document.createElement('div');
-        businessItem.className = 'asset-item';
-        businessItem.innerHTML = `
-            <span>${business.name}</span>
-            <span>$${business.value}</span>
-        `;
-        
-        businessItem.addEventListener('click', () => selectAsset(business, 'business'));
-        businessList.appendChild(businessItem);
-    });
-}
 
 // AssetManager управляет всеми списками активов и их отображением
 
@@ -173,41 +72,7 @@ function updateDisplay() {
     closeSellStockModal();
 }
 
-// Функция для настройки числового поля ввода
-function setupNumericInput(input) {
-    if (!input) return;
-    
-    // Устанавливаем тип клавиатуры для числовых полей
-    input.setAttribute('inputmode', 'numeric');
-    input.setAttribute('pattern', '[0-9]*');
-    
-    // Добавляем обработчик события input для мгновенного обновления значения
-    input.addEventListener('input', function(e) {
-        // Удаляем все нецифровые символы
-        let value = e.target.value.replace(/[^0-9]/g, '');
-        
-        // Обновляем значение поля
-        e.target.value = value;
-        
-        // Принудительно обновляем отображение
-        input.blur();
-        input.focus();
-        
-        // AssetManager управляет всеми расчетами
-    });
-    
-    // Автоматически скрываем клавиатуру при нажатии Enter
-    input.addEventListener('keydown', function(e) {
-        if (e.key === 'Enter') {
-            input.blur();
-        }
-    });
-}
 
-// Функция для настройки всех числовых полей в форме
-function setupAllNumericInputs() {
-    // AssetManager управляет всеми полями ввода
-}
 
 // AssetManager теперь управляет всем интерфейсом продажи
 // Старые обработчики удалены - используется новый AssetManager
