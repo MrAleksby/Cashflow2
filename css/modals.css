@@ -429,26 +429,6 @@
         margin-bottom: var(--spacing-sm);
     }
     
-    /* Специальные стили для модального окна покупки акций */
-    .stock-inputs {
-        padding: 0.3rem;
-        margin-bottom: 0.3rem;
-    }
-    
-    .stock-inputs .input-group {
-        margin-bottom: 0.2rem;
-    }
-    
-    .stock-inputs label {
-        font-size: 0.75rem;
-        margin-bottom: 0.05rem;
-    }
-    
-    .stock-inputs input {
-        padding: 0.25rem;
-        font-size: 0.8rem;
-        height: 32px;
-    }
     
     .quick-price-buttons,
     .quick-sell-price-buttons {
