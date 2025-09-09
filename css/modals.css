@@ -612,11 +612,6 @@
         padding: 0.4rem;
     }
     
-    /* Специальные стили для форм действий */
-    .category-card .action-form {
-        margin-top: 0.6rem;
-        padding-top: 0.6rem;
-    }
     
     .category-card .input-group {
         gap: 0.5rem;
@@ -1749,9 +1744,6 @@
         margin: 8px 0;
     }
 
-    .category-card .action-form {
-        padding: 12px 0;
-    }
 
     .category-card input {
     width: 100%;
