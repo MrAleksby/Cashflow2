@@ -614,10 +614,6 @@
     
     
     
-    .category-card input {
-        padding: 0.6rem;
-        font-size: 0.9rem;
-    }
     
     
     /* Дополнительная оптимизация для модального окна */
@@ -1737,10 +1733,6 @@
     }
 
 
-    .category-card input {
-    width: 100%;
-        box-sizing: border-box;
-    }
 
 
     .asset-categories {
