@@ -41,6 +41,10 @@
         padding: var(--spacing-md) var(--spacing-lg);
     }
     
+    .container {
+        padding-bottom: 80px !important;
+    }
+    
     #bottom-nav {
         height: 72px !important;
     }
@@ -53,9 +57,6 @@
         font-size: 1em !important;
     }
     
-    .container {
-        padding-bottom: 80px !important;
-    }
     
     h1 {
         font-size: 1.2em;
