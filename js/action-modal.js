@@ -279,63 +279,7 @@ document.addEventListener('DOMContentLoaded', function() {
         closeActionModal();
     }
 
-    function forceReflow(element) {
-        // Принудительное обновление отображения
-        element.style.display = '';
-        element.style.visibility = 'visible';
-        element.style.opacity = '1';
-        element.offsetHeight; // Принудительный reflow
-        
-        // Дополнительное обновление через RAF для iOS
-        requestAnimationFrame(() => {
-            element.style.transform = 'translateZ(0)';
-            setTimeout(() => {
-                element.style.transform = '';
-            }, 0);
-        });
-    }
 
-    function setupNumericInput(input) {
-        if (!input) return;
-
-        // Используем обычное текстовое поле вместо tel
-        input.setAttribute('type', 'text');
-        input.setAttribute('inputmode', 'numeric');
-        
-        const updateValue = (e) => {
-            let value = e.target.value.replace(/[^0-9]/g, '');
-            if (value !== e.target.value) {
-                e.target.value = value;
-            }
-        };
-
-        // Упрощаем обработчики событий
-        input.addEventListener('input', updateValue);
-        input.addEventListener('change', updateValue);
-
-        // Обработка фокуса для прокрутки
-        input.addEventListener('focus', (e) => {
-            setTimeout(() => {
-                e.target.scrollIntoView({ behavior: 'smooth', block: 'center' });
-            }, 100);
-        });
-    }
-
-    // Настраиваем все числовые поля в модальном окне
-    function setupAllNumericInputs() {
-        // Поля для взятия/отдачи денег
-        setupNumericInput(takeMoneyAmount);
-        setupNumericInput(giveMoneyAmount);
-        
-        // Поля для детей
-        setupNumericInput(childExpenseInput);
-        
-        // Поля для кредита
-        setupNumericInput(loanAmountInput);
-        
-        // Поля для работы
-        setupNumericInput(jobSalaryInput);
-    }
 
     // Открытие модального окна
     window.openActionModal = function() {
@@ -345,7 +289,6 @@ document.addEventListener('DOMContentLoaded', function() {
             updateModalWalletAmount();
             updateChildrenList();
             clearInputs();
-            setupAllNumericInputs();
         }
     };
 
@@ -782,27 +725,5 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     }
 
-    // Добавляем обработчик на открытие модального окна
-    const actionBtn = document.getElementById('main-action-btn');
-    if (actionBtn) {
-        actionBtn.addEventListener('click', function() {
-            modal.classList.add('active');
-            // Обновляем отображение полей после открытия окна
-            setTimeout(forceUpdateInputs, 100);
-        });
-    } else {
-        console.error('Не найдена кнопка main-action-btn');
-    }
 
-    // Обработчик закрытия модального окна
-    closeBtn.addEventListener('click', function() {
-        closeActionModal();
-    });
-
-    // Закрытие по клику вне модального окна
-    actionModal.addEventListener('click', function(e) {
-        if (e.target === actionModal) {
-            closeActionModal();
-        }
-    });
 }); 
