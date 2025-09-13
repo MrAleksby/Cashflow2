@@ -98,30 +98,52 @@
         
         .income-card {
             background: var(--card-background);
-            border: 2px solid var(--border-color-light);
+            border: 2px solid var(--primary-color);
             border-radius: var(--border-radius);
             padding: 15px;
             box-shadow: var(--shadow-sm);
         }
         
         .income-card h3 {
-            margin: 0 0 10px 0;
+            margin: 0 0 15px 0;
             color: var(--primary-color);
-            font-size: 1.1em;
+            font-size: 1.2em;
             display: flex;
             align-items: center;
+            justify-content: center;
             gap: 8px;
         }
         
-        .income-amount {
-            font-size: 1.8em;
-            font-weight: 700;
-            color: var(--primary-color);
-            text-align: center;
-            padding: 20px;
+        .income-row {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+        
+        .income-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
             background: linear-gradient(135deg, rgba(156, 39, 176, 0.1), rgba(156, 39, 176, 0.05));
             border-radius: var(--border-radius-small);
             border: 2px solid var(--primary-color);
+        }
+        
+        .income-label {
+            font-size: 1em;
+            font-weight: 600;
+            color: var(--primary-color);
+        }
+        
+        .income-amount {
+            font-size: 1.4em;
+            font-weight: 700;
+            color: var(--primary-color);
+        }
+        
+        .income-amount.assets-income {
+            color: var(--warning-color);
         }
         
         .actions-section {
@@ -373,12 +395,10 @@
             background: var(--card-background);
             border: 1px solid var(--border-color-light);
             border-radius: var(--border-radius-small);
-            padding: 15px;
-            margin-bottom: 10px;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
+            padding: 12px;
+            margin-bottom: 8px;
             transition: all 0.3s ease;
+            display: block;
         }
         
         .asset-item:hover {
@@ -386,25 +406,44 @@
             border-color: #FF9800;
         }
         
+        .asset-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 8px;
+        }
+        
         .asset-info {
             flex: 1;
+            min-width: 0;
         }
         
         .asset-name {
             font-weight: 600;
             color: var(--primary-color);
-            margin-bottom: 5px;
+            margin-bottom: 4px;
+            font-size: 0.95em;
+            line-height: 1.3;
         }
         
         .asset-details {
-            font-size: 0.9em;
+            font-size: 0.8em;
             color: var(--text-color);
+            margin-bottom: 8px;
         }
         
         .asset-price {
             font-weight: 700;
             color: #FF9800;
-            margin-left: 15px;
+            font-size: 1.1em;
+            white-space: nowrap;
+            margin-left: 10px;
+        }
+        
+        .asset-actions {
+            display: flex;
+            justify-content: flex-end;
+            margin-top: 8px;
         }
         
         .sell-asset-btn {
@@ -427,11 +466,13 @@
             background: linear-gradient(135deg, #4CAF50, #388E3C);
             color: white;
             border: none;
-            padding: 8px 16px;
+            padding: 8px 12px;
             border-radius: var(--border-radius-small);
             cursor: pointer;
             font-weight: 600;
             transition: all 0.3s ease;
+            font-size: 0.85em;
+            white-space: nowrap;
         }
         
         .buy-asset-btn:hover {
@@ -802,7 +843,11 @@
             }
             
             .income-amount {
-                font-size: 1.5em;
+                font-size: 1.3em;
+            }
+            
+            .income-label {
+                font-size: 0.9em;
             }
             
             .payday-button {
@@ -846,7 +891,37 @@
             }
             
             .income-amount {
-                font-size: 1.3em;
+                font-size: 1.1em;
+            }
+            
+            .income-label {
+                font-size: 0.8em;
+            }
+            
+            .income-item {
+                padding: 8px 12px;
+            }
+            
+            .asset-item {
+                padding: 10px;
+                margin-bottom: 6px;
+            }
+            
+            .asset-name {
+                font-size: 0.9em;
+            }
+            
+            .asset-details {
+                font-size: 0.75em;
+            }
+            
+            .asset-price {
+                font-size: 1em;
+            }
+            
+            .buy-asset-btn {
+                padding: 6px 10px;
+                font-size: 0.8em;
             }
             
             .payday-button {
@@ -889,6 +964,28 @@
                 grid-template-columns: 1fr;
                 gap: 10px;
             }
+            
+            .asset-item {
+                padding: 8px;
+                margin-bottom: 5px;
+            }
+            
+            .asset-name {
+                font-size: 0.85em;
+            }
+            
+            .asset-details {
+                font-size: 0.7em;
+            }
+            
+            .asset-price {
+                font-size: 0.95em;
+            }
+            
+            .buy-asset-btn {
+                padding: 5px 8px;
+                font-size: 0.75em;
+            }
         }
     </style>
 </head>
@@ -906,8 +1003,17 @@
             </div>
             
             <div class="income-card">
-                <h3><i class="fas fa-money-bill-wave"></i> Пассивный доход</h3>
-                <div class="income-amount" id="speed-road-income">$0</div>
+                <h3><i class="fas fa-money-bill-wave"></i> Доходы</h3>
+                <div class="income-row">
+                    <div class="income-item">
+                        <span class="income-label">Пассивный доход:</span>
+                        <span class="income-amount" id="speed-road-income">$0</span>
+                    </div>
+                    <div class="income-item">
+                        <span class="income-label">Доход от активов:</span>
+                        <span class="income-amount assets-income" id="speed-road-assets-income">$0</span>
+                    </div>
+                </div>
             </div>
             
             <div class="actions-section">
@@ -1104,6 +1210,17 @@
             const params = getUrlParams();
             document.getElementById('speed-road-balance').textContent = '$' + parseInt(params.balance).toLocaleString();
             document.getElementById('speed-road-income').textContent = '$' + parseInt(params.income).toLocaleString();
+            
+            // Обновляем доход от активов
+            updateAssetsIncomeDisplay();
+        }
+        
+        // Обновляем отображение дохода от активов
+        function updateAssetsIncomeDisplay() {
+            const totalAssetsIncome = currentAssets.reduce((total, asset) => {
+                return total + (asset.income || 0);
+            }, 0);
+            document.getElementById('speed-road-assets-income').textContent = '$' + totalAssetsIncome.toLocaleString();
         }
         
         // Функция PayDay
@@ -1218,15 +1335,19 @@
                         `Доход: $${business.income.toLocaleString()}/${incomeType}`;
                     
                     assetItem.innerHTML = `
-                        <div class="asset-info">
-                            <div class="asset-name">${business.name}</div>
-                            <div class="asset-details">${incomeText}</div>
+                        <div class="asset-header">
+                            <div class="asset-info">
+                                <div class="asset-name">${business.name}</div>
+                                <div class="asset-details">${incomeText}</div>
+                            </div>
+                            <div class="asset-price">$${business.price.toLocaleString()}</div>
                         </div>
-                        <div class="asset-price">$${business.price.toLocaleString()}</div>
-                        <button class="buy-asset-btn" onclick="buyAsset(${index})">
-                            <i class="fas fa-shopping-cart"></i>
-                            Купить
-                        </button>
+                        <div class="asset-actions">
+                            <button class="buy-asset-btn" onclick="buyAsset(${index})">
+                                <i class="fas fa-shopping-cart"></i>
+                                Купить
+                            </button>
+                        </div>
                     `;
                     assetsList.appendChild(assetItem);
                 });
@@ -1330,6 +1451,9 @@
             
             document.getElementById('speed-road-balance').textContent = '$' + newBalance.toLocaleString();
             
+            // Обновляем отображение дохода от активов
+            updateAssetsIncomeDisplay();
+            
             // Обновляем URL
             const newUrl = `speed-road.html?balance=${newBalance}&income=${params.income}&assets=${params.assets}`;
             window.history.replaceState({}, document.title, newUrl);
@@ -1394,6 +1518,9 @@
             // Списываем деньги в любом случае
             const newBalance = currentBalance - asset.price;
             document.getElementById('speed-road-balance').textContent = '$' + newBalance.toLocaleString();
+            
+            // Обновляем отображение дохода от активов
+            updateAssetsIncomeDisplay();
             
             // Обновляем URL
             const newUrl = `speed-road.html?balance=${newBalance}&income=${params.income}&assets=${params.assets}`;
@@ -1538,6 +1665,9 @@
             const newBalance = currentBalance + sellPrice;
             
             document.getElementById('speed-road-balance').textContent = '$' + newBalance.toLocaleString();
+            
+            // Обновляем отображение дохода от активов
+            updateAssetsIncomeDisplay();
             
             // Обновляем URL
             const newUrl = `speed-road.html?balance=${newBalance}&income=${params.income}&assets=${params.assets}`;
