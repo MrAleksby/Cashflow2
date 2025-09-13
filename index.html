@@ -22,7 +22,22 @@
                 <i class="fas fa-wallet"></i>
                 <span id="top-cash-amount">0</span>
             </div>
-            <button id="new-game-btn" class="new-game-btn" onclick="window.resetGame()">Новая игра</button>
+            <div class="menu-container">
+                <button id="menu-btn" class="menu-btn">
+                    <i class="fas fa-bars"></i>
+                    <span>Меню</span>
+                </button>
+                <div id="menu-dropdown" class="menu-dropdown">
+                    <button class="menu-item" onclick="window.resetGame()">
+                        <i class="fas fa-play"></i>
+                        Новая игра
+                    </button>
+                    <button class="menu-item" onclick="window.openSpeedRoad()">
+                        <i class="fas fa-road"></i>
+                        Скоростная дорога
+                    </button>
+                </div>
+            </div>
             <img src="logo.jpg" alt="Big Money Kids Logo" class="logo-img"/>
         </div>
         <div id="screen-cashflow" class="screen">
@@ -576,6 +591,34 @@
                 <p style="margin-top: 20px; text-align: center; color: #666; font-size: 0.9em;">
                     Налог будет взиматься с общего дохода (зарплата + пассивный доход)
                 </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- Модальное окно для ввода дохода скоростной дороги -->
+    <div id="income-input-modal" class="modal">
+        <div class="modal-content">
+            <button class="close-btn">&times;</button>
+            <h2><i class="fas fa-road"></i> Скоростная дорога</h2>
+            <p>Введите ваш новый пассивный доход для скоростной дороги:</p>
+            
+            <div class="input-group">
+                <label for="new-income-amount">Пассивный доход:</label>
+                <div class="input-wrapper">
+                    <span class="currency-symbol">$</span>
+                    <input type="number" id="new-income-amount" placeholder="1000000" min="0" step="1000">
+                </div>
+            </div>
+            
+            <div class="modal-actions">
+                <button id="confirm-income-btn" class="btn btn-primary">
+                    <i class="fas fa-check"></i>
+                    Подтвердить
+                </button>
+                <button id="cancel-income-btn" class="btn btn-secondary">
+                    <i class="fas fa-times"></i>
+                    Отмена
+                </button>
             </div>
         </div>
     </div>

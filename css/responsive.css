@@ -229,9 +229,9 @@
     }
 }
 
-/* Мобильная оптимизация для кнопки Новая игра */
+/* Мобильная оптимизация для кнопки меню */
 @media (max-width: 480px) {
-    .new-game-btn {
+    .menu-btn {
         padding: 12px !important;
         font-size: 0 !important; /* Убираем текст */
         border-radius: 50% !important; /* Делаем круглой */
@@ -244,13 +244,23 @@
         justify-content: center !important;
     }
     
-    .new-game-btn::after {
-        content: "" !important; /* Убираем иконку, оставляем пустую кнопку */
+    .menu-btn span {
+        display: none !important; /* Скрываем текст */
+    }
+    
+    .menu-btn i {
+        font-size: 16px !important;
+    }
+    
+    .menu-dropdown {
+        right: 0 !important;
+        left: auto !important;
+        min-width: 140px !important;
     }
 }
 
 @media (max-width: 320px) {
-    .new-game-btn {
+    .menu-btn {
         padding: 10px !important;
         min-height: 44px !important;
         min-width: 44px !important;
@@ -258,7 +268,11 @@
         height: 44px !important;
     }
     
-    .new-game-btn::after {
-        content: "" !important; /* Убираем иконку и на маленьких экранах */
+    .menu-btn i {
+        font-size: 14px !important;
+    }
+    
+    .menu-dropdown {
+        min-width: 120px !important;
     }
 } 

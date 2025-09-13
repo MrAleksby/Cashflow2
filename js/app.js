@@ -877,4 +877,149 @@ function initializeSellPriceButtons(stockName) {
             updateSellCalculations();
         });
     });
-} 
+}
+
+// Функциональность для кнопки меню
+document.addEventListener('DOMContentLoaded', function() {
+    const menuBtn = document.getElementById('menu-btn');
+    const menuDropdown = document.getElementById('menu-dropdown');
+    
+    if (menuBtn && menuDropdown) {
+        // Открытие/закрытие меню при клике на кнопку
+        menuBtn.addEventListener('click', function(e) {
+            e.stopPropagation();
+            menuDropdown.classList.toggle('show');
+        });
+        
+        // Закрытие меню при клике вне его
+        document.addEventListener('click', function(e) {
+            if (!menuBtn.contains(e.target) && !menuDropdown.contains(e.target)) {
+                menuDropdown.classList.remove('show');
+            }
+        });
+        
+        // Закрытие меню при клике на пункт меню
+        const menuItems = menuDropdown.querySelectorAll('.menu-item');
+        menuItems.forEach(item => {
+            item.addEventListener('click', function() {
+                menuDropdown.classList.remove('show');
+            });
+        });
+        
+        // Закрытие меню при нажатии Escape
+        document.addEventListener('keydown', function(e) {
+            if (e.key === 'Escape') {
+                menuDropdown.classList.remove('show');
+            }
+        });
+    }
+});
+
+// Функциональность скоростной дороги
+window.openSpeedRoad = function() {
+    // Показываем модальное окно для ввода дохода
+    const modal = document.getElementById('income-input-modal');
+    if (modal) {
+        modal.style.display = 'block';
+        
+        // Фокусируемся на поле ввода
+        const input = document.getElementById('new-income-amount');
+        if (input) {
+            input.focus();
+            input.select();
+        }
+        
+        // Закрываем основное меню
+        const menuDropdown = document.getElementById('menu-dropdown');
+        if (menuDropdown) {
+            menuDropdown.classList.remove('show');
+        }
+    }
+};
+
+// Инициализация модального окна ввода дохода
+document.addEventListener('DOMContentLoaded', function() {
+    const incomeModal = document.getElementById('income-input-modal');
+    const confirmBtn = document.getElementById('confirm-income-btn');
+    const cancelBtn = document.getElementById('cancel-income-btn');
+    const closeBtn = incomeModal?.querySelector('.close-btn');
+    const incomeInput = document.getElementById('new-income-amount');
+    
+    // Функция закрытия модального окна
+    function closeIncomeModal() {
+        if (incomeModal) {
+            incomeModal.style.display = 'none';
+            if (incomeInput) {
+                incomeInput.value = '';
+            }
+        }
+    }
+    
+    // Обработчики событий для кнопок
+    if (confirmBtn) {
+        confirmBtn.addEventListener('click', function() {
+            const incomeAmount = incomeInput?.value;
+            
+            if (!incomeAmount || incomeAmount <= 0) {
+                alert('Пожалуйста, введите корректную сумму дохода!');
+                return;
+            }
+            
+            // Получаем текущий баланс
+            let currentBalance = 0;
+            if (window.gameState && window.gameState.data) {
+                currentBalance = window.gameState.data.cash || 0;
+            }
+            
+            // Рассчитываем доходы от активов
+            let assetsIncome = 0;
+            if (window.data && Array.isArray(window.data.asset)) {
+                window.data.asset.forEach(function(asset) {
+                    if (asset.income && typeof asset.income === 'number') {
+                        assetsIncome += asset.income;
+                    }
+                });
+            }
+            
+            // Открываем новое окно скоростной дороги с параметрами
+            const speedRoadUrl = `speed-road.html?balance=${currentBalance}&income=${incomeAmount}&assets=${assetsIncome}`;
+            window.open(speedRoadUrl, '_blank', 'width=900,height=700,scrollbars=yes,resizable=yes');
+            
+            // Закрываем модальное окно
+            closeIncomeModal();
+        });
+    }
+    
+    if (cancelBtn) {
+        cancelBtn.addEventListener('click', closeIncomeModal);
+    }
+    
+    if (closeBtn) {
+        closeBtn.addEventListener('click', closeIncomeModal);
+    }
+    
+    // Закрытие по клику вне модального окна
+    if (incomeModal) {
+        incomeModal.addEventListener('click', function(e) {
+            if (e.target === incomeModal) {
+                closeIncomeModal();
+            }
+        });
+    }
+    
+    // Закрытие по клавише Escape
+    document.addEventListener('keydown', function(e) {
+        if (e.key === 'Escape' && incomeModal && incomeModal.style.display === 'block') {
+            closeIncomeModal();
+        }
+    });
+    
+    // Подтверждение по клавише Enter
+    if (incomeInput) {
+        incomeInput.addEventListener('keydown', function(e) {
+            if (e.key === 'Enter') {
+                confirmBtn?.click();
+            }
+        });
+    }
+});

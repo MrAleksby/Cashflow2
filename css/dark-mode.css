@@ -72,6 +72,33 @@
     box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4), 0 6px 16px rgba(156, 39, 176, 0.5) !important;
     border-color: var(--gold-color) !important;
 }
+
+/* Стили для кнопки меню в темной теме */
+.menu-btn {
+    background: linear-gradient(135deg, #7B1FA2, #6A1B9A) !important;
+    border-color: var(--gold-color) !important;
+    box-shadow: 0 4px 12px rgba(255, 215, 0, 0.3), 0 4px 12px rgba(156, 39, 176, 0.4) !important;
+}
+
+.menu-btn:hover {
+    background: linear-gradient(135deg, #6A1B9A, #4A148C) !important;
+    box-shadow: 0 6px 20px rgba(255, 215, 0, 0.4), 0 6px 16px rgba(156, 39, 176, 0.5) !important;
+    border-color: var(--gold-color) !important;
+}
+
+.menu-dropdown {
+    background: linear-gradient(145deg, #2d2d2d, #3a3a3a) !important;
+    border-color: rgba(156, 39, 176, 0.3) !important;
+}
+
+.menu-item {
+    color: var(--text-color) !important;
+}
+
+.menu-item:hover {
+    background: var(--primary-color) !important;
+    color: white !important;
+}
     
     .modal-content {
         background: linear-gradient(145deg, #2d2d2d, #3a3a3a);

@@ -14,7 +14,8 @@ class DOMManager {
     initializeElements() {
         // Основные элементы интерфейса
         this.cacheElement('top-cash-amount');
-        this.cacheElement('new-game-btn');
+        this.cacheElement('menu-btn');
+        this.cacheElement('menu-dropdown');
         this.cacheElement('main-buy-btn');
         this.cacheElement('main-sell-btn');
         this.cacheElement('main-action-btn');
