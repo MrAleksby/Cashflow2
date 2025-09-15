@@ -824,6 +824,161 @@
             box-shadow: 0 6px 16px rgba(158, 158, 158, 0.4);
         }
         
+        /* Стили для модального окна ввода цены */
+        .price-modal-content {
+            text-align: center;
+            max-width: 500px;
+        }
+        
+        .price-input-section {
+            margin: 20px 0;
+        }
+        
+        .business-info {
+            background: linear-gradient(135deg, rgba(33, 150, 243, 0.1), rgba(33, 150, 243, 0.05));
+            border: 2px solid #2196F3;
+            border-radius: var(--border-radius);
+            padding: 20px;
+            margin-bottom: 20px;
+            text-align: left;
+        }
+        
+        .business-info h3 {
+            color: #2196F3;
+            margin: 0 0 10px 0;
+            font-size: 1.3em;
+        }
+        
+        .business-info p {
+            color: var(--text-color);
+            margin: 5px 0;
+            font-size: 0.95em;
+        }
+        
+        .price-input-group {
+            margin: 20px 0;
+        }
+        
+        .price-input-group label {
+            display: block;
+            color: var(--primary-color);
+            font-weight: 600;
+            margin-bottom: 10px;
+            font-size: 1.1em;
+        }
+        
+        .price-input-wrapper {
+            position: relative;
+            display: inline-block;
+            width: 100%;
+            max-width: 300px;
+        }
+        
+        .price-input-wrapper .currency-symbol {
+            position: absolute;
+            left: 15px;
+            top: 50%;
+            transform: translateY(-50%);
+            color: var(--primary-color);
+            font-weight: 600;
+            font-size: 1.2em;
+            z-index: 1;
+        }
+        
+        .price-input-wrapper input {
+            width: 100%;
+            padding: 15px 15px 15px 35px;
+            border: 2px solid var(--primary-color);
+            border-radius: var(--border-radius);
+            font-size: 1.2em;
+            font-weight: 600;
+            text-align: right;
+            background: var(--card-background);
+            color: var(--text-color);
+            transition: all 0.3s ease;
+        }
+        
+        .price-input-wrapper input:focus {
+            outline: none;
+            border-color: #2196F3;
+            box-shadow: 0 0 10px rgba(33, 150, 243, 0.3);
+        }
+        
+        .price-suggestions {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin: 20px 0;
+        }
+        
+        .price-suggestion-btn {
+            background: linear-gradient(135deg, #9C27B0, #7B1FA2);
+            color: white;
+            border: none;
+            padding: 12px 20px;
+            border-radius: var(--border-radius-small);
+            font-size: 0.9em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .price-suggestion-btn:hover {
+            background: linear-gradient(135deg, #BA68C8, #9C27B0);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3);
+        }
+        
+        .price-modal-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-top: 20px;
+        }
+        
+        .price-confirm-btn {
+            background: linear-gradient(135deg, #4CAF50, #388E3C);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .price-confirm-btn:hover {
+            background: linear-gradient(135deg, #66BB6A, #4CAF50);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(76, 175, 80, 0.4);
+        }
+        
+        .price-cancel-btn {
+            background: linear-gradient(135deg, #9E9E9E, #757575);
+            color: white;
+            border: none;
+            padding: 15px 25px;
+            border-radius: var(--border-radius);
+            font-size: 1.1em;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .price-cancel-btn:hover {
+            background: linear-gradient(135deg, #BDBDBD, #9E9E9E);
+            transform: translateY(-2px);
+            box-shadow: 0 6px 16px rgba(158, 158, 158, 0.4);
+        }
+        
         /* Анимации для уведомлений */
         @keyframes slideIn {
             from {
@@ -1146,6 +1301,55 @@
             .event-cost {
                 font-size: 0.8em;
             }
+            
+            /* Адаптивные стили для модального окна ввода цены */
+            .price-modal-content {
+                padding: 15px;
+                margin: 2% auto;
+            }
+            
+            .business-info {
+                padding: 15px;
+                margin-bottom: 15px;
+            }
+            
+            .business-info h3 {
+                font-size: 1.1em;
+            }
+            
+            .business-info p {
+                font-size: 0.85em;
+            }
+            
+            .price-input-wrapper {
+                max-width: 100%;
+            }
+            
+            .price-input-wrapper input {
+                padding: 12px 12px 12px 30px;
+                font-size: 1.1em;
+            }
+            
+            .price-suggestions {
+                gap: 8px;
+                margin: 15px 0;
+            }
+            
+            .price-suggestion-btn {
+                padding: 10px 15px;
+                font-size: 0.85em;
+            }
+            
+            .price-modal-buttons {
+                gap: 10px;
+                margin-top: 15px;
+            }
+            
+            .price-confirm-btn,
+            .price-cancel-btn {
+                padding: 12px 20px;
+                font-size: 1em;
+            }
         }
     </style>
 </head>
@@ -1212,6 +1416,51 @@
             
             <div class="assets-list" id="speed-road-buy-list">
                 <!-- Список будет заполнен динамически -->
+            </div>
+        </div>
+    </div>
+    
+    <!-- Модальное окно для ввода цены покупки -->
+    <div id="speed-road-price-modal" class="modal">
+        <div class="modal-content price-modal-content">
+            <button class="close-btn">&times;</button>
+            <h2><i class="fas fa-dollar-sign"></i> Укажите цену покупки</h2>
+            
+            <div class="price-input-section">
+                <div class="business-info" id="price-modal-business-info">
+                    <!-- Информация о бизнесе будет заполнена динамически -->
+                </div>
+                
+                <div class="price-input-group">
+                    <label for="custom-price-input">Цена покупки:</label>
+                    <div class="price-input-wrapper">
+                        <span class="currency-symbol">$</span>
+                        <input type="number" id="custom-price-input" placeholder="0" min="1" step="1000">
+                    </div>
+                </div>
+                
+                <div class="price-suggestions">
+                    <button class="price-suggestion-btn" onclick="setSuggestedPrice('default')">
+                        Рекомендуемая цена
+                    </button>
+                    <button class="price-suggestion-btn" onclick="setSuggestedPrice('half')">
+                        Половина от рекомендованной
+                    </button>
+                    <button class="price-suggestion-btn" onclick="setSuggestedPrice('double')">
+                        Двойная цена
+                    </button>
+                </div>
+            </div>
+            
+            <div class="price-modal-buttons">
+                <button class="price-confirm-btn" onclick="confirmCustomPrice()">
+                    <i class="fas fa-check"></i>
+                    Купить
+                </button>
+                <button class="price-cancel-btn" onclick="closePriceModal()">
+                    <i class="fas fa-times"></i>
+                    Отмена
+                </button>
             </div>
         </div>
     </div>
@@ -1561,8 +1810,6 @@
         
         // Функция покупки актива
         function buyAsset(assetIndex) {
-            const params = getUrlParams();
-            const currentBalance = parseInt(params.balance) || 0;
             const asset = speedRoadBusinesses[assetIndex];
             
             if (!asset) {
@@ -1570,19 +1817,129 @@
                 return;
             }
             
-            if (currentBalance < asset.price) {
-                alert('Недостаточно средств для покупки!');
+            // Открываем модальное окно для ввода цены
+            openPriceModal(asset, assetIndex);
+        }
+        
+        // Функция открытия модального окна ввода цены
+        function openPriceModal(asset, assetIndex) {
+            const modal = document.getElementById('speed-road-price-modal');
+            const businessInfo = document.getElementById('price-modal-business-info');
+            const priceInput = document.getElementById('custom-price-input');
+            
+            if (modal && businessInfo && priceInput) {
+                // Заполняем информацию о бизнесе
+                const incomeType = asset.income >= 50000 ? 'единоразовый' : 'месячный';
+                const incomeText = asset.income >= 50000 ? 
+                    `Доход: $${asset.income.toLocaleString()} (${incomeType})` : 
+                    `Доход: $${asset.income.toLocaleString()}/${incomeType}`;
+                
+                businessInfo.innerHTML = `
+                    <h3>${asset.name}</h3>
+                    <p><strong>Рекомендуемая цена:</strong> $${asset.price.toLocaleString()}</p>
+                    <p><strong>${incomeText}</strong></p>
+                    ${asset.isRisky ? '<p style="color: #FF9800;"><strong>⚠️ Рисковый бизнес</strong></p>' : ''}
+                `;
+                
+                // Устанавливаем рекомендуемую цену по умолчанию
+                priceInput.value = asset.price;
+                
+                // Сохраняем данные для использования при подтверждении
+                currentAssetForPurchase = asset;
+                currentAssetIndexForPurchase = assetIndex;
+                
+                // Закрываем модальное окно покупки и открываем ввод цены
+                closeModal('speed-road-buy-modal');
+                modal.style.display = 'block';
+                
+                // Фокусируемся на поле ввода
+                setTimeout(() => {
+                    priceInput.focus();
+                    priceInput.select();
+                }, 100);
+            }
+        }
+        
+        // Переменные для хранения данных о покупке
+        let currentAssetForPurchase = null;
+        let currentAssetIndexForPurchase = null;
+        
+        // Функция установки предложенной цены
+        function setSuggestedPrice(type) {
+            if (!currentAssetForPurchase) return;
+            
+            const priceInput = document.getElementById('custom-price-input');
+            if (!priceInput) return;
+            
+            const defaultPrice = currentAssetForPurchase.price;
+            let suggestedPrice = defaultPrice;
+            
+            switch (type) {
+                case 'default':
+                    suggestedPrice = defaultPrice;
+                    break;
+                case 'half':
+                    suggestedPrice = Math.floor(defaultPrice / 2);
+                    break;
+                case 'double':
+                    suggestedPrice = defaultPrice * 2;
+                    break;
+            }
+            
+            priceInput.value = suggestedPrice;
+            priceInput.focus();
+        }
+        
+        // Функция подтверждения покупки с кастомной ценой
+        function confirmCustomPrice() {
+            if (!currentAssetForPurchase) return;
+            
+            const priceInput = document.getElementById('custom-price-input');
+            if (!priceInput) return;
+            
+            const customPrice = parseInt(priceInput.value);
+            
+            if (!customPrice || customPrice <= 0) {
+                alert('Введите корректную цену покупки!');
                 return;
             }
+            
+            const params = getUrlParams();
+            const currentBalance = parseInt(params.balance) || 0;
+            
+            if (currentBalance < customPrice) {
+                alert(`Недостаточно средств! Нужно: $${customPrice.toLocaleString()}, есть: $${currentBalance.toLocaleString()}`);
+                return;
+            }
+            
+            // Создаем копию актива с кастомной ценой
+            const assetWithCustomPrice = {
+                ...currentAssetForPurchase,
+                price: customPrice
+            };
             
             // Если это рисковый бизнес, показываем результат
-            if (asset.isRisky) {
-                showRiskResult(asset, currentBalance, params);
-                return;
+            if (assetWithCustomPrice.isRisky) {
+                showRiskResult(assetWithCustomPrice, currentBalance, params);
+            } else {
+                // Обычная покупка (не рисковый бизнес)
+                buyAssetNormal(assetWithCustomPrice, currentBalance, params);
             }
             
-            // Обычная покупка (не рисковый бизнес)
-            buyAssetNormal(asset, currentBalance, params);
+            // Закрываем модальное окно
+            closePriceModal();
+        }
+        
+        // Функция закрытия модального окна ввода цены
+        function closePriceModal() {
+            const modal = document.getElementById('speed-road-price-modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+            
+            // Очищаем данные
+            currentAssetForPurchase = null;
+            currentAssetIndexForPurchase = null;
         }
         
         // Функция обычной покупки актива
@@ -2025,6 +2382,7 @@
             const riskModal = document.getElementById('speed-road-risk-modal');
             const charityModal = document.getElementById('speed-road-charity-modal');
             const lifeEventsModal = document.getElementById('speed-road-life-events-modal');
+            const priceModal = document.getElementById('speed-road-price-modal');
             
             // Закрытие по клику на крестик
             document.querySelectorAll('.close-btn').forEach(btn => {
@@ -2037,17 +2395,33 @@
             });
             
             // Закрытие по клику вне модального окна
-            [buyModal, sellModal, riskModal, charityModal, lifeEventsModal].forEach(modal => {
+            [buyModal, sellModal, riskModal, charityModal, lifeEventsModal, priceModal].forEach(modal => {
                 if (modal) {
                     modal.addEventListener('click', function(e) {
                         if (e.target === modal) {
                             modal.style.display = 'none';
+                            // Если это модальное окно цены, очищаем данные
+                            if (modal.id === 'speed-road-price-modal') {
+                                currentAssetForPurchase = null;
+                                currentAssetIndexForPurchase = null;
+                            }
                         }
                     });
                 }
             });
             
+            // Обработчик для клавиши Enter в поле ввода цены
+            const priceInput = document.getElementById('custom-price-input');
+            if (priceInput) {
+                priceInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        confirmCustomPrice();
+                    }
+                });
+            }
+            
         });
     </script>
 </body>
 </html>
+
