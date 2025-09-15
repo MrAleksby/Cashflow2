@@ -57,6 +57,29 @@
         font-size: 1em !important;
     }
     
+    /* Оптимизация нижней панели для мобильных */
+    .bottom-nav {
+        padding: 4px 6px !important;
+        gap: 2px !important;
+    }
+    
+    .nav-item {
+        padding: 4px 2px !important;
+        min-width: 35px !important;
+        max-width: 50px !important;
+        font-size: 0.6rem !important;
+    }
+    
+    .nav-item i {
+        font-size: 1rem !important;
+        margin-bottom: 1px !important;
+    }
+    
+    .nav-item span {
+        font-size: 0.55rem !important;
+        line-height: 1.1 !important;
+    }
+    
     
     h1 {
         font-size: 1.2em;
@@ -194,6 +217,29 @@
     .nav-btn span:last-child {
         font-size: 1.1em !important;
     }
+    
+    /* Дополнительная оптимизация для очень маленьких экранов */
+    .bottom-nav {
+        padding: 3px 4px !important;
+        gap: 1px !important;
+    }
+    
+    .nav-item {
+        padding: 3px 1px !important;
+        min-width: 30px !important;
+        max-width: 45px !important;
+        font-size: 0.55rem !important;
+    }
+    
+    .nav-item i {
+        font-size: 0.9rem !important;
+        margin-bottom: 0px !important;
+    }
+    
+    .nav-item span {
+        font-size: 0.5rem !important;
+        line-height: 1.0 !important;
+    }
 }
 
 @media (max-width: 400px) {
@@ -212,6 +258,29 @@
     .nav-btn span:last-child {
         font-size: 1.2em !important;
     }
+    
+    /* Максимальная оптимизация для очень маленьких экранов */
+    .bottom-nav {
+        padding: 2px 3px !important;
+        gap: 0px !important;
+    }
+    
+    .nav-item {
+        padding: 2px 0px !important;
+        min-width: 28px !important;
+        max-width: 40px !important;
+        font-size: 0.5rem !important;
+    }
+    
+    .nav-item i {
+        font-size: 0.8rem !important;
+        margin-bottom: 0px !important;
+    }
+    
+    .nav-item span {
+        font-size: 0.45rem !important;
+        line-height: 0.9 !important;
+    }
 }
 
 /* Специфичные стили для очень маленьких экранов */
@@ -226,6 +295,29 @@
 
     .input-group label {
         font-size: 0.8em;
+    }
+    
+    /* Экстремальная оптимизация для самых маленьких экранов */
+    .bottom-nav {
+        padding: 1px 2px !important;
+        gap: 0px !important;
+    }
+    
+    .nav-item {
+        padding: 1px 0px !important;
+        min-width: 25px !important;
+        max-width: 35px !important;
+        font-size: 0.45rem !important;
+    }
+    
+    .nav-item i {
+        font-size: 0.7rem !important;
+        margin-bottom: 0px !important;
+    }
+    
+    .nav-item span {
+        font-size: 0.4rem !important;
+        line-height: 0.8 !important;
     }
 }
 
