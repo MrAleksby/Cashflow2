@@ -165,8 +165,19 @@
             gap: 8px;
             flex-wrap: nowrap;
             overflow-x: auto;
+            overflow-y: hidden;
             padding: 10px 0;
             -webkit-overflow-scrolling: touch;
+            scrollbar-width: none; /* Firefox */
+            -ms-overflow-style: none; /* IE/Edge */
+            /* Улучшенная прокрутка для Android */
+            overscroll-behavior-x: contain;
+            scroll-behavior: smooth;
+        }
+        
+        /* Скрываем скроллбар для WebKit браузеров */
+        .action-buttons-row.compact::-webkit-scrollbar {
+            display: none;
         }
         
         .action-button {
@@ -873,6 +884,15 @@
             .action-buttons-row.compact {
                 gap: 6px;
                 padding: 8px 0;
+                /* Дополнительные стили для Android */
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior-x: contain;
+                scroll-snap-type: x mandatory;
+            }
+            
+            .action-button.compact {
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
             }
             
             .actions-section {
@@ -947,6 +967,18 @@
             .action-buttons-row.compact {
                 gap: 4px;
                 padding: 6px 0;
+                /* Дополнительные стили для Android на маленьких экранах */
+                -webkit-overflow-scrolling: touch;
+                overscroll-behavior-x: contain;
+                scroll-snap-type: x mandatory;
+                /* Увеличиваем область прокрутки */
+                padding-left: 5px;
+                padding-right: 5px;
+            }
+            
+            .action-button.compact {
+                scroll-snap-align: start;
+                scroll-snap-stop: always;
             }
             
             .actions-section {
@@ -1728,9 +1760,69 @@
             }
         }
         
+        // Функция для улучшения прокрутки на Android
+        function improveAndroidScrolling() {
+            const buttonsRow = document.querySelector('.action-buttons-row.compact');
+            if (!buttonsRow) return;
+            
+            // Определяем, что это Android устройство
+            const isAndroid = /Android/i.test(navigator.userAgent);
+            if (!isAndroid) return;
+            
+            // Добавляем обработчики для улучшения прокрутки
+            let isScrolling = false;
+            let startX = 0;
+            let scrollLeft = 0;
+            
+            buttonsRow.addEventListener('touchstart', function(e) {
+                isScrolling = true;
+                startX = e.touches[0].pageX - buttonsRow.offsetLeft;
+                scrollLeft = buttonsRow.scrollLeft;
+            }, { passive: true });
+            
+            buttonsRow.addEventListener('touchmove', function(e) {
+                if (!isScrolling) return;
+                e.preventDefault();
+                const x = e.touches[0].pageX - buttonsRow.offsetLeft;
+                const walk = (x - startX) * 2; // Увеличиваем чувствительность
+                buttonsRow.scrollLeft = scrollLeft - walk;
+            }, { passive: false });
+            
+            buttonsRow.addEventListener('touchend', function() {
+                isScrolling = false;
+            }, { passive: true });
+            
+            // Добавляем индикатор прокрутки
+            const scrollIndicator = document.createElement('div');
+            scrollIndicator.style.cssText = `
+                position: absolute;
+                bottom: -2px;
+                left: 50%;
+                transform: translateX(-50%);
+                width: 30px;
+                height: 3px;
+                background: rgba(156, 39, 176, 0.3);
+                border-radius: 2px;
+                z-index: 10;
+            `;
+            
+            buttonsRow.style.position = 'relative';
+            buttonsRow.appendChild(scrollIndicator);
+            
+            // Обновляем индикатор при прокрутке
+            buttonsRow.addEventListener('scroll', function() {
+                const scrollPercent = (buttonsRow.scrollLeft / (buttonsRow.scrollWidth - buttonsRow.clientWidth)) * 100;
+                scrollIndicator.style.width = `${Math.max(20, 30 - scrollPercent * 0.1)}px`;
+                scrollIndicator.style.opacity = buttonsRow.scrollWidth > buttonsRow.clientWidth ? '1' : '0';
+            });
+        }
+
         // Инициализация при загрузке страницы
         document.addEventListener('DOMContentLoaded', function() {
             updateDisplay();
+            
+            // Улучшаем прокрутку для Android
+            setTimeout(improveAndroidScrolling, 100);
             
             // Добавляем обработчики событий для кнопок
             const paydayBtn = document.getElementById('speed-road-payday-btn');
