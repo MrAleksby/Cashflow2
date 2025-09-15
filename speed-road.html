@@ -1439,17 +1439,6 @@
                     </div>
                 </div>
                 
-                <div class="price-suggestions">
-                    <button class="price-suggestion-btn" onclick="setSuggestedPrice('default')">
-                        Рекомендуемая цена
-                    </button>
-                    <button class="price-suggestion-btn" onclick="setSuggestedPrice('half')">
-                        Половина от рекомендованной
-                    </button>
-                    <button class="price-suggestion-btn" onclick="setSuggestedPrice('double')">
-                        Двойная цена
-                    </button>
-                </div>
             </div>
             
             <div class="price-modal-buttons">
@@ -1909,31 +1898,6 @@
         let currentAssetForPurchase = null;
         let currentAssetIndexForPurchase = null;
         
-        // Функция установки предложенной цены
-        function setSuggestedPrice(type) {
-            if (!currentAssetForPurchase) return;
-            
-            const priceInput = document.getElementById('custom-price-input');
-            if (!priceInput) return;
-            
-            const defaultPrice = currentAssetForPurchase.price;
-            let suggestedPrice = defaultPrice;
-            
-            switch (type) {
-                case 'default':
-                    suggestedPrice = defaultPrice;
-                    break;
-                case 'half':
-                    suggestedPrice = Math.floor(defaultPrice / 2);
-                    break;
-                case 'double':
-                    suggestedPrice = defaultPrice * 2;
-                    break;
-            }
-            
-            priceInput.value = suggestedPrice;
-            priceInput.focus();
-        }
         
         // Функция подтверждения покупки с кастомной ценой
         function confirmCustomPrice() {
