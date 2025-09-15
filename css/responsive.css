@@ -59,25 +59,25 @@
     
     /* Оптимизация нижней панели для мобильных */
     .bottom-nav {
-        padding: 4px 6px !important;
-        gap: 2px !important;
+        padding: 8px 6px !important;
+        gap: 4px !important;
     }
     
     .nav-item {
-        padding: 4px 2px !important;
-        min-width: 35px !important;
-        max-width: 50px !important;
-        font-size: 0.6rem !important;
+        padding: 8px 4px !important;
+        min-width: 50px !important;
+        max-width: 70px !important;
+        font-size: 0.7rem !important;
     }
     
     .nav-item i {
-        font-size: 1rem !important;
-        margin-bottom: 1px !important;
+        font-size: 1.4rem !important;
+        margin-bottom: 2px !important;
     }
     
     .nav-item span {
-        font-size: 0.55rem !important;
-        line-height: 1.1 !important;
+        font-size: 0.65rem !important;
+        line-height: 1.2 !important;
     }
     
     
@@ -220,25 +220,25 @@
     
     /* Дополнительная оптимизация для очень маленьких экранов */
     .bottom-nav {
-        padding: 3px 4px !important;
-        gap: 1px !important;
+        padding: 6px 4px !important;
+        gap: 3px !important;
     }
     
     .nav-item {
-        padding: 3px 1px !important;
-        min-width: 30px !important;
-        max-width: 45px !important;
-        font-size: 0.55rem !important;
+        padding: 6px 2px !important;
+        min-width: 45px !important;
+        max-width: 60px !important;
+        font-size: 0.65rem !important;
     }
     
     .nav-item i {
-        font-size: 0.9rem !important;
-        margin-bottom: 0px !important;
+        font-size: 1.2rem !important;
+        margin-bottom: 1px !important;
     }
     
     .nav-item span {
-        font-size: 0.5rem !important;
-        line-height: 1.0 !important;
+        font-size: 0.6rem !important;
+        line-height: 1.1 !important;
     }
 }
 
@@ -261,25 +261,25 @@
     
     /* Максимальная оптимизация для очень маленьких экранов */
     .bottom-nav {
-        padding: 2px 3px !important;
-        gap: 0px !important;
+        padding: 5px 3px !important;
+        gap: 2px !important;
     }
     
     .nav-item {
-        padding: 2px 0px !important;
-        min-width: 28px !important;
-        max-width: 40px !important;
-        font-size: 0.5rem !important;
+        padding: 5px 1px !important;
+        min-width: 40px !important;
+        max-width: 55px !important;
+        font-size: 0.6rem !important;
     }
     
     .nav-item i {
-        font-size: 0.8rem !important;
-        margin-bottom: 0px !important;
+        font-size: 1.1rem !important;
+        margin-bottom: 1px !important;
     }
     
     .nav-item span {
-        font-size: 0.45rem !important;
-        line-height: 0.9 !important;
+        font-size: 0.55rem !important;
+        line-height: 1.0 !important;
     }
 }
 
@@ -299,25 +299,25 @@
     
     /* Экстремальная оптимизация для самых маленьких экранов */
     .bottom-nav {
-        padding: 1px 2px !important;
-        gap: 0px !important;
+        padding: 4px 2px !important;
+        gap: 1px !important;
     }
     
     .nav-item {
-        padding: 1px 0px !important;
-        min-width: 25px !important;
-        max-width: 35px !important;
-        font-size: 0.45rem !important;
+        padding: 4px 1px !important;
+        min-width: 35px !important;
+        max-width: 50px !important;
+        font-size: 0.55rem !important;
     }
     
     .nav-item i {
-        font-size: 0.7rem !important;
-        margin-bottom: 0px !important;
+        font-size: 1rem !important;
+        margin-bottom: 1px !important;
     }
     
     .nav-item span {
-        font-size: 0.4rem !important;
-        line-height: 0.8 !important;
+        font-size: 0.5rem !important;
+        line-height: 0.9 !important;
     }
 }
 
