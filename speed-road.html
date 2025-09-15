@@ -1477,6 +1477,51 @@
         </div>
     </div>
     
+    <!-- Модальное окно для ввода цены продажи -->
+    <div id="speed-road-sell-price-modal" class="modal">
+        <div class="modal-content price-modal-content">
+            <button class="close-btn">&times;</button>
+            <h2><i class="fas fa-dollar-sign"></i> Укажите цену продажи</h2>
+            
+            <div class="price-input-section">
+                <div class="business-info" id="sell-price-modal-business-info">
+                    <!-- Информация о бизнесе будет заполнена динамически -->
+                </div>
+                
+                <div class="price-input-group">
+                    <label for="custom-sell-price-input">Цена продажи:</label>
+                    <div class="price-input-wrapper">
+                        <span class="currency-symbol">$</span>
+                        <input type="number" id="custom-sell-price-input" placeholder="0" min="1" step="1000">
+                    </div>
+                </div>
+                
+                <div class="price-suggestions">
+                    <button class="price-suggestion-btn" onclick="setSuggestedSellPrice('default')">
+                        Рекомендуемая цена (x2)
+                    </button>
+                    <button class="price-suggestion-btn" onclick="setSuggestedSellPrice('original')">
+                        Оригинальная цена
+                    </button>
+                    <button class="price-suggestion-btn" onclick="setSuggestedSellPrice('triple')">
+                        Тройная цена
+                    </button>
+                </div>
+            </div>
+            
+            <div class="price-modal-buttons">
+                <button class="price-confirm-btn" onclick="confirmCustomSellPrice()">
+                    <i class="fas fa-check"></i>
+                    Продать
+                </button>
+                <button class="price-cancel-btn" onclick="closeSellPriceModal()">
+                    <i class="fas fa-times"></i>
+                    Отмена
+                </button>
+            </div>
+        </div>
+    </div>
+    
     <!-- Модальное окно выбора результата рискового бизнеса -->
     <div id="speed-road-risk-modal" class="modal">
         <div class="modal-content risk-modal-content">
@@ -2211,15 +2256,112 @@
         // Функция продажи актива
         function sellAsset(assetIndex) {
             const asset = currentAssets[assetIndex];
+            
+            if (!asset) {
+                alert('Актив не найден!');
+                return;
+            }
+            
+            // Открываем модальное окно для ввода цены продажи
+            openSellPriceModal(asset, assetIndex);
+        }
+        
+        // Функция открытия модального окна ввода цены продажи
+        function openSellPriceModal(asset, assetIndex) {
+            const modal = document.getElementById('speed-road-sell-price-modal');
+            const businessInfo = document.getElementById('sell-price-modal-business-info');
+            const priceInput = document.getElementById('custom-sell-price-input');
+            
+            if (modal && businessInfo && priceInput) {
+                // Заполняем информацию о бизнесе
+                const incomeType = asset.isOneTime ? 'единоразовый' : 'месяц';
+                const incomeText = asset.isOneTime ? 
+                    `Доход: $${asset.income.toLocaleString()} (${incomeType})` : 
+                    `Доход: $${asset.income.toLocaleString()}/${incomeType}`;
+                
+                const recommendedPrice = asset.price * 2;
+                
+                businessInfo.innerHTML = `
+                    <h3>${asset.name}</h3>
+                    <p><strong>Цена покупки:</strong> $${asset.price.toLocaleString()}</p>
+                    <p><strong>${incomeText}</strong></p>
+                    <p><strong>Рекомендуемая цена продажи:</strong> $${recommendedPrice.toLocaleString()}</p>
+                `;
+                
+                // Устанавливаем рекомендуемую цену продажи по умолчанию (x2)
+                priceInput.value = recommendedPrice;
+                
+                // Сохраняем данные для использования при подтверждении
+                currentAssetForSale = asset;
+                currentAssetIndexForSale = assetIndex;
+                
+                // Закрываем модальное окно продажи и открываем ввод цены
+                closeModal('speed-road-sell-modal');
+                modal.style.display = 'block';
+                
+                // Фокусируемся на поле ввода
+                setTimeout(() => {
+                    priceInput.focus();
+                    priceInput.select();
+                }, 100);
+            }
+        }
+        
+        // Переменные для хранения данных о продаже
+        let currentAssetForSale = null;
+        let currentAssetIndexForSale = null;
+        
+        // Функция установки предложенной цены продажи
+        function setSuggestedSellPrice(type) {
+            if (!currentAssetForSale) return;
+            
+            const priceInput = document.getElementById('custom-sell-price-input');
+            if (!priceInput) return;
+            
+            const originalPrice = currentAssetForSale.price;
+            const recommendedPrice = originalPrice * 2;
+            let suggestedPrice = recommendedPrice;
+            
+            switch (type) {
+                case 'default':
+                    suggestedPrice = recommendedPrice; // x2
+                    break;
+                case 'original':
+                    suggestedPrice = originalPrice; // x1
+                    break;
+                case 'triple':
+                    suggestedPrice = originalPrice * 3; // x3
+                    break;
+            }
+            
+            priceInput.value = suggestedPrice;
+            priceInput.focus();
+        }
+        
+        // Функция подтверждения продажи с кастомной ценой
+        function confirmCustomSellPrice() {
+            if (!currentAssetForSale) return;
+            
+            const priceInput = document.getElementById('custom-sell-price-input');
+            if (!priceInput) return;
+            
+            const customPrice = parseInt(priceInput.value);
+            
+            if (!customPrice || customPrice <= 0) {
+                alert('Введите корректную цену продажи!');
+                return;
+            }
+            
+            const asset = currentAssetForSale;
+            const assetIndex = currentAssetIndexForSale;
             const params = getUrlParams();
             const currentBalance = parseInt(params.balance) || 0;
             
             // Удаляем актив из списка
             currentAssets.splice(assetIndex, 1);
             
-            // Продаем за двойную цену
-            const sellPrice = asset.price * 2;
-            const newBalance = currentBalance + sellPrice;
+            // Продаем за указанную цену
+            const newBalance = currentBalance + customPrice;
             
             document.getElementById('speed-road-balance').textContent = '$' + newBalance.toLocaleString();
             
@@ -2231,10 +2373,30 @@
             window.history.replaceState({}, document.title, newUrl);
             
             // Показываем уведомление
-            showNotification(`Продан актив: ${asset.name} за $${sellPrice.toLocaleString()} (в 2 раза больше покупной цены)`, 'info');
+            const profitLoss = customPrice - asset.price;
+            const profitText = profitLoss >= 0 ? 
+                `Прибыль: +$${profitLoss.toLocaleString()}` : 
+                `Убыток: -$${Math.abs(profitLoss).toLocaleString()}`;
+            
+            showNotification(`Продан актив: ${asset.name} за $${customPrice.toLocaleString()}. ${profitText}`, 'info');
+            
+            // Закрываем модальное окно
+            closeSellPriceModal();
             
             // Обновляем список активов
             openSellModal();
+        }
+        
+        // Функция закрытия модального окна ввода цены продажи
+        function closeSellPriceModal() {
+            const modal = document.getElementById('speed-road-sell-price-modal');
+            if (modal) {
+                modal.style.display = 'none';
+            }
+            
+            // Очищаем данные
+            currentAssetForSale = null;
+            currentAssetIndexForSale = null;
         }
         
         // Функция показа уведомления
@@ -2383,6 +2545,7 @@
             const charityModal = document.getElementById('speed-road-charity-modal');
             const lifeEventsModal = document.getElementById('speed-road-life-events-modal');
             const priceModal = document.getElementById('speed-road-price-modal');
+            const sellPriceModal = document.getElementById('speed-road-sell-price-modal');
             
             // Закрытие по клику на крестик
             document.querySelectorAll('.close-btn').forEach(btn => {
@@ -2395,27 +2558,42 @@
             });
             
             // Закрытие по клику вне модального окна
-            [buyModal, sellModal, riskModal, charityModal, lifeEventsModal, priceModal].forEach(modal => {
+            [buyModal, sellModal, riskModal, charityModal, lifeEventsModal, priceModal, sellPriceModal].forEach(modal => {
                 if (modal) {
                     modal.addEventListener('click', function(e) {
                         if (e.target === modal) {
                             modal.style.display = 'none';
-                            // Если это модальное окно цены, очищаем данные
+                            // Если это модальное окно цены покупки, очищаем данные
                             if (modal.id === 'speed-road-price-modal') {
                                 currentAssetForPurchase = null;
                                 currentAssetIndexForPurchase = null;
+                            }
+                            // Если это модальное окно цены продажи, очищаем данные
+                            if (modal.id === 'speed-road-sell-price-modal') {
+                                currentAssetForSale = null;
+                                currentAssetIndexForSale = null;
                             }
                         }
                     });
                 }
             });
             
-            // Обработчик для клавиши Enter в поле ввода цены
+            // Обработчик для клавиши Enter в поле ввода цены покупки
             const priceInput = document.getElementById('custom-price-input');
             if (priceInput) {
                 priceInput.addEventListener('keypress', function(e) {
                     if (e.key === 'Enter') {
                         confirmCustomPrice();
+                    }
+                });
+            }
+            
+            // Обработчик для клавиши Enter в поле ввода цены продажи
+            const sellPriceInput = document.getElementById('custom-sell-price-input');
+            if (sellPriceInput) {
+                sellPriceInput.addEventListener('keypress', function(e) {
+                    if (e.key === 'Enter') {
+                        confirmCustomSellPrice();
                     }
                 });
             }
