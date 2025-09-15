@@ -1485,17 +1485,6 @@
                     </div>
                 </div>
                 
-                <div class="price-suggestions">
-                    <button class="price-suggestion-btn" onclick="setSuggestedSellPrice('default')">
-                        Рекомендуемая цена (x2)
-                    </button>
-                    <button class="price-suggestion-btn" onclick="setSuggestedSellPrice('original')">
-                        Оригинальная цена
-                    </button>
-                    <button class="price-suggestion-btn" onclick="setSuggestedSellPrice('triple')">
-                        Тройная цена
-                    </button>
-                </div>
             </div>
             
             <div class="price-modal-buttons">
@@ -2275,32 +2264,6 @@
         let currentAssetForSale = null;
         let currentAssetIndexForSale = null;
         
-        // Функция установки предложенной цены продажи
-        function setSuggestedSellPrice(type) {
-            if (!currentAssetForSale) return;
-            
-            const priceInput = document.getElementById('custom-sell-price-input');
-            if (!priceInput) return;
-            
-            const originalPrice = currentAssetForSale.price;
-            const recommendedPrice = originalPrice * 2;
-            let suggestedPrice = recommendedPrice;
-            
-            switch (type) {
-                case 'default':
-                    suggestedPrice = recommendedPrice; // x2
-                    break;
-                case 'original':
-                    suggestedPrice = originalPrice; // x1
-                    break;
-                case 'triple':
-                    suggestedPrice = originalPrice * 3; // x3
-                    break;
-            }
-            
-            priceInput.value = suggestedPrice;
-            priceInput.focus();
-        }
         
         // Функция подтверждения продажи с кастомной ценой
         function confirmCustomSellPrice() {
