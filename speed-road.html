@@ -329,6 +329,9 @@
             box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
             border: 2px solid var(--primary-color);
             position: relative;
+            max-height: 90vh;
+            overflow-y: auto;
+            -webkit-overflow-scrolling: touch;
         }
         
         .close-btn {
@@ -899,6 +902,26 @@
                 gap: 12px;
                 margin-top: 15px;
             }
+            
+            /* Стили для модального окна жизненных событий на планшетах */
+            .life-events-modal-content {
+                max-height: 90vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .life-events-options {
+                gap: 12px;
+            }
+            
+            .life-event-option {
+                padding: 18px;
+            }
+            
+            .event-icon {
+                width: 55px;
+                height: 55px;
+            }
         }
         
         @media (max-width: 480px) {
@@ -988,8 +1011,56 @@
             
             .modal-content {
                 padding: 15px;
-                margin: 5% auto;
+                margin: 2% auto;
                 width: 95%;
+                max-height: 96vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            /* Специальные стили для модального окна жизненных событий на мобильных */
+            .life-events-modal-content {
+                max-height: 96vh;
+                overflow-y: auto;
+                -webkit-overflow-scrolling: touch;
+                padding: 15px;
+            }
+            
+            .life-events-options {
+                margin: 15px 0;
+                gap: 10px;
+            }
+            
+            .life-event-option {
+                padding: 15px;
+                flex-direction: column;
+                text-align: center;
+                gap: 10px;
+            }
+            
+            .event-icon {
+                width: 50px;
+                height: 50px;
+                margin-right: 0;
+                margin-bottom: 10px;
+            }
+            
+            .event-icon i {
+                font-size: 1.2em;
+            }
+            
+            .event-info h4 {
+                font-size: 1.1em;
+                margin-bottom: 8px;
+            }
+            
+            .event-info p {
+                font-size: 0.9em;
+                margin-bottom: 6px;
+            }
+            
+            .event-cost {
+                font-size: 0.85em;
             }
             
             .asset-categories {
@@ -1017,6 +1088,47 @@
             .buy-asset-btn {
                 padding: 5px 8px;
                 font-size: 0.75em;
+            }
+        }
+        
+        /* Дополнительные стили для очень маленьких экранов */
+        @media (max-width: 320px) {
+            .life-events-modal-content {
+                max-height: 98vh;
+                padding: 10px;
+            }
+            
+            .life-events-options {
+                gap: 8px;
+                margin: 10px 0;
+            }
+            
+            .life-event-option {
+                padding: 12px;
+                gap: 8px;
+            }
+            
+            .event-icon {
+                width: 45px;
+                height: 45px;
+            }
+            
+            .event-icon i {
+                font-size: 1.1em;
+            }
+            
+            .event-info h4 {
+                font-size: 1em;
+                margin-bottom: 6px;
+            }
+            
+            .event-info p {
+                font-size: 0.85em;
+                margin-bottom: 4px;
+            }
+            
+            .event-cost {
+                font-size: 0.8em;
             }
         }
     </style>
@@ -1623,7 +1735,47 @@
             const modal = document.getElementById('speed-road-life-events-modal');
             if (modal) {
                 modal.style.display = 'block';
+                
+                // Улучшаем прокрутку для мобильных устройств
+                setTimeout(() => {
+                    improveModalScrolling();
+                }, 100);
             }
+        }
+        
+        // Функция для улучшения прокрутки модального окна на мобильных
+        function improveModalScrolling() {
+            const isMobile = window.innerWidth <= 768;
+            if (!isMobile) return;
+            
+            const modal = document.querySelector('.life-events-modal-content');
+            if (!modal) return;
+            
+            // Добавляем обработчики для улучшения прокрутки
+            let isScrolling = false;
+            let startY = 0;
+            let scrollTop = 0;
+            
+            modal.addEventListener('touchstart', function(e) {
+                isScrolling = true;
+                startY = e.touches[0].pageY;
+                scrollTop = modal.scrollTop;
+            }, { passive: true });
+            
+            modal.addEventListener('touchmove', function(e) {
+                if (!isScrolling) return;
+                e.preventDefault();
+                const y = e.touches[0].pageY;
+                const walk = (y - startY) * 1.5; // Увеличиваем чувствительность
+                modal.scrollTop = scrollTop - walk;
+            }, { passive: false });
+            
+            modal.addEventListener('touchend', function() {
+                isScrolling = false;
+            }, { passive: true });
+            
+            // Прокручиваем к началу при открытии
+            modal.scrollTop = 0;
         }
         
         // Функция закрытия модального окна жизненных событий
