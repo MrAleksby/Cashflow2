@@ -173,6 +173,10 @@
             /* Улучшенная прокрутка для Android */
             overscroll-behavior-x: contain;
             scroll-behavior: smooth;
+            /* Дополнительные стили для Android */
+            touch-action: pan-x;
+            scroll-snap-type: x mandatory;
+            scroll-padding: 0 20px;
         }
         
         /* Скрываем скроллбар для WebKit браузеров */
@@ -294,6 +298,8 @@
             font-size: 0.9em;
             min-width: 80px;
             flex-shrink: 0;
+            scroll-snap-align: start;
+            scroll-snap-stop: always;
         }
         
         /* Специальная ширина для кнопки благотворительности */
@@ -1056,6 +1062,9 @@
                 -webkit-overflow-scrolling: touch;
                 overscroll-behavior-x: contain;
                 scroll-snap-type: x mandatory;
+                /* Улучшенная прокрутка для Android */
+                touch-action: pan-x;
+                scroll-behavior: smooth;
             }
             
             .action-button.compact {
@@ -1168,6 +1177,9 @@
                 /* Увеличиваем область прокрутки */
                 padding-left: 5px;
                 padding-right: 5px;
+                /* Улучшенная прокрутка для Android */
+                touch-action: pan-x;
+                scroll-behavior: smooth;
             }
             
             .action-button.compact {
@@ -2383,30 +2395,67 @@
             const isAndroid = /Android/i.test(navigator.userAgent);
             if (!isAndroid) return;
             
-            // Добавляем обработчики для улучшения прокрутки
+            // Улучшенные обработчики для прокрутки
             let isScrolling = false;
             let startX = 0;
             let scrollLeft = 0;
+            let velocity = 0;
+            let lastX = 0;
+            let lastTime = 0;
             
+            // Обработчик начала касания
             buttonsRow.addEventListener('touchstart', function(e) {
                 isScrolling = true;
-                startX = e.touches[0].pageX - buttonsRow.offsetLeft;
+                startX = e.touches[0].pageX;
                 scrollLeft = buttonsRow.scrollLeft;
+                lastX = startX;
+                lastTime = Date.now();
+                velocity = 0;
             }, { passive: true });
             
+            // Обработчик движения
             buttonsRow.addEventListener('touchmove', function(e) {
                 if (!isScrolling) return;
-                e.preventDefault();
-                const x = e.touches[0].pageX - buttonsRow.offsetLeft;
-                const walk = (x - startX) * 2; // Увеличиваем чувствительность
-                buttonsRow.scrollLeft = scrollLeft - walk;
+                
+                const currentX = e.touches[0].pageX;
+                const currentTime = Date.now();
+                const deltaX = currentX - startX;
+                const deltaTime = currentTime - lastTime;
+                
+                // Рассчитываем скорость для инерции
+                if (deltaTime > 0) {
+                    velocity = (currentX - lastX) / deltaTime;
+                }
+                
+                // Прокручиваем с учетом направления
+                buttonsRow.scrollLeft = scrollLeft - deltaX;
+                
+                lastX = currentX;
+                lastTime = currentTime;
             }, { passive: false });
             
-            buttonsRow.addEventListener('touchend', function() {
+            // Обработчик окончания касания
+            buttonsRow.addEventListener('touchend', function(e) {
+                if (!isScrolling) return;
                 isScrolling = false;
+                
+                // Добавляем инерцию для более плавной прокрутки
+                if (Math.abs(velocity) > 0.5) {
+                    const inertia = velocity * 100;
+                    const targetScroll = buttonsRow.scrollLeft - inertia;
+                    
+                    // Плавная анимация к целевой позиции
+                    buttonsRow.style.scrollBehavior = 'smooth';
+                    buttonsRow.scrollLeft = Math.max(0, Math.min(targetScroll, buttonsRow.scrollWidth - buttonsRow.clientWidth));
+                    
+                    // Возвращаем обычное поведение
+                    setTimeout(() => {
+                        buttonsRow.style.scrollBehavior = 'auto';
+                    }, 300);
+                }
             }, { passive: true });
             
-            // Добавляем индикатор прокрутки
+            // Добавляем визуальный индикатор прокрутки
             const scrollIndicator = document.createElement('div');
             scrollIndicator.style.cssText = `
                 position: absolute;
@@ -2418,6 +2467,7 @@
                 background: rgba(156, 39, 176, 0.3);
                 border-radius: 2px;
                 z-index: 10;
+                transition: opacity 0.3s ease;
             `;
             
             buttonsRow.style.position = 'relative';
@@ -2429,6 +2479,62 @@
                 scrollIndicator.style.width = `${Math.max(20, 30 - scrollPercent * 0.1)}px`;
                 scrollIndicator.style.opacity = buttonsRow.scrollWidth > buttonsRow.clientWidth ? '1' : '0';
             });
+            
+            // Добавляем стрелки для навигации на очень маленьких экранах
+            if (window.innerWidth <= 320) {
+                const leftArrow = document.createElement('button');
+                const rightArrow = document.createElement('button');
+                
+                leftArrow.innerHTML = '‹';
+                rightArrow.innerHTML = '›';
+                
+                leftArrow.style.cssText = `
+                    position: absolute;
+                    left: -10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    background: rgba(156, 39, 176, 0.8);
+                    color: white;
+                    border: none;
+                    font-size: 18px;
+                    z-index: 20;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                `;
+                
+                rightArrow.style.cssText = `
+                    position: absolute;
+                    right: -10px;
+                    top: 50%;
+                    transform: translateY(-50%);
+                    width: 30px;
+                    height: 30px;
+                    border-radius: 50%;
+                    background: rgba(156, 39, 176, 0.8);
+                    color: white;
+                    border: none;
+                    font-size: 18px;
+                    z-index: 20;
+                    display: flex;
+                    align-items: center;
+                    justify-content: center;
+                `;
+                
+                leftArrow.addEventListener('click', () => {
+                    buttonsRow.scrollBy({ left: -100, behavior: 'smooth' });
+                });
+                
+                rightArrow.addEventListener('click', () => {
+                    buttonsRow.scrollBy({ left: 100, behavior: 'smooth' });
+                });
+                
+                buttonsRow.appendChild(leftArrow);
+                buttonsRow.appendChild(rightArrow);
+            }
         }
 
         // Инициализация при загрузке страницы
