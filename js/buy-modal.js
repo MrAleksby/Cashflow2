@@ -144,8 +144,9 @@ const ASSET_CATEGORIES = {
 
 // Инициализация модального окна покупки
 (function() {
-    const modal = document.getElementById('buy-modal');
-    const buyBtn = document.getElementById('main-buy-btn');
+    // Используем DOMCache для оптимизации
+    const modal = window.$id('buy-modal') || document.getElementById('buy-modal');
+    const buyBtn = window.$id('main-buy-btn') || document.getElementById('main-buy-btn');
     const closeBtn = modal.querySelector('.close-btn');
     const categoryCards = modal.querySelectorAll('.category-card');
 
