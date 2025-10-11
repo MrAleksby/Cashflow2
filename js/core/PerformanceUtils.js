@@ -11,6 +11,22 @@ class PerformanceUtils {
         this._isRendering = false;
     }
 
+    // === PASSIVE EVENT LISTENERS ===
+
+    /**
+     * Добавить passive event listener для улучшения производительности скролла
+     * @param {Element} element - DOM элемент
+     * @param {string} eventType - Тип события ('scroll', 'touchstart', 'touchmove', 'wheel')
+     * @param {Function} handler - Обработчик события
+     * @returns {Function} - Функция для удаления обработчика
+     */
+    addPassiveListener(element, eventType, handler) {
+        const passiveEvents = ['scroll', 'touchstart', 'touchmove', 'wheel', 'mousewheel'];
+        const options = passiveEvents.includes(eventType) ? { passive: true } : false;
+        element.addEventListener(eventType, handler, options);
+        return () => element.removeEventListener(eventType, handler, options);
+    }
+
     // === ДЕБАУНСИНГ ===
 
     /**
@@ -247,7 +263,7 @@ class PerformanceUtils {
             startIndex = Math.floor(scrollTop / itemHeight);
             endIndex = Math.min(startIndex + visibleCount, data.length);
             renderVisibleItems();
-        }, 16, 'virtual-list-scroll'));
+        }, 16, 'virtual-list-scroll'), { passive: true });
         
         container.appendChild(viewport);
         renderVisibleItems();
