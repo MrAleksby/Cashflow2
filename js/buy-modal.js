@@ -376,9 +376,12 @@ const ASSET_CATEGORIES = {
             }
         }
 
+        // Создаём debounced версию для оптимизации (200мс)
+        const debouncedUpdateLiability = debounce(updateLiabilityDisplay, 200);
+
         // Добавляем обработчики для автообновления пассива
-        priceInput.addEventListener('input', updateLiabilityDisplay);
-        downPaymentInput.addEventListener('input', updateLiabilityDisplay);
+        priceInput.addEventListener('input', debouncedUpdateLiability);
+        downPaymentInput.addEventListener('input', debouncedUpdateLiability);
 
         // Добавляем обработчик для автоматического заполнения при выборе бизнеса
         nameInput.addEventListener('change', fillBusinessData);
@@ -1252,9 +1255,12 @@ const ASSET_CATEGORIES = {
                 }
             }
 
-            if (priceInput) priceInput.addEventListener('input', updateTotal);
-            if (priceSelect) priceSelect.addEventListener('change', updateTotal);
-            sharesInput.addEventListener('input', updateTotal);
+            // Создаём debounced версию для оптимизации (200мс)
+            const debouncedUpdateTotal = debounce(updateTotal, 200);
+
+            if (priceInput) priceInput.addEventListener('input', debouncedUpdateTotal);
+            if (priceSelect) priceSelect.addEventListener('change', updateTotal); // Select не требует debounce
+            sharesInput.addEventListener('input', debouncedUpdateTotal);
 
             // Добавляем обработчик для кнопки покупки
             if (buyButton) {
