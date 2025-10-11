@@ -499,13 +499,18 @@ const ASSET_CATEGORIES = {
                 date: new Date().toISOString()
             });
 
-            // Обновляем отображение
-            window.renderCash();
-            window.renderAll();
-            window.renderLiability();
-            window.renderIncome();
-            window.renderSummary();
-            window.renderHistory();
+            // Обновляем отображение (батчинг для производительности)
+            if (window.scheduleFullUpdate) {
+                window.scheduleFullUpdate();
+            } else {
+                // Fallback для старых версий
+                window.renderCash();
+                window.renderAll();
+                window.renderLiability();
+                window.renderIncome();
+                window.renderSummary();
+                window.renderHistory();
+            }
             autoSave();
 
             // Закрываем модальное окно
