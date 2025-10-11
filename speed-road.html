@@ -2134,31 +2134,11 @@
             const modal = document.querySelector('.life-events-modal-content');
             if (!modal) return;
             
-            // Добавляем обработчики для улучшения прокрутки
-            let isScrolling = false;
-            let startY = 0;
-            let scrollTop = 0;
-            
-            modal.addEventListener('touchstart', function(e) {
-                isScrolling = true;
-                startY = e.touches[0].pageY;
-                scrollTop = modal.scrollTop;
-            }, { passive: true });
-            
-            modal.addEventListener('touchmove', function(e) {
-                if (!isScrolling) return;
-                e.preventDefault();
-                const y = e.touches[0].pageY;
-                const walk = (y - startY) * 1.5; // Увеличиваем чувствительность
-                modal.scrollTop = scrollTop - walk;
-            }, { passive: false });
-            
-            modal.addEventListener('touchend', function() {
-                isScrolling = false;
-            }, { passive: true });
-            
             // Прокручиваем к началу при открытии
             modal.scrollTop = 0;
+            
+            // Полагаемся на нативный скролл браузера для Android
+            // Убраны кастомные touch обработчики для совместимости с Android
         }
         
         // Функция закрытия модального окна жизненных событий
