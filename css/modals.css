@@ -183,6 +183,9 @@
     display: flex;
     flex-direction: column;
     gap: 8px;
+    /* CSS Containment для изоляции layout и улучшения производительности */
+    contain: layout style paint;
+    will-change: transform;
 }
 
 .asset-card:hover {
@@ -370,6 +373,8 @@
     flex-direction: column;
     gap: 0.6rem;
     margin-bottom: 0.8rem;
+    /* CSS Containment для изоляции layout */
+    contain: layout style;
 }
 
 .category-card input {
@@ -814,6 +819,8 @@
 
 .assets-list {
     animation: fadeIn 0.3s ease-out;
+    /* CSS Containment для изоляции layout при рендеринге списков */
+    contain: layout style;
 }
 
 /* Стили для ввода цен акций */
