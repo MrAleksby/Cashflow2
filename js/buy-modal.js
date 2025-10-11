@@ -1,3 +1,16 @@
+// Утилита debounce для оптимизации обработчиков событий
+function debounce(func, wait) {
+    let timeout;
+    return function executedFunction(...args) {
+        const later = () => {
+            clearTimeout(timeout);
+            func(...args);
+        };
+        clearTimeout(timeout);
+        timeout = setTimeout(later, wait);
+    };
+}
+
 // Категории активов и их содержимое
 const ASSET_CATEGORIES = {
     stocks: {
@@ -1291,6 +1304,9 @@ const ASSET_CATEGORIES = {
                 });
             }
         });
+        
+        // Инициализируем обработчики для расчета ипотеки
+        updateMortgageDisplay();
     }
 
     // Показ деталей выбранного актива
@@ -1686,13 +1702,21 @@ const ASSET_CATEGORIES = {
             const mortgageDisplay = inputs.querySelector('.calculated-mortgage');
             
             if (priceInput && downPaymentInput && mortgageDisplay) {
+                // Проверяем, были ли уже добавлены обработчики
+                if (priceInput.dataset.mortgageListenerAdded === 'true') {
+                    return; // Обработчики уже добавлены, выходим
+                }
+                
+                // Функция расчета ипотеки
                 const updateMortgage = () => {
                     const price = parseFloat(priceInput.value) || 0;
                     const downPayment = parseFloat(downPaymentInput.value) || 0;
                     const mortgage = Math.max(0, price - downPayment);
                     
                     if (price > 0 || downPayment > 0) {
-                        mortgageDisplay.textContent = `$${mortgage.toLocaleString()}`;
+                        // Оптимизированное форматирование без toLocaleString
+                        const formattedMortgage = mortgage.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ',');
+                        mortgageDisplay.textContent = `$${formattedMortgage}`;
                         mortgageDisplay.style.color = mortgage > 0 ? '#333' : '#666';
                     } else {
                         mortgageDisplay.textContent = 'Рассчитается автоматически';
@@ -1700,18 +1724,20 @@ const ASSET_CATEGORIES = {
                     }
                 };
                 
-                priceInput.addEventListener('input', updateMortgage);
-                downPaymentInput.addEventListener('input', updateMortgage);
+                // Создаём debounced версию функции (задержка 200мс)
+                const debouncedUpdate = debounce(updateMortgage, 200);
+                
+                // Добавляем обработчики с debounce
+                priceInput.addEventListener('input', debouncedUpdate);
+                downPaymentInput.addEventListener('input', debouncedUpdate);
+                
+                // Отмечаем, что обработчики добавлены
+                priceInput.dataset.mortgageListenerAdded = 'true';
+                downPaymentInput.dataset.mortgageListenerAdded = 'true';
             }
         });
     }
 
     // Инициализируем обработчики при загрузке
     // setupNumericInput удален - используется общая функция из других модулей
-    
-    // Обновляем отображение ипотеки при изменении контента модального окна
-    const observer = new MutationObserver(() => {
-        updateMortgageDisplay();
-    });
-    observer.observe(modal, { childList: true, subtree: true });
 })(); 
