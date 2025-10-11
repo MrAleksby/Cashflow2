@@ -173,9 +173,9 @@
             /* Улучшенная прокрутка для Android */
             overscroll-behavior-x: contain;
             scroll-behavior: smooth;
-            /* Дополнительные стили для Android */
-            touch-action: pan-x;
-            scroll-snap-type: x mandatory;
+            /* Оптимизированные стили для Android */
+            touch-action: pan-x pan-y; /* Разрешаем скролл в обе стороны */
+            scroll-snap-type: x proximity; /* Изменено с mandatory для работы на Android */
             scroll-padding: 0 20px;
         }
         
@@ -299,7 +299,7 @@
             min-width: 80px;
             flex-shrink: 0;
             scroll-snap-align: start;
-            scroll-snap-stop: always;
+            /* Убрано scroll-snap-stop: always для естественной прокрутки на Android */
         }
         
         /* Специальная ширина для кнопки благотворительности */
@@ -1058,18 +1058,18 @@
             .action-buttons-row.compact {
                 gap: 6px;
                 padding: 8px 0;
-                /* Дополнительные стили для Android */
+                /* Оптимизированные стили для Android */
                 -webkit-overflow-scrolling: touch;
                 overscroll-behavior-x: contain;
-                scroll-snap-type: x mandatory;
+                scroll-snap-type: x proximity; /* Изменено с mandatory для лучшей работы на Android */
                 /* Улучшенная прокрутка для Android */
-                touch-action: pan-x;
+                touch-action: pan-x pan-y; /* Разрешаем скролл в обе стороны */
                 scroll-behavior: smooth;
             }
             
             .action-button.compact {
                 scroll-snap-align: start;
-                scroll-snap-stop: always;
+                /* Убрано scroll-snap-stop: always для плавной прокрутки на Android */
             }
             
             .actions-section {
@@ -1170,21 +1170,21 @@
             .action-buttons-row.compact {
                 gap: 4px;
                 padding: 6px 0;
-                /* Дополнительные стили для Android на маленьких экранах */
+                /* Оптимизированные стили для Android на маленьких экранах */
                 -webkit-overflow-scrolling: touch;
                 overscroll-behavior-x: contain;
-                scroll-snap-type: x mandatory;
+                scroll-snap-type: x proximity; /* Изменено с mandatory для работы на Android */
                 /* Увеличиваем область прокрутки */
                 padding-left: 5px;
                 padding-right: 5px;
                 /* Улучшенная прокрутка для Android */
-                touch-action: pan-x;
+                touch-action: pan-x pan-y; /* Разрешаем скролл в обе стороны */
                 scroll-behavior: smooth;
             }
             
             .action-button.compact {
                 scroll-snap-align: start;
-                scroll-snap-stop: always;
+                /* Убрано scroll-snap-stop: always для плавной прокрутки на Android */
             }
             
             .actions-section {
@@ -2391,71 +2391,7 @@
             const buttonsRow = document.querySelector('.action-buttons-row.compact');
             if (!buttonsRow) return;
             
-            // Определяем, что это Android устройство
-            const isAndroid = /Android/i.test(navigator.userAgent);
-            if (!isAndroid) return;
-            
-            // Улучшенные обработчики для прокрутки
-            let isScrolling = false;
-            let startX = 0;
-            let scrollLeft = 0;
-            let velocity = 0;
-            let lastX = 0;
-            let lastTime = 0;
-            
-            // Обработчик начала касания
-            buttonsRow.addEventListener('touchstart', function(e) {
-                isScrolling = true;
-                startX = e.touches[0].pageX;
-                scrollLeft = buttonsRow.scrollLeft;
-                lastX = startX;
-                lastTime = Date.now();
-                velocity = 0;
-            }, { passive: true });
-            
-            // Обработчик движения
-            buttonsRow.addEventListener('touchmove', function(e) {
-                if (!isScrolling) return;
-                
-                const currentX = e.touches[0].pageX;
-                const currentTime = Date.now();
-                const deltaX = currentX - startX;
-                const deltaTime = currentTime - lastTime;
-                
-                // Рассчитываем скорость для инерции
-                if (deltaTime > 0) {
-                    velocity = (currentX - lastX) / deltaTime;
-                }
-                
-                // Прокручиваем с учетом направления
-                buttonsRow.scrollLeft = scrollLeft - deltaX;
-                
-                lastX = currentX;
-                lastTime = currentTime;
-            }, { passive: false });
-            
-            // Обработчик окончания касания
-            buttonsRow.addEventListener('touchend', function(e) {
-                if (!isScrolling) return;
-                isScrolling = false;
-                
-                // Добавляем инерцию для более плавной прокрутки
-                if (Math.abs(velocity) > 0.5) {
-                    const inertia = velocity * 100;
-                    const targetScroll = buttonsRow.scrollLeft - inertia;
-                    
-                    // Плавная анимация к целевой позиции
-                    buttonsRow.style.scrollBehavior = 'smooth';
-                    buttonsRow.scrollLeft = Math.max(0, Math.min(targetScroll, buttonsRow.scrollWidth - buttonsRow.clientWidth));
-                    
-                    // Возвращаем обычное поведение
-                    setTimeout(() => {
-                        buttonsRow.style.scrollBehavior = 'auto';
-                    }, 300);
-                }
-            }, { passive: true });
-            
-            // Добавляем визуальный индикатор прокрутки
+            // Добавляем визуальный индикатор прокрутки для всех устройств
             const scrollIndicator = document.createElement('div');
             scrollIndicator.style.cssText = `
                 position: absolute;
@@ -2473,68 +2409,59 @@
             buttonsRow.style.position = 'relative';
             buttonsRow.appendChild(scrollIndicator);
             
-            // Обновляем индикатор при прокрутке
+            // Обновляем индикатор при прокрутке (passive listener)
             buttonsRow.addEventListener('scroll', function() {
                 const scrollPercent = (buttonsRow.scrollLeft / (buttonsRow.scrollWidth - buttonsRow.clientWidth)) * 100;
                 scrollIndicator.style.width = `${Math.max(20, 30 - scrollPercent * 0.1)}px`;
                 scrollIndicator.style.opacity = buttonsRow.scrollWidth > buttonsRow.clientWidth ? '1' : '0';
-            });
+            }, { passive: true });
             
-            // Добавляем стрелки для навигации на очень маленьких экранах
-            if (window.innerWidth <= 320) {
-                const leftArrow = document.createElement('button');
-                const rightArrow = document.createElement('button');
+            // Добавляем градиенты-подсказки о возможности прокрутки
+            const leftGradient = document.createElement('div');
+            const rightGradient = document.createElement('div');
+            
+            leftGradient.style.cssText = `
+                position: absolute;
+                left: 0;
+                top: 0;
+                bottom: 0;
+                width: 20px;
+                background: linear-gradient(to right, rgba(102, 126, 234, 0.3), transparent);
+                pointer-events: none;
+                z-index: 5;
+                opacity: 0;
+                transition: opacity 0.3s ease;
+            `;
+            
+            rightGradient.style.cssText = `
+                position: absolute;
+                right: 0;
+                top: 0;
+                bottom: 0;
+                width: 20px;
+                background: linear-gradient(to left, rgba(102, 126, 234, 0.3), transparent);
+                pointer-events: none;
+                z-index: 5;
+                transition: opacity 0.3s ease;
+            `;
+            
+            buttonsRow.appendChild(leftGradient);
+            buttonsRow.appendChild(rightGradient);
+            
+            // Обновляем видимость градиентов при прокрутке
+            buttonsRow.addEventListener('scroll', function() {
+                const canScrollLeft = buttonsRow.scrollLeft > 0;
+                const canScrollRight = buttonsRow.scrollLeft < (buttonsRow.scrollWidth - buttonsRow.clientWidth - 5);
                 
-                leftArrow.innerHTML = '‹';
-                rightArrow.innerHTML = '›';
-                
-                leftArrow.style.cssText = `
-                    position: absolute;
-                    left: -10px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    width: 30px;
-                    height: 30px;
-                    border-radius: 50%;
-                    background: rgba(156, 39, 176, 0.8);
-                    color: white;
-                    border: none;
-                    font-size: 18px;
-                    z-index: 20;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                `;
-                
-                rightArrow.style.cssText = `
-                    position: absolute;
-                    right: -10px;
-                    top: 50%;
-                    transform: translateY(-50%);
-                    width: 30px;
-                    height: 30px;
-                    border-radius: 50%;
-                    background: rgba(156, 39, 176, 0.8);
-                    color: white;
-                    border: none;
-                    font-size: 18px;
-                    z-index: 20;
-                    display: flex;
-                    align-items: center;
-                    justify-content: center;
-                `;
-                
-                leftArrow.addEventListener('click', () => {
-                    buttonsRow.scrollBy({ left: -100, behavior: 'smooth' });
-                });
-                
-                rightArrow.addEventListener('click', () => {
-                    buttonsRow.scrollBy({ left: 100, behavior: 'smooth' });
-                });
-                
-                buttonsRow.appendChild(leftArrow);
-                buttonsRow.appendChild(rightArrow);
-            }
+                leftGradient.style.opacity = canScrollLeft ? '1' : '0';
+                rightGradient.style.opacity = canScrollRight ? '1' : '0';
+            }, { passive: true });
+            
+            // Первоначальная проверка возможности скролла
+            setTimeout(() => {
+                const canScroll = buttonsRow.scrollWidth > buttonsRow.clientWidth;
+                rightGradient.style.opacity = canScroll ? '1' : '0';
+            }, 100);
         }
 
         // Инициализация при загрузке страницы
