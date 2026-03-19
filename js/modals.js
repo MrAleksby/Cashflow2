@@ -356,6 +356,33 @@ function renderBuyForm() {
         <label class="form-label">Доход в месяц (за 1 шт)</label>
         <input class="form-input" id="buy-income-per" type="number" inputmode="numeric" value="${a.monthlyIncome}" />
       </div>` : ''}`;
+  } else if (buyCategory === 'realestate') {
+    // ── Недвижимость: с ипотекой ──
+    el.innerHTML = `
+      <div style="padding:12px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px">
+        <div style="font-size:16px;font-weight:700">${a.icon} ${a.name}</div>
+        <div style="font-size:13px;color:var(--text-2);margin-top:4px">${a.desc}</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Стоимость</label>
+        <input class="form-input" id="buy-price" type="number" inputmode="numeric" placeholder="${a.price}" value="${a.price || ''}" oninput="updateMortgageCalc()" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Первый взнос</label>
+        <input class="form-input" id="buy-down" type="number" inputmode="numeric" placeholder="0" oninput="updateMortgageCalc()" />
+      </div>
+      <div class="mortgage-calc" id="mortgage-calc-block">
+        <span class="mortgage-calc-label">Ипотека:</span>
+        <span class="mortgage-calc-value" id="mortgage-display">—</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Ежемесячный платёж по ипотеке</label>
+        <input class="form-input" id="buy-mortgage-payment" type="number" inputmode="numeric" placeholder="0" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Денежный поток (доход в месяц)</label>
+        <input class="form-input" id="buy-income" type="number" inputmode="numeric" value="${a.monthlyIncome || ''}" placeholder="0" />
+      </div>`;
   } else {
     el.innerHTML = `
       <div style="padding:12px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px">
@@ -374,6 +401,26 @@ function renderBuyForm() {
         <input class="form-input" id="buy-income" type="number" inputmode="numeric" placeholder="0" />
       </div>`}`;
   }
+}
+
+function updateSellProceeds(id, mortgage) {
+  const price = parseInt(document.getElementById(`sell-price-${id}`)?.value) || 0;
+  const proceeds = price - mortgage;
+  const el = document.getElementById(`sell-proceeds-${id}`);
+  if (el) {
+    el.textContent = fmt(Math.max(0, proceeds));
+    el.style.color = proceeds >= 0 ? 'var(--green)' : 'var(--red)';
+  }
+}
+
+function updateMortgageCalc() {
+  const price = parseInt(document.getElementById('buy-price')?.value) || 0;
+  const down  = parseInt(document.getElementById('buy-down')?.value)  || 0;
+  const mortgage = Math.max(0, price - down);
+  const display = document.getElementById('mortgage-display');
+  const block   = document.getElementById('mortgage-calc-block');
+  if (display) display.textContent = mortgage > 0 ? fmt(mortgage) : '—';
+  if (block)   block.classList.toggle('mortgage-calc--active', mortgage > 0);
 }
 
 function confirmBuy() {
@@ -412,6 +459,36 @@ function confirmBuy() {
       }
 
       newAsset = { id: nextId(), key: a.key, name: a.name, category: buyCategory, type: a.type, quantity: qty, price: unitPrice, monthlyIncome: incomePer * qty };
+    } else if (buyCategory === 'realestate') {
+      // ── Недвижимость с ипотекой ──
+      const price          = parseInt(document.getElementById('buy-price').value) || a.price || 0;
+      const downPayment    = parseInt(document.getElementById('buy-down').value) || 0;
+      const mortgagePayment = parseInt(document.getElementById('buy-mortgage-payment').value) || 0;
+      const income         = parseInt(document.getElementById('buy-income').value) || 0;
+      const mortgage       = Math.max(0, price - downPayment);
+      if (price <= 0) return;
+
+      let linkedLiabilityId = null;
+      let newLiabilities = [...state.liabilities];
+      if (mortgage > 0) {
+        const mortgageLiab = { id: nextId(), name: `Ипотека: ${a.name}`, amount: mortgage, payment: mortgagePayment };
+        linkedLiabilityId = mortgageLiab.id;
+        newLiabilities = [...newLiabilities, mortgageLiab];
+      }
+
+      const cost = downPayment > 0 ? downPayment : price;
+      const descParts = mortgage > 0
+        ? `взнос ${fmt(downPayment)}, ипотека ${fmt(mortgage)}`
+        : `полная оплата ${fmt(price)}`;
+      const entry = { id: nextId(), month: state.monthsCount, description: `Куплено: ${a.name} (${descParts})`, amount: -cost, date: new Date().toLocaleDateString('ru-RU') };
+      setState({
+        assets: [...state.assets, { id: nextId(), key: a.key, name: a.name, category: buyCategory, type: a.type, quantity: 1, price, downPayment, monthlyIncome: income, linkedLiabilityId }],
+        liabilities: newLiabilities,
+        cash: state.cash - cost,
+        history: [...state.history, entry],
+      });
+      closeModal('overlay-buy');
+      return;
     } else {
       const price = parseInt(document.getElementById('buy-price').value) || a.price || 0;
       const incomeEl = document.getElementById('buy-income');
@@ -455,6 +532,12 @@ function renderSellList() {
     const incomeText = a.monthlyIncome ? ` · доход ${fmt(a.monthlyIncome)}/мес` : '';
     const isExpanded = sellExpandedId === a.id;
 
+    // Ипотека для недвижимости
+    const linkedLiab = a.linkedLiabilityId
+      ? state.liabilities.find(l => l.id === a.linkedLiabilityId)
+      : null;
+    const mortgageAmount = linkedLiab ? linkedLiab.amount : 0;
+
     const formHtml = isExpanded ? `
       <div class="sell-form" id="sell-form-${a.id}">
         ${isQty ? `
@@ -468,8 +551,18 @@ function renderSellList() {
           </div>` : `
           <div class="sell-form-row">
             <label class="sell-form-label">Цена продажи</label>
-            <input class="form-input" id="sell-price-${a.id}" type="number" inputmode="numeric" placeholder="${totalValue}" value="${totalValue}" />
-          </div>`}
+            <input class="form-input" id="sell-price-${a.id}" type="number" inputmode="numeric" placeholder="${totalValue}" value="${totalValue}"
+              ${mortgageAmount > 0 ? `oninput="updateSellProceeds('${a.id}', ${mortgageAmount})"` : ''} />
+          </div>
+          ${mortgageAmount > 0 ? `
+          <div class="sell-mortgage-row">
+            <span class="sell-mortgage-label">Погашение ипотеки:</span>
+            <span class="sell-mortgage-debt">−${fmt(mortgageAmount)}</span>
+          </div>
+          <div class="sell-mortgage-row sell-mortgage-row--net">
+            <span class="sell-mortgage-label">Вы получите:</span>
+            <span class="sell-mortgage-net" id="sell-proceeds-${a.id}">—</span>
+          </div>` : ''}`}
         <div class="sell-form-actions">
           <button class="btn-secondary" onclick="cancelSell()">Отмена</button>
           <button class="btn-primary" onclick="confirmSell('${a.id}')">Подтвердить</button>
@@ -531,8 +624,25 @@ function confirmSell(id) {
   } else {
     const sellPrice = parseInt(priceInput?.value) || (asset.price || 0) * (asset.quantity || 1);
     if (sellPrice < 0) return;
-    const entry = { id: nextId(), month: state.monthsCount, description: `Продано: ${asset.name} за ${fmt(sellPrice)}`, amount: sellPrice, date: new Date().toLocaleDateString('ru-RU') };
-    setState({ assets: state.assets.filter(a => a.id !== id), cash: state.cash + sellPrice, history: [...state.history, entry] });
+
+    // Ипотека: если есть — гасим автоматически
+    const linkedLiab = asset.linkedLiabilityId
+      ? state.liabilities.find(l => l.id === asset.linkedLiabilityId)
+      : null;
+    const mortgage = linkedLiab ? linkedLiab.amount : 0;
+    const proceeds = sellPrice - mortgage;
+
+    const desc = mortgage > 0
+      ? `Продано: ${asset.name} за ${fmt(sellPrice)} (погашена ипотека ${fmt(mortgage)})`
+      : `Продано: ${asset.name} за ${fmt(sellPrice)}`;
+    const entry = { id: nextId(), month: state.monthsCount, description: desc, amount: proceeds, date: new Date().toLocaleDateString('ru-RU') };
+
+    setState({
+      assets: state.assets.filter(a => a.id !== id),
+      liabilities: linkedLiab ? state.liabilities.filter(l => l.id !== linkedLiab.id) : state.liabilities,
+      cash: state.cash + proceeds,
+      history: [...state.history, entry],
+    });
   }
 
   sellExpandedId = null;

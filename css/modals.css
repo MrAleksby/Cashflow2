@@ -349,6 +349,65 @@
 .sell-form-actions .btn-primary:active { opacity: 0.75; }
 .sell-form-actions .btn-secondary:active { opacity: 0.75; }
 
+/* ── Mortgage calc (buy form) ── */
+.mortgage-calc {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 14px;
+  border-radius: var(--radius-sm);
+  background: var(--surface-2);
+  margin-bottom: 12px;
+  font-size: 13px;
+}
+
+.mortgage-calc-label {
+  color: var(--text-2);
+  font-weight: 500;
+}
+
+.mortgage-calc-value {
+  font-weight: 700;
+  color: var(--text-3);
+  font-variant-numeric: tabular-nums;
+}
+
+.mortgage-calc--active .mortgage-calc-value {
+  color: var(--red);
+}
+
+/* ── Mortgage info (sell form) ── */
+.sell-mortgage-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 6px 0;
+  font-size: 13px;
+}
+
+.sell-mortgage-label {
+  color: var(--text-2);
+}
+
+.sell-mortgage-debt {
+  font-weight: 600;
+  color: var(--red);
+  font-variant-numeric: tabular-nums;
+}
+
+.sell-mortgage-row--net {
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+  padding-top: 8px;
+}
+
+.sell-mortgage-net {
+  font-size: 15px;
+  font-weight: 700;
+  color: var(--green);
+  font-variant-numeric: tabular-nums;
+}
+
 /* ── Back button in modals ── */
 .modal-back {
   display: flex;
