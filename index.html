@@ -1,656 +1,402 @@
 <!DOCTYPE html>
 <html lang="ru">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
-    <title>Big Money Kids</title>
-    <link rel="icon" type="image/x-icon" href="favicon.ico">
-    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>💰</text></svg>">
-    <link rel="stylesheet" href="css/base.css">
-    <link rel="stylesheet" href="css/layout.css">
-    <link rel="stylesheet" href="css/components.css">
-    <link rel="stylesheet" href="css/modals.css">
-    <link rel="stylesheet" href="css/responsive.css">
-    <link rel="stylesheet" href="css/dark-mode.css">
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover" />
+  <title>Cashflow</title>
+  <link rel="icon" href="favicon.ico" />
+
+  <link rel="stylesheet" href="css/variables.css" />
+  <link rel="stylesheet" href="css/base.css" />
+  <link rel="stylesheet" href="css/layout.css" />
+  <link rel="stylesheet" href="css/components.css" />
+  <link rel="stylesheet" href="css/modals.css" />
+  <link rel="stylesheet" href="css/responsive.css" />
 </head>
 <body>
-    <div class="container">
-        <div class="header-row">
-            <div id="top-cash-value">
-                <i class="fas fa-wallet"></i>
-                <span id="top-cash-amount">0</span>
-            </div>
-            <div class="menu-container">
-                <button id="menu-btn" class="menu-btn">
-                    <i class="fas fa-bars"></i>
-                    <span>Меню</span>
-                </button>
-                <div id="menu-dropdown" class="menu-dropdown">
-                    <button class="menu-item" onclick="window.resetGame()">
-                        <i class="fas fa-play"></i>
-                        Новая игра
-                    </button>
-                    <button class="menu-item" onclick="window.openSpeedRoad()">
-                        <i class="fas fa-road"></i>
-                        Скоростная дорога
-                    </button>
-                </div>
-            </div>
-            <img src="logo.jpg" alt="Big Money Kids Logo" class="logo-img"/>
-        </div>
-        <div id="screen-cashflow" class="screen">
-                <div id="action-btns-wrap" style="display:flex;gap:10px;width:100%;margin:0;position:relative;">
-                <button id="main-buy-btn" class="action-btn buy">Купить</button>
-                <button id="main-sell-btn" class="action-btn sell">Продать</button>
-                <button id="main-action-btn" class="action-btn action">Действие</button>
-                </div>
-            
-            <div class="block" id="summary-block" style="margin-top:32px; background: linear-gradient(135deg, #f3e5f5, #e8eaf6); border: 2px solid rgba(156, 39, 176, 0.3); box-shadow: 0 4px 12px rgba(156, 39, 176, 0.1);">
-                <div id="summary-list" style="margin-top:10px; font-size:1.2em; display:flex; flex-direction:column; gap:8px;">
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding: 4px 0;">
-                        <span style="color: #7B1FA2; font-weight: 500;">Зарплата</span><span id="salary-value" style="color: #9C27B0; font-weight: 600;">0</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding: 4px 0;">
-                        <span style="color: #7B1FA2; font-weight: 500;">Пассивный доход</span><span id="passive-value" style="color: #9C27B0; font-weight: 600;">0</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding: 4px 0;">
-                        <span style="color: #7B1FA2; font-weight: 500;">Общий доход</span><span id="income-sum" style="color: #9C27B0; font-weight: 600;">0</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; padding: 4px 0;">
-                        <span style="color: #7B1FA2; font-weight: 500;">Общий расход</span><span id="expense-sum" style="color: #9C27B0; font-weight: 600;">0</span>
-                    </div>
-                    <div style="display:flex; justify-content:space-between; align-items:center; font-weight:bold; color: white; background: linear-gradient(135deg, #9C27B0, #7B1FA2); padding: 8px 12px; border-radius: 8px; margin: 4px 0;">
-                        <span>Поток</span><span id="cashflow">0</span>
-                    </div>
-                    <div style="border-top: 2px solid rgba(156, 39, 176, 0.3); margin-top: 12px; padding-top: 12px;">
-                        <div style="display:flex; justify-content:space-between; align-items:center; margin-bottom: 12px; padding: 4px 0;">
-                            <span style="color: #7B1FA2; font-weight: 500;">Прошло месяцев:</span><span id="months-counter" style="color: #9C27B0; font-weight: 600;">0</span>
-                        </div>
-                        <button id="payday-btn" style="width: 100%; padding: 14px; background: linear-gradient(135deg, #FFD700, #FFA500); color: #333; border: 2px solid #FFD700; border-radius: 12px; font-size: 1.3em; font-weight: 700; cursor: pointer; box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5), 0 2px 4px rgba(255, 165, 0, 0.3); transition: all 0.3s ease; position: relative; overflow: hidden; text-transform: uppercase; letter-spacing: 1px;">PayDay</button>
-                    </div>
-                </div>
-            </div>
-                        </div>
 
-        <div id="screen-income" class="screen" style="display:none;">
-            <div class="block" id="income-block">
-                <ul class="item-list" id="income-list"></ul>
-                <div class="total">Итого: <span id="income-total">0</span></div>
-            </div>
-        </div>
+<div id="app">
 
-        <div id="screen-expense" class="screen" style="display:none;">
-            <div class="block" id="expense-block">
-                <ul class="item-list" id="expense-list"></ul>
-                <div class="total">Итого: <span id="expense-total">0</span></div>
-            </div>
-        </div>
-
-        <div id="screen-asset" class="screen" style="display:none;">
-            <div class="block" id="asset-block">
-                <ul class="item-list" id="asset-list"></ul>
-                <div class="total">Итого: <span id="asset-total">0</span></div>
-            </div>
-        </div>
-
-        <div id="screen-liability" class="screen" style="display:none;">
-            <div class="block" id="liability-block">
-                <ul class="item-list" id="liability-list"></ul>
-                <div class="total">Итого: <span id="liability-total">0</span></div>
-            </div>
-        </div>
-
-        <div id="screen-history" class="screen" style="display:none;">
-            <div class="block" id="history-block">
-                <h2>История операций</h2>
-                <div id="history-container" style="max-height:300px;overflow-y:auto;"></div>
-            </div>
-        </div>
+  <!-- ── Header ── -->
+  <header class="app-header">
+    <div class="header-wallet">
+      <span class="header-wallet-label">Кошелёк</span>
+      <span class="header-wallet-amount amount" id="header-cash">0 ₽</span>
     </div>
-
-    <!-- Нижняя панель навигации -->
-    <nav class="bottom-nav">
-        <a href="#" class="nav-item" data-section="asset">
-            <i class="fas fa-chart-line"></i>
-            <span>Активы</span>
-        </a>
-        <a href="#" class="nav-item" data-section="liability">
-            <i class="fas fa-wallet"></i>
-            <span>Пассивы</span>
-        </a>
-        <a href="#" class="nav-item active" data-section="cashflow">
-            <i class="fas fa-stream"></i>
-            <span>Поток</span>
-        </a>
-        <a href="#" class="nav-item" data-section="income">
-            <i class="fas fa-plus-circle"></i>
-            <span>Доход</span>
-        </a>
-        <a href="#" class="nav-item" data-section="expense">
-            <i class="fas fa-minus-circle"></i>
-            <span>Расход</span>
-        </a>
-        <a href="#" class="nav-item" data-section="history">
-            <i class="fas fa-history"></i>
-            <span>История</span>
-        </a>
-    </nav>
-
-    <style>
-        .bottom-nav {
-            position: fixed;
-            bottom: env(safe-area-inset-bottom, 0);
-            left: 0;
-            right: 0;
-            background: linear-gradient(135deg, rgba(255, 255, 255, 0.95), rgba(248, 249, 255, 0.9));
-            backdrop-filter: blur(15px);
-            display: flex;
-            justify-content: space-between;
-            padding: 8px 10px;
-            padding-bottom: calc(8px + env(safe-area-inset-bottom, 0));
-            box-shadow: 0 -4px 20px rgba(156, 39, 176, 0.1), 0 -2px 8px rgba(63, 81, 181, 0.05);
-            z-index: 1000;
-            border-top: 1px solid rgba(156, 39, 176, 0.2);
-        }
-
-        .nav-item {
-            position: relative;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            padding: 8px 10px;
-            color: #9C27B0;
-            text-decoration: none;
-            font-size: 0.7rem;
-            font-weight: 600;
-            transition: all 0.3s ease;
-            border-radius: 12px;
-            -webkit-tap-highlight-color: transparent;
-            flex: 1;
-            min-width: 48px;
-            max-width: 80px;
-            background: linear-gradient(135deg, rgba(156, 39, 176, 0.05), rgba(63, 81, 181, 0.03));
-            border: 1px solid rgba(156, 39, 176, 0.1);
-        }
-
-        .nav-item i {
-            font-size: 1.3rem;
-            margin-bottom: 3px;
-            transition: all 0.3s ease;
-            color: inherit;
-        }
-
-        .nav-item span {
-            white-space: nowrap;
-            transition: all 0.3s ease;
-            font-size: 0.65rem;
-            text-align: center;
-            width: 100%;
-            overflow: hidden;
-            text-overflow: ellipsis;
-            color: inherit;
-        }
-
-        .nav-item.active {
-            color: white;
-            background: linear-gradient(135deg, #9C27B0, #7B1FA2);
-            border: 1px solid #7B1FA2;
-            box-shadow: 0 4px 12px rgba(156, 39, 176, 0.3), 0 2px 6px rgba(63, 81, 181, 0.2);
-            transform: translateY(-2px);
-        }
-
-        .nav-item.active i {
-            transform: translateY(-1px) scale(1.1);
-            color: white;
-        }
-
-        .nav-item.active span {
-            color: white;
-            font-weight: 700;
-        }
-
-        .nav-item:not(.active):hover {
-            background: linear-gradient(135deg, rgba(156, 39, 176, 0.15), rgba(63, 81, 181, 0.1));
-            color: #7B1FA2;
-            border-color: rgba(156, 39, 176, 0.3);
-            transform: translateY(-1px);
-            box-shadow: 0 2px 8px rgba(156, 39, 176, 0.2);
-        }
-
-        .nav-item:not(.active):hover i {
-            transform: scale(1.05);
-        }
-
-        /* Добавляем отступ для контента */
-        body {
-            padding-bottom: calc(65px + env(safe-area-inset-bottom, 20px));
-        }
-
-        /* Стили для кнопки PayDay */
-        #payday-btn::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: -100%;
-            width: 100%;
-            height: 100%;
-            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.2), transparent);
-            transition: left 0.5s ease;
-        }
-
-        #payday-btn:hover::before {
-            left: 100%;
-        }
-
-        #payday-btn:hover {
-            background: linear-gradient(135deg, #FFA500, #FF8C00) !important;
-            transform: translateY(-3px) scale(1.02);
-            box-shadow: 0 8px 25px rgba(255, 215, 0, 0.6), 0 4px 8px rgba(255, 165, 0, 0.4) !important;
-            border-color: #FF8C00 !important;
-        }
-
-        #payday-btn:active {
-            transform: translateY(-1px) scale(0.98);
-            box-shadow: 0 4px 12px rgba(255, 215, 0, 0.4) !important;
-        }
-
-        /* Анимация пульсации для привлечения внимания */
-        @keyframes paydayPulse {
-            0% { box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5), 0 2px 4px rgba(255, 165, 0, 0.3); }
-            50% { box-shadow: 0 8px 25px rgba(255, 215, 0, 0.7), 0 4px 8px rgba(255, 165, 0, 0.5); }
-            100% { box-shadow: 0 6px 20px rgba(255, 215, 0, 0.5), 0 2px 4px rgba(255, 165, 0, 0.3); }
-        }
-
-        #payday-btn {
-            animation: paydayPulse 2s ease-in-out infinite;
-        }
-
-        #payday-btn:hover {
-            animation: none;
-        }
-
-        /* Мобильная оптимизация для кнопки PayDay */
-        @media (max-width: 480px) {
-            #payday-btn {
-                padding: 16px !important;
-                font-size: 1.4em !important;
-                border-radius: 14px !important;
-                min-height: 56px !important;
-            }
-        }
-
-        /* Оптимизация для маленьких экранов */
-        @media (max-width: 320px) {
-            .nav-item {
-                padding: 4px 6px;
-                font-size: 0.65rem;
-                min-width: 40px;
-            }
-            
-            .nav-item i {
-                font-size: 1.1rem;
-            }
-
-            .nav-item span {
-                font-size: 0.6rem;
-            }
-
-            .bottom-nav {
-                padding: 6px 8px;
-            }
-
-            #payday-btn {
-                padding: 14px !important;
-                font-size: 1.2em !important;
-            }
-        }
-    </style>
-
-    <!-- Модальное окно для покупки активов -->
-    <div id="buy-modal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn">&times;</button>
-            <h2>Выберите тип актива</h2>
-            <div class="asset-categories">
-                <div class="category-card" data-category="stocks">
-                    <i class="fas fa-chart-line"></i>
-                    <h3>Акции</h3>
-                    <p>Инвестиции в ценные бумаги</p>
-                </div>
-                <div class="category-card" data-category="realestate">
-                    <i class="fas fa-home"></i>
-                    <h3>Недвижимость</h3>
-                    <p>Дома, квартиры, офисы</p>
-                </div>
-                <div class="category-card" data-category="business">
-                    <i class="fas fa-store"></i>
-                    <h3>Бизнес</h3>
-                    <p>Малый и средний бизнес</p>
-                </div>
-            </div>
+    <div class="header-actions">
+      <button class="btn-payday" id="btn-payday">PayDay</button>
+      <div class="menu-wrapper">
+        <button class="btn-icon" id="btn-menu" aria-label="Меню">
+          <svg viewBox="0 0 24 24"><circle cx="12" cy="5" r="1.5" fill="currentColor"/><circle cx="12" cy="12" r="1.5" fill="currentColor"/><circle cx="12" cy="19" r="1.5" fill="currentColor"/></svg>
+        </button>
+        <div class="dropdown" id="dropdown-menu">
+          <div class="dropdown-item" id="menu-new-game">
+            <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 1 0 18 0 9 9 0 0 0-18 0"/><path d="M12 8v4l3 3"/></svg>
+            Новая игра
+          </div>
         </div>
+      </div>
     </div>
+  </header>
 
-    <!-- Модальное окно продажи активов -->
-    <div id="sell-modal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn">&times;</button>
-            <h2>Продажа активов</h2>
-            
-            <!-- Единый список всех активов -->
-            <div id="unified-assets-list" class="unified-assets-list">
-                <!-- Активы будут загружены динамически -->
-            </div>
+  <!-- ── Screens ── -->
+  <main>
 
-
+    <!-- Cashflow -->
+    <section class="screen active" id="screen-cashflow">
+      <div id="freedom-block"></div>
+      <div class="summary-card" id="summary-card">
+        <div class="summary-card-header">
+          <span class="summary-card-title">Финансовый отчёт</span>
+          <span class="summary-card-month" id="summary-month">Месяц 0</span>
         </div>
-    </div>
-
-    <!-- Модальное окно действий -->
-    <div id="action-modal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn">&times;</button>
-            <h2>Выберите действие</h2>
-            <div class="wallet-balance">
-                Баланс: <span id="modal-action-wallet-amount">0</span>
-            </div>
-            <div class="asset-categories">
-                <!-- Карточка взять деньги -->
-                <div class="category-card" data-action="take">
-                    <i class="fas fa-plus"></i>
-                    <div class="text-content">
-                        <h3>Взять деньги</h3>
-                        <p>Добавить деньги в кошелек</p>
-                    </div>
-                    <div class="action-form" style="display: none;">
-                        <div class="input-group">
-                            <input type="number" class="take-money-amount" placeholder="Сумма">
-                            <input type="text" class="take-money-description" placeholder="Описание">
-                            <button class="take-money-btn">Подтвердить</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Карточка отдать деньги -->
-                <div class="category-card" data-action="give">
-                    <i class="fas fa-minus"></i>
-                    <div class="text-content">
-                        <h3>Отдать деньги</h3>
-                        <p>Вычесть деньги из кошелька</p>
-                    </div>
-                    <div class="action-form" style="display: none;">
-                        <div class="input-group">
-                            <input type="number" class="give-money-amount" placeholder="Сумма">
-                            <input type="text" class="give-money-description" placeholder="Описание">
-                            <button class="give-money-btn">Подтвердить</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Карточка добавить ребенка -->
-                <div class="category-card" data-action="child">
-                        <i class="fas fa-child"></i>
-                    <div class="text-content">
-                        <h3>Добавить ребенка</h3>
-                        <p>Добавить расходы на ребенка</p>
-                    </div>
-                    <div class="action-form" style="display: none;">
-                        <div class="input-group">
-                            <input type="text" class="child-name" placeholder="Имя ребенка">
-                            <input type="number" class="child-expense" placeholder="Сумма расходов">
-                            <button class="add-child-btn">Добавить</button>
-                        </div>
-                        <div class="children-list"></div>
-                    </div>
-                </div>
-
-                <!-- Карточка взять кредит -->
-                <div class="category-card" data-action="loan">
-                    <i class="fas fa-hand-holding-usd"></i>
-                    <div class="text-content">
-                        <h3>Взять кредит</h3>
-                        <p>Оформить кредит в банке</p>
-                    </div>
-                    <div class="action-form" style="display: none;">
-                        <div class="input-group">
-                            <input type="number" class="loan-amount" placeholder="Сумма кредита">
-                            <input type="text" class="loan-description" placeholder="Цель кредита">
-                            <button class="take-loan-btn">Оформить</button>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- Карточка работа -->
-                <div class="category-card" data-action="job">
-                        <i class="fas fa-briefcase"></i>
-                    <div class="text-content">
-                        <h3>Работа</h3>
-                        <p>Устроиться на работу</p>
-                    </div>
-                    <div class="action-form" style="display: none;">
-                        <div class="input-group">
-                            <input type="text" class="job-title" placeholder="Название должности">
-                            <input type="number" class="job-salary" placeholder="Зарплата">
-                            <button class="set-job-btn">Устроиться</button>
-                            <button id="quit-job-btn" class="btn btn-danger quit-job-btn" disabled>Уволиться</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div id="summary-rows"></div>
+        <div class="summary-divider"></div>
+        <div class="summary-total">
+          <span class="summary-total-label">Cash Flow</span>
+          <span class="summary-total-value amount" id="summary-cashflow">0 ₽</span>
         </div>
-    </div>
+      </div>
+      <div class="action-buttons">
+        <button class="btn btn-secondary" id="btn-buy">+ Купить</button>
+        <button class="btn btn-secondary" id="btn-sell">− Продать</button>
+        <button class="btn btn-secondary" id="btn-action">Действие</button>
+      </div>
+    </section>
 
-    <!-- Модальное окно списка доступных акций для продажи -->
-    <div id="sell-stocks-list-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Доступные акции для продажи</h2>
-                <button class="close-btn" onclick="window.assetManager?.closeSellStocksListModal()">&times;</button>
-            </div>
-            
-            <div class="modal-body">
-                <div id="sell-stocks-list">
-                    <!-- Список акций будет загружен динамически -->
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button id="back-to-asset-types-btn" class="btn btn-secondary" onclick="window.assetManager?.backToAssetTypes()">Назад</button>
-            </div>
+    <!-- Доходы -->
+    <section class="screen" id="screen-income">
+      <div class="section-title">Источники дохода</div>
+      <div id="income-list"></div>
+    </section>
+
+    <!-- Расходы -->
+    <section class="screen" id="screen-expense">
+      <div class="section-title">Расходы</div>
+      <div id="expense-list"></div>
+    </section>
+
+    <!-- Активы -->
+    <section class="screen" id="screen-assets">
+      <div class="section-title">Активы</div>
+      <div id="assets-list"></div>
+    </section>
+
+    <!-- Пассивы -->
+    <section class="screen" id="screen-liabilities">
+      <div class="section-title">Пассивы (долги)</div>
+      <div id="liabilities-list"></div>
+    </section>
+
+    <!-- История -->
+    <section class="screen" id="screen-history">
+      <div class="section-title">История транзакций</div>
+      <div id="history-list"></div>
+    </section>
+
+  </main>
+
+  <!-- ── Bottom navigation ── -->
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-screen="cashflow">
+      <svg viewBox="0 0 24 24"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg>
+      Отчёт
+    </button>
+    <button class="nav-item" data-screen="income">
+      <svg viewBox="0 0 24 24"><polyline points="23 6 13.5 15.5 8.5 10.5 1 18"/><polyline points="17 6 23 6 23 12"/></svg>
+      Доходы
+    </button>
+    <button class="nav-item" data-screen="expense">
+      <svg viewBox="0 0 24 24"><polyline points="23 18 13.5 8.5 8.5 13.5 1 6"/><polyline points="17 18 23 18 23 12"/></svg>
+      Расходы
+    </button>
+    <button class="nav-item" data-screen="assets">
+      <svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg>
+      Активы
+    </button>
+    <button class="nav-item" data-screen="liabilities">
+      <svg viewBox="0 0 24 24"><path d="M4 4h16v16H4z M9 9h6 M9 12h6 M9 15h4"/></svg>
+      Пассивы
+    </button>
+    <button class="nav-item" data-screen="history">
+      <svg viewBox="0 0 24 24"><polyline points="22 12 18 12 15 21 9 3 6 12 2 12"/></svg>
+      История
+    </button>
+  </nav>
+
+</div><!-- #app -->
+
+
+<!-- ══════════════════════════════════════ MODALS ════════════════════════════════════════ -->
+
+<!-- Новая игра -->
+<div class="modal-overlay" id="overlay-newgame">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title">Новая игра</span>
+    </div>
+    <div class="modal-body">
+      <p style="font-size:14px;color:var(--text-2);margin-bottom:var(--space-md)">Выберите налоговую ставку:</p>
+      <div class="tax-grid" id="tax-options">
+        <button class="tax-option" data-rate="0">0%</button>
+        <button class="tax-option" data-rate="0.1">10%</button>
+        <button class="tax-option" data-rate="0.15">15%</button>
+        <button class="tax-option" data-rate="0.2">20%</button>
+        <button class="tax-option selected" data-rate="0.25">25%</button>
+        <button class="tax-option" data-rate="0.3">30%</button>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-primary" id="btn-start-game">Начать игру</button>
+    </div>
+  </div>
+</div>
+
+<!-- Действие -->
+<div class="modal-overlay" id="overlay-action">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title">Действие</span>
+      <button class="modal-close" data-close="overlay-action">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="options-grid">
+        <button class="option-btn" id="action-job">
+          <span class="option-btn-icon">💼</span>
+          <span class="option-btn-label">Работа</span>
+        </button>
+        <button class="option-btn" id="action-add-money">
+          <span class="option-btn-icon">💵</span>
+          <span class="option-btn-label">Деньги</span>
+        </button>
+        <button class="option-btn" id="action-loan">
+          <span class="option-btn-icon">🏦</span>
+          <span class="option-btn-label">Займ</span>
+        </button>
+        <button class="option-btn" id="action-child">
+          <span class="option-btn-icon">👶</span>
+          <span class="option-btn-label">Ребёнок</span>
+        </button>
+        <button class="option-btn" id="action-expense">
+          <span class="option-btn-icon">💳</span>
+          <span class="option-btn-label">Расход</span>
+        </button>
+        <button class="option-btn" id="action-pay-loan">
+          <span class="option-btn-icon">✅</span>
+          <span class="option-btn-label">Погасить долг</span>
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Работа -->
+<div class="modal-overlay" id="overlay-job">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title">Работа / Должность</span>
+      <button class="modal-close" data-close="overlay-job">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Должность</label>
+        <input class="form-input" id="job-title" type="text" placeholder="Менеджер, директор..." />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Зарплата в месяц</label>
+        <input class="form-input" id="job-salary" type="number" inputmode="numeric" placeholder="50 000" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" data-close="overlay-job">Отмена</button>
+      <button class="btn btn-primary" id="btn-save-job">Сохранить</button>
+    </div>
+  </div>
+</div>
+
+<!-- Добавить / снять деньги -->
+<div class="modal-overlay" id="overlay-add-money">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title">Добавить / Снять</span>
+      <button class="modal-close" data-close="overlay-add-money">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Сумма</label>
+        <input class="form-input" id="add-money-amount" type="number" inputmode="numeric" placeholder="10 000" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Описание (необязательно)</label>
+        <input class="form-input" id="add-money-desc" type="text" placeholder="Бонус, подарок..." />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-danger" id="btn-remove-money">Снять</button>
+      <button class="btn btn-primary" id="btn-add-money">Добавить</button>
+    </div>
+  </div>
+</div>
+
+<!-- Займ -->
+<div class="modal-overlay" id="overlay-loan">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title">Взять займ</span>
+      <button class="modal-close" data-close="overlay-loan">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Название</label>
+        <input class="form-input" id="loan-name" type="text" placeholder="Кредит на машину..." />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Сумма займа</label>
+        <input class="form-input" id="loan-amount" type="number" inputmode="numeric" placeholder="100 000" />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Ежемесячный платёж</label>
+        <input class="form-input" id="loan-payment" type="number" inputmode="numeric" placeholder="5 000" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" data-close="overlay-loan">Отмена</button>
+      <button class="btn btn-primary" id="btn-save-loan">Взять займ</button>
+    </div>
+  </div>
+</div>
+
+<!-- Ребёнок -->
+<div class="modal-overlay" id="overlay-child">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title">Расходы на ребёнка</span>
+      <button class="modal-close" data-close="overlay-child">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Ежемесячные расходы</label>
+        <input class="form-input" id="child-expense" type="number" inputmode="numeric" placeholder="15 000" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" data-close="overlay-child">Отмена</button>
+      <button class="btn btn-primary" id="btn-save-child">Добавить</button>
+    </div>
+  </div>
+</div>
+
+<!-- Расход -->
+<div class="modal-overlay" id="overlay-expense">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title">Добавить расход</span>
+      <button class="modal-close" data-close="overlay-expense">×</button>
+    </div>
+    <div class="modal-body">
+      <div class="form-group">
+        <label class="form-label">Название</label>
+        <input class="form-input" id="expense-name" type="text" placeholder="Аренда, коммунальные..." />
+      </div>
+      <div class="form-group">
+        <label class="form-label">Сумма в месяц</label>
+        <input class="form-input" id="expense-amount" type="number" inputmode="numeric" placeholder="30 000" />
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn btn-secondary" data-close="overlay-expense">Отмена</button>
+      <button class="btn btn-primary" id="btn-save-expense">Добавить</button>
+    </div>
+  </div>
+</div>
+
+<!-- Погасить долг -->
+<div class="modal-overlay" id="overlay-pay-loan">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title">Погасить долг</span>
+      <button class="modal-close" data-close="overlay-pay-loan">×</button>
+    </div>
+    <div class="modal-body">
+      <div id="pay-loan-list"></div>
+    </div>
+  </div>
+</div>
+
+<!-- Купить актив -->
+<div class="modal-overlay" id="overlay-buy">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title" id="buy-modal-title">Купить актив</span>
+      <button class="modal-close" data-close="overlay-buy">×</button>
+    </div>
+    <div class="modal-body">
+      <div id="buy-step-category">
+        <div class="options-grid">
+          <button class="option-btn" data-category="stocks">
+            <span class="option-btn-icon">📈</span>
+            <span class="option-btn-label">Акции</span>
+          </button>
+          <button class="option-btn" data-category="realestate">
+            <span class="option-btn-icon">🏠</span>
+            <span class="option-btn-label">Недвижимость</span>
+          </button>
+          <button class="option-btn" data-category="metals">
+            <span class="option-btn-icon">🥇</span>
+            <span class="option-btn-label">Металлы</span>
+          </button>
+          <button class="option-btn" data-category="custom">
+            <span class="option-btn-icon">💼</span>
+            <span class="option-btn-label">Другое</span>
+          </button>
         </div>
+      </div>
+      <div id="buy-step-asset" style="display:none">
+        <div class="modal-back" id="buy-back-to-category">← Назад</div>
+        <div id="buy-asset-list"></div>
+      </div>
+      <div id="buy-step-form" style="display:none">
+        <div class="modal-back" id="buy-back-to-asset">← Назад</div>
+        <div id="buy-form-content"></div>
+      </div>
     </div>
-
-    <!-- Модальное окно списка доступной недвижимости для продажи -->
-    <div id="sell-realestate-list-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Доступная недвижимость для продажи</h2>
-                <button class="close-btn" onclick="window.assetManager?.closeSellRealEstateListModal()">&times;</button>
-            </div>
-            
-            <div class="modal-body">
-                <div id="sell-realestate-list">
-                    <!-- Список недвижимости будет загружен динамически -->
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button id="back-to-asset-types-btn" class="btn btn-secondary" onclick="window.assetManager?.backToAssetTypes()">Назад</button>
-            </div>
-        </div>
+    <div class="modal-footer" id="buy-modal-footer" style="display:none">
+      <button class="btn btn-secondary" data-close="overlay-buy">Отмена</button>
+      <button class="btn btn-primary" id="btn-confirm-buy">Купить</button>
     </div>
+  </div>
+</div>
 
-    <!-- Модальное окно списка доступного бизнеса для продажи -->
-    <div id="sell-business-list-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Доступный бизнес для продажи</h2>
-                <button class="close-btn" onclick="window.assetManager?.closeSellBusinessListModal()">&times;</button>
-            </div>
-            
-            <div class="modal-body">
-                <div id="sell-business-list">
-                    <!-- Список бизнеса будет загружен динамически -->
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button id="back-to-asset-types-btn" class="btn btn-secondary" onclick="window.assetManager?.backToAssetTypes()">Назад</button>
-            </div>
-        </div>
+<!-- Продать актив -->
+<div class="modal-overlay" id="overlay-sell">
+  <div class="modal">
+    <div class="modal-handle"></div>
+    <div class="modal-header">
+      <span class="modal-title">Продать актив</span>
+      <button class="modal-close" data-close="overlay-sell">×</button>
     </div>
-
-    <!-- Модальное окно списка доступных драгоценных металлов для продажи -->
-    <div id="sell-preciousmetals-list-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Доступные драгоценные металлы для продажи</h2>
-                <button class="close-btn" onclick="window.assetManager?.closeSellPreciousMetalsListModal()">&times;</button>
-            </div>
-            
-            <div class="modal-body">
-                <div id="sell-preciousmetals-list">
-                    <!-- Список драгоценных металлов будет загружен динамически -->
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button id="back-to-asset-types-btn" class="btn btn-secondary" onclick="window.assetManager?.backToAssetTypes()">Назад</button>
-            </div>
-        </div>
+    <div class="modal-body">
+      <div id="sell-asset-list"></div>
     </div>
+  </div>
+</div>
 
-    <!-- Модальное окно списка доступных прочих активов для продажи -->
-    <div id="sell-misc-list-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Доступные прочие активы для продажи</h2>
-                <button class="close-btn" onclick="window.assetManager?.closeSellMiscListModal()">&times;</button>
-            </div>
-            
-            <div class="modal-body">
-                <div id="sell-misc-list">
-                    <!-- Список прочих активов будет загружен динамически -->
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button id="back-to-asset-types-btn" class="btn btn-secondary" onclick="window.assetManager?.backToAssetTypes()">Назад</button>
-            </div>
-        </div>
-    </div>
 
-    <!-- Модальное окно продажи конкретного актива -->
-    <div id="sell-asset-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2 id="sell-asset-title">Продажа актива</h2>
-                <button class="close-btn" onclick="window.assetManager?.closeSellAssetModal()">&times;</button>
-            </div>
-            
-            <div class="modal-body">
-                <div id="sell-asset-info">
-                    <!-- Информация об активе будет загружена динамически -->
-                </div>
-                
-                <div id="sell-asset-form">
-                    <!-- Форма продажи будет загружена динамически -->
-                </div>
-            </div>
-            
-            <div class="modal-footer">
-                <button id="confirm-sell-btn" class="btn btn-primary">Продать</button>
-                <button id="cancel-sell-asset-btn" class="btn btn-secondary" onclick="window.assetManager?.closeSellAssetModal()">Отмена</button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Модальное окно выбора налоговой ставки -->
-    <div id="tax-rate-modal" class="modal">
-        <div class="modal-content">
-            <div class="modal-header">
-                <h2>Выбор налоговой ставки</h2>
-            </div>
-            
-            <div class="modal-body">
-                <p style="margin-bottom: 20px; text-align: center; font-size: 1.1em;">
-                    Выберите налоговую ставку для новой игры:
-                </p>
-                
-                <div class="tax-rate-options" style="display: grid; grid-template-columns: repeat(3, 1fr); gap: 15px; margin: 20px 0;">
-                    <button class="tax-rate-btn" data-rate="0">0%</button>
-                    <button class="tax-rate-btn" data-rate="10">10%</button>
-                    <button class="tax-rate-btn" data-rate="15">15%</button>
-                    <button class="tax-rate-btn" data-rate="20">20%</button>
-                    <button class="tax-rate-btn" data-rate="25">25%</button>
-                    <button class="tax-rate-btn" data-rate="30">30%</button>
-                </div>
-                
-                <p style="margin-top: 20px; text-align: center; color: #666; font-size: 0.9em;">
-                    Налог будет взиматься с общего дохода (зарплата + пассивный доход)
-                </p>
-            </div>
-        </div>
-    </div>
-
-    <!-- Модальное окно для ввода дохода скоростной дороги -->
-    <div id="income-input-modal" class="modal">
-        <div class="modal-content">
-            <button class="close-btn">&times;</button>
-            <h2><i class="fas fa-road"></i> Скоростная дорога</h2>
-            <p>Введите ваш новый пассивный доход для скоростной дороги:</p>
-            
-            <div class="input-group">
-                <label for="new-income-amount">Пассивный доход:</label>
-                <div class="input-wrapper">
-                    <span class="currency-symbol">$</span>
-                    <input type="number" id="new-income-amount" placeholder="1000000" min="0" step="1000">
-                </div>
-            </div>
-            
-            <div class="modal-actions">
-                <button id="confirm-income-btn" class="btn btn-primary">
-                    <i class="fas fa-check"></i>
-                    Подтвердить
-                </button>
-                <button id="cancel-income-btn" class="btn btn-secondary">
-                    <i class="fas fa-times"></i>
-                    Отмена
-                </button>
-            </div>
-        </div>
-    </div>
-
-    <!-- Основные скрипты приложения -->
-    <!-- Сначала загружаем core модули -->
-    <script src="js/core/DOMCache.js"></script>
-    <script src="js/core/RenderBatcher.js"></script>
-    <script src="js/core/DOM.js"></script>
-    <script src="js/core/EventBus.js"></script>
-    <script src="js/core/GameState.js"></script>
-    <script src="js/core/UIManager.js"></script>
-    <script src="js/core/PerformanceUtils.js"></script>
-    <script src="js/core/AnimationManager.js"></script>
-    
-    <!-- Затем основные скрипты -->
-    <script src="js/storage.js"></script>
-    <script src="js/assets.js"></script>
-    <script src="js/app.js"></script>
-    <script src="js/modals.js"></script>
-    <script src="js/buy-modal.js"></script>
-    <script src="js/action-modal.js"></script>
-    <script src="js/modules/AssetManager.js"></script>
-    <script src="js/modules/FinanceManager.js"></script>
-    
-    <!-- Тестовые файлы - ВРЕМЕННО ОТКЛЮЧЕНЫ -->
-    <!--
-    <script src="js/test-dom.js"></script>
-    <script src="js/test-gamestate.js"></script>
-    <script src="js/test-eventbus.js"></script>
-    <script src="js/test-modules.js"></script>
-    <script src="js/test-animations.js"></script>
-    -->
+<script src="js/state.js"></script>
+<script src="js/storage.js"></script>
+<script src="js/finance.js"></script>
+<script src="js/data.js"></script>
+<script src="js/ui.js"></script>
+<script src="js/modals.js"></script>
+<script src="js/app.js"></script>
 </body>
-</html> 
+</html>
