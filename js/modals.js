@@ -423,7 +423,7 @@ function renderBuyForm() {
         <div style="font-size:13px;color:var(--text-2);margin-top:4px">${a.desc}</div>
       </div>
       <div class="form-group">
-        <label class="form-label">Стоимость</label>
+        <label class="form-label">Цена</label>
         <input class="form-input" id="buy-price" type="number" inputmode="numeric" placeholder="${a.price}" value="${a.price || ''}" oninput="updateMortgageCalc()" />
       </div>
       <div class="form-group">
