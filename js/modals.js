@@ -91,7 +91,6 @@ function initActionModal() {
     closeModal('overlay-action');
     document.getElementById('loan-name').value = '';
     document.getElementById('loan-amount').value = '';
-    document.getElementById('loan-payment').value = '';
     openModal('overlay-loan');
   });
 
