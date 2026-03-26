@@ -722,7 +722,7 @@ function confirmSell(id) {
   const qtyInput = document.getElementById(`sell-qty-${id}`);
 
   if (isQty) {
-    const sellPrice = parseInt(priceInput?.value) || asset.price || 0;
+    const sellPrice = priceInput?.value !== '' ? (parseInt(priceInput.value) || 0) : (asset.price || 0);
     const sellQty = Math.min(parseInt(qtyInput?.value) || asset.quantity, asset.quantity);
     if (sellQty <= 0) return;
 
