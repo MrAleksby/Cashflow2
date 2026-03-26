@@ -37,9 +37,9 @@ function doPayDay() {
   const entry = {
     id: nextId(),
     month: newMonth,
-    description: `PayDay — Cash Flow ${cashflow >= 0 ? '+' : ''}${fmtNum(cashflow)} ₽`,
+    description: `PayDay — Cash Flow ${cashflow >= 0 ? '+' : ''}${fmtNum(cashflow)}`,
     amount: cashflow,
-    date: new Date().toLocaleDateString('ru-RU'),
+    date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }),
   };
 
   setState({
@@ -133,7 +133,7 @@ function initAddMoneyModal() {
     const amount = parseInt(document.getElementById('add-money-amount').value) || 0;
     const desc = document.getElementById('add-money-desc').value.trim() || 'Пополнение';
     if (amount <= 0) return;
-    const entry = { id: nextId(), month: state.monthsCount, description: desc, amount, date: new Date().toLocaleDateString('ru-RU') };
+    const entry = { id: nextId(), month: state.monthsCount, description: desc, amount, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
     setState({ cash: state.cash + amount, history: [...state.history, entry] });
     closeModal('overlay-add-money');
   });
@@ -142,7 +142,7 @@ function initAddMoneyModal() {
     const amount = parseInt(document.getElementById('add-money-amount').value) || 0;
     const desc = document.getElementById('add-money-desc').value.trim() || 'Снятие';
     if (amount <= 0) return;
-    const entry = { id: nextId(), month: state.monthsCount, description: desc, amount: -amount, date: new Date().toLocaleDateString('ru-RU') };
+    const entry = { id: nextId(), month: state.monthsCount, description: desc, amount: -amount, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
     setState({ cash: state.cash - amount, history: [...state.history, entry] });
     closeModal('overlay-add-money');
   });
@@ -154,16 +154,24 @@ function initLoanModal() {
   document.getElementById('btn-save-loan').addEventListener('click', () => {
     const name = document.getElementById('loan-name').value.trim();
     const amount = parseInt(document.getElementById('loan-amount').value) || 0;
-    const payment = parseInt(document.getElementById('loan-payment').value) || 0;
     if (!name || amount <= 0) return;
-
-    const newLiability = { id: nextId(), name, amount, payment };
-    const entry = { id: nextId(), month: state.monthsCount, description: `Займ: ${name}`, amount, date: new Date().toLocaleDateString('ru-RU') };
+    if (amount % 1000 !== 0) {
+      alert('Сумма займа должна быть кратна 1000');
+      return;
+    }
+    const loanId = nextId();
+    const commission = Math.round(amount * 0.10);
+    const newLiability = { id: loanId, name, amount, payment: 0 };
+    const commissionExpense = { id: nextId(), name: `Комиссия: ${name}`, amount: commission, type: 'loan-commission', linkedLiabilityId: loanId };
+    const entry = { id: nextId(), month: state.monthsCount, description: `Займ: ${name} ${fmt(amount)}`, amount, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
     setState({
       cash: state.cash + amount,
       liabilities: [...state.liabilities, newLiability],
+      expenses: [...state.expenses, commissionExpense],
       history: [...state.history, entry],
     });
+    document.getElementById('loan-name').value = '';
+    document.getElementById('loan-amount').value = '';
     closeModal('overlay-loan');
   });
 }
@@ -174,9 +182,13 @@ function initChildModal() {
   document.getElementById('btn-save-child').addEventListener('click', () => {
     const amount = parseInt(document.getElementById('child-expense').value) || 0;
     if (amount <= 0) return;
+    const nameInput = document.getElementById('child-name').value.trim();
     const childNum = state.expenses.filter(e => e.type === 'child').length + 1;
-    const newExpense = { id: nextId(), name: `Ребёнок ${childNum}`, amount, type: 'child' };
+    const name = nameInput || `Ребёнок ${childNum}`;
+    const newExpense = { id: nextId(), name, amount, type: 'child' };
     setState({ expenses: [...state.expenses, newExpense] });
+    document.getElementById('child-name').value = '';
+    document.getElementById('child-expense').value = '';
     closeModal('overlay-child');
   });
 }
@@ -206,28 +218,48 @@ function renderPayLoanList() {
   }
 
   el.innerHTML = state.liabilities.map(l => `
-    <div class="sell-item">
+    <div class="sell-item" style="flex-direction:column;align-items:stretch;gap:10px">
       <div class="sell-item-info">
         <div class="sell-item-name">${l.name}</div>
-        <div class="sell-item-detail">Долг: ${fmt(l.amount)} · Платёж: ${fmt(l.payment)}/мес</div>
+        <div class="sell-item-detail">Остаток: ${fmt(l.amount)} · Комиссия: ${fmt(Math.round(l.amount * 0.10))}/мес</div>
       </div>
-      <button class="sell-item-btn" onclick="payOffLoan('${l.id}')">Погасить</button>
+      <div style="display:flex;gap:8px;align-items:center">
+        <input class="form-input" id="repay-${l.id}" type="number" inputmode="numeric" step="1000" placeholder="Сумма (кратно 1000)" style="flex:1" />
+        <button class="sell-item-btn" onclick="payOffLoan('${l.id}')">Погасить</button>
+      </div>
     </div>`).join('');
 }
 
 function payOffLoan(id) {
   const loan = state.liabilities.find(l => l.id === id);
   if (!loan) return;
-  if (state.cash < loan.amount) {
-    alert(`Недостаточно средств. Нужно ${fmt(loan.amount)}, на счёте ${fmt(state.cash)}`);
-    return;
+  const repayAmount = parseInt(document.getElementById(`repay-${id}`)?.value) || 0;
+  if (repayAmount <= 0) { alert('Введите сумму погашения'); return; }
+  if (repayAmount % 1000 !== 0) { alert('Сумма должна быть кратна 1000'); return; }
+  if (repayAmount > loan.amount) { alert(`Нельзя погасить больше долга (${fmt(loan.amount)})`); return; }
+  if (repayAmount > state.cash) { alert(`Недостаточно средств. На счёте: ${fmt(state.cash)}`); return; }
+
+  const remaining = loan.amount - repayAmount;
+  const entry = { id: nextId(), month: state.monthsCount, description: `Погашен долг: ${loan.name} — ${fmt(repayAmount)}`, amount: -repayAmount, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
+
+  if (remaining === 0) {
+    // Полное погашение: удалить пассив и связанную комиссию
+    setState({
+      cash: state.cash - repayAmount,
+      liabilities: state.liabilities.filter(l => l.id !== id),
+      expenses: state.expenses.filter(e => e.linkedLiabilityId !== id),
+      history: [...state.history, entry],
+    });
+  } else {
+    // Частичное: уменьшить долг и пересчитать комиссию
+    const newCommission = Math.round(remaining * 0.10);
+    setState({
+      cash: state.cash - repayAmount,
+      liabilities: state.liabilities.map(l => l.id === id ? { ...l, amount: remaining } : l),
+      expenses: state.expenses.map(e => e.linkedLiabilityId === id ? { ...e, amount: newCommission } : e),
+      history: [...state.history, entry],
+    });
   }
-  const entry = { id: nextId(), month: state.monthsCount, description: `Погашен долг: ${loan.name}`, amount: -loan.amount, date: new Date().toLocaleDateString('ru-RU') };
-  setState({
-    cash: state.cash - loan.amount,
-    liabilities: state.liabilities.filter(l => l.id !== id),
-    history: [...state.history, entry],
-  });
   renderPayLoanList();
 }
 
@@ -320,21 +352,48 @@ function renderBuyForm() {
   if (buySelectedAsset && buySelectedAsset.custom) {
     el.innerHTML = `
       <div class="form-group">
-        <label class="form-label">Название актива</label>
-        <input class="form-input" id="buy-custom-name" type="text" placeholder="Бизнес, инвестиция..." />
+        <label class="form-label">Название бизнеса</label>
+        <input class="form-input" id="buy-custom-name" type="text" placeholder="Автомойка, пекарня..." />
       </div>
       <div class="form-group">
         <label class="form-label">Стоимость</label>
-        <input class="form-input" id="buy-custom-price" type="number" inputmode="numeric" placeholder="100 000" />
+        <input class="form-input" id="buy-custom-price" type="number" inputmode="numeric" placeholder="100 000" oninput="updateBusinessCalc()" />
       </div>
       <div class="form-group">
-        <label class="form-label">Ежемесячный доход (необязательно)</label>
+        <label class="form-label">Первый взнос</label>
+        <input class="form-input" id="buy-custom-down" type="number" inputmode="numeric" placeholder="0" oninput="updateBusinessCalc()" />
+      </div>
+      <div class="mortgage-calc" id="business-calc-block">
+        <span class="mortgage-calc-label">Долг:</span>
+        <span class="mortgage-calc-value" id="business-debt-display">—</span>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Ежемесячный доход</label>
         <input class="form-input" id="buy-custom-income" type="number" inputmode="numeric" placeholder="5 000" />
       </div>`;
     return;
   }
 
   const a = buySelectedAsset;
+
+  // ── Депозит ──
+  if (a.type === 'deposit') {
+    el.innerHTML = `
+      <div style="padding:12px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px">
+        <div style="font-size:16px;font-weight:700">${a.icon} ${a.name}</div>
+        <div style="font-size:13px;color:var(--text-2);margin-top:4px">${a.desc}</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Сумма вклада</label>
+        <input class="form-input" id="buy-deposit-amount" type="number" inputmode="numeric" placeholder="10 000" oninput="updateDepositCalc()" />
+      </div>
+      <div class="mortgage-calc" id="deposit-calc-block">
+        <span class="mortgage-calc-label">Доход в месяц:</span>
+        <span class="mortgage-calc-value" id="deposit-income-display">—</span>
+      </div>`;
+    return;
+  }
+
   const isQty = a.pricePerShare !== undefined || a.pricePerUnit !== undefined;
   const unitPrice = a.pricePerShare || a.pricePerUnit || a.price || 0;
 
@@ -409,6 +468,25 @@ function updateSellProceeds(id, mortgage) {
   }
 }
 
+function updateDepositCalc() {
+  const amount = parseInt(document.getElementById('buy-deposit-amount')?.value) || 0;
+  const income = Math.round(amount * 0.01);
+  const display = document.getElementById('deposit-income-display');
+  const block   = document.getElementById('deposit-calc-block');
+  if (display) display.textContent = amount > 0 ? fmt(income) : '—';
+  if (block)   block.classList.toggle('mortgage-calc--active', amount > 0);
+}
+
+function updateBusinessCalc() {
+  const price = parseInt(document.getElementById('buy-custom-price')?.value) || 0;
+  const down  = parseInt(document.getElementById('buy-custom-down')?.value)  || 0;
+  const debt  = Math.max(0, price - down);
+  const display = document.getElementById('business-debt-display');
+  const block   = document.getElementById('business-calc-block');
+  if (display) display.textContent = debt > 0 ? fmt(debt) : '—';
+  if (block)   block.classList.toggle('mortgage-calc--active', debt > 0);
+}
+
 function updateMortgageCalc() {
   const price = parseInt(document.getElementById('buy-price')?.value) || 0;
   const down  = parseInt(document.getElementById('buy-down')?.value)  || 0;
@@ -422,14 +500,54 @@ function updateMortgageCalc() {
 function confirmBuy() {
   if (!buySelectedAsset) return;
 
+  // ── Депозит ──
+  if (buySelectedAsset.type === 'deposit') {
+    const amount = parseInt(document.getElementById('buy-deposit-amount').value) || 0;
+    if (amount <= 0) return;
+    const income = Math.round(amount * 0.01);
+    const existing = state.assets.find(x => x.key === 'deposit');
+    if (existing) {
+      const updated = state.assets.map(x => x.key === 'deposit'
+        ? { ...x, price: x.price + amount, monthlyIncome: x.monthlyIncome + income }
+        : x);
+      const entry = { id: nextId(), month: state.monthsCount, description: `Депозит: +${fmt(amount)}`, amount: -amount, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
+      setState({ assets: updated, cash: state.cash - amount, history: [...state.history, entry] });
+    } else {
+      const newAsset = { id: nextId(), key: 'deposit', name: 'Депозит', icon: '🏦', category: 'stocks', type: 'deposit', quantity: 1, price: amount, monthlyIncome: income };
+      const entry = { id: nextId(), month: state.monthsCount, description: `Депозит: ${fmt(amount)}`, amount: -amount, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
+      setState({ assets: [...state.assets, newAsset], cash: state.cash - amount, history: [...state.history, entry] });
+    }
+    closeModal('overlay-buy');
+    return;
+  }
+
   let newAsset;
 
   if (buySelectedAsset.custom) {
     const name = document.getElementById('buy-custom-name').value.trim();
     const price = parseInt(document.getElementById('buy-custom-price').value) || 0;
+    const downPayment = parseInt(document.getElementById('buy-custom-down').value) || 0;
     const income = parseInt(document.getElementById('buy-custom-income').value) || 0;
     if (!name || price <= 0) return;
-    newAsset = { id: nextId(), name, category: 'custom', type: 'custom', quantity: 1, price, monthlyIncome: income };
+    const debt = Math.max(0, price - downPayment);
+    let linkedLiabilityId = null;
+    let newLiabilities = [...state.liabilities];
+    if (debt > 0) {
+      const debtLiab = { id: nextId(), name: `Долг: ${name}`, amount: debt, payment: 0 };
+      linkedLiabilityId = debtLiab.id;
+      newLiabilities = [...newLiabilities, debtLiab];
+    }
+    const cost = downPayment > 0 ? downPayment : price;
+    const descParts = debt > 0 ? `взнос ${fmt(downPayment)}, долг ${fmt(debt)}` : `полная оплата ${fmt(price)}`;
+    const entry = { id: nextId(), month: state.monthsCount, description: `Бизнес: ${name} (${descParts})`, amount: -cost, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
+    setState({
+      assets: [...state.assets, { id: nextId(), name, category: 'custom', type: 'custom', quantity: 1, price, downPayment, monthlyIncome: income, linkedLiabilityId }],
+      liabilities: newLiabilities,
+      cash: state.cash - cost,
+      history: [...state.history, entry],
+    });
+    closeModal('overlay-buy');
+    return;
   } else {
     const a = buySelectedAsset;
     const isQty = a.pricePerShare !== undefined || a.pricePerUnit !== undefined;
@@ -448,7 +566,7 @@ function confirmBuy() {
           ? { ...x, quantity: x.quantity + qty, monthlyIncome: (x.monthlyIncome || 0) + incomePer * qty }
           : x);
         const cost = unitPrice * qty;
-        const entry = { id: nextId(), month: state.monthsCount, description: `Куплено ${a.name} × ${qty}`, amount: -cost, date: new Date().toLocaleDateString('ru-RU') };
+        const entry = { id: nextId(), month: state.monthsCount, description: `Куплено ${a.name} × ${qty}`, amount: -cost, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
         setState({ assets: updated, cash: state.cash - cost, history: [...state.history, entry] });
         closeModal('overlay-buy');
         return;
@@ -475,7 +593,7 @@ function confirmBuy() {
       const descParts = mortgage > 0
         ? `взнос ${fmt(downPayment)}, ипотека ${fmt(mortgage)}`
         : `полная оплата ${fmt(price)}`;
-      const entry = { id: nextId(), month: state.monthsCount, description: `Куплено: ${a.name} (${descParts})`, amount: -cost, date: new Date().toLocaleDateString('ru-RU') };
+      const entry = { id: nextId(), month: state.monthsCount, description: `Куплено: ${a.name} (${descParts})`, amount: -cost, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
       setState({
         assets: [...state.assets, { id: nextId(), key: a.key, name: a.name, category: buyCategory, type: a.type, quantity: 1, price, downPayment, monthlyIncome: income, linkedLiabilityId }],
         liabilities: newLiabilities,
@@ -494,7 +612,7 @@ function confirmBuy() {
   }
 
   const cost = (newAsset.price || 0) * (newAsset.quantity || 1);
-  const entry = { id: nextId(), month: state.monthsCount, description: `Куплено: ${newAsset.name}`, amount: -cost, date: new Date().toLocaleDateString('ru-RU') };
+  const entry = { id: nextId(), month: state.monthsCount, description: `Куплено: ${newAsset.name}`, amount: -cost, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
   setState({
     assets: [...state.assets, newAsset],
     cash: state.cash - cost,
@@ -607,7 +725,7 @@ function confirmSell(id) {
     if (sellQty <= 0) return;
 
     const proceeds = sellPrice * sellQty;
-    const entry = { id: nextId(), month: state.monthsCount, description: `Продано: ${asset.name} × ${sellQty} по ${fmt(sellPrice)}`, amount: proceeds, date: new Date().toLocaleDateString('ru-RU') };
+    const entry = { id: nextId(), month: state.monthsCount, description: `Продано: ${asset.name} × ${sellQty} по ${fmt(sellPrice)}`, amount: proceeds, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
 
     const remaining = asset.quantity - sellQty;
     const incomeRatio = remaining / asset.quantity;
@@ -630,7 +748,7 @@ function confirmSell(id) {
     const desc = mortgage > 0
       ? `Продано: ${asset.name} за ${fmt(sellPrice)} (погашена ипотека ${fmt(mortgage)})`
       : `Продано: ${asset.name} за ${fmt(sellPrice)}`;
-    const entry = { id: nextId(), month: state.monthsCount, description: desc, amount: proceeds, date: new Date().toLocaleDateString('ru-RU') };
+    const entry = { id: nextId(), month: state.monthsCount, description: desc, amount: proceeds, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
 
     setState({
       assets: state.assets.filter(a => a.id !== id),

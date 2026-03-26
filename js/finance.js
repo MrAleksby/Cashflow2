@@ -21,13 +21,11 @@ function calcTax() {
 }
 
 function calcTotalExpenses() {
-  // Фиксированные расходы + дети
+  // Расходы (включая комиссии по займам)
   const fixed = state.expenses.reduce((sum, e) => sum + (e.amount || 0), 0);
-  // Платежи по пассивам (кредиты)
-  const loans = state.liabilities.reduce((sum, l) => sum + (l.payment || 0), 0);
   // Налог
   const tax = calcTax();
-  return fixed + loans + tax;
+  return fixed + tax;
 }
 
 function calcCashFlow() {
@@ -51,13 +49,13 @@ function calcFreedomPercent() {
 
 function fmt(n) {
   const num = Math.round(n || 0);
-  return num.toLocaleString('ru-RU') + ' ₽';
+  return num.toLocaleString('ru-RU');
 }
 
 function fmtSign(n) {
   const num = Math.round(n || 0);
   const sign = num >= 0 ? '+' : '';
-  return sign + num.toLocaleString('ru-RU') + ' ₽';
+  return sign + num.toLocaleString('ru-RU');
 }
 
 function fmtNum(n) {

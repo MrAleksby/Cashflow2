@@ -7,8 +7,8 @@ const ASSET_CATALOG = {
     { key: 'ON2U',     name: 'ON2U',     icon: '📈', type: 'stocks', pricePerShare: 1,    monthlyIncome: 0,   desc: 'Спекулятивные акции' },
     { key: 'OK4U',     name: 'OK4U',     icon: '📈', type: 'stocks', pricePerShare: 1,    monthlyIncome: 0,   desc: 'Спекулятивные акции' },
     { key: 'GRO4US',   name: 'GRO4US',   icon: '📈', type: 'stocks', pricePerShare: 1,    monthlyIncome: 0,   desc: 'Спекулятивные акции' },
-    { key: '2BIGPOWER', name: '2BIGPOWER', icon: '💡', type: 'stocks', pricePerShare: 1,   monthlyIncome: 0,   desc: 'Дивидендные акции' },
-    { key: 'CD',       name: 'CD',       icon: '💿', type: 'stocks', pricePerShare: 1,    monthlyIncome: 0,   desc: 'Дивидендные акции' },
+    { key: '2BIGPOWER', name: '2BIGPOWER', icon: '💡', type: 'stocks', pricePerShare: 1200, monthlyIncome: 10, desc: 'Дивидендные акции, 10/акцию в месяц' },
+    { key: 'deposit',  name: 'Депозит',  icon: '🏦', type: 'deposit', desc: 'Банковский вклад, 1% дохода в месяц' },
   ],
 
   realestate: [
@@ -40,5 +40,5 @@ const CATEGORY_NAMES = {
   stocks:      'Акции',
   realestate:  'Недвижимость',
   metals:      'Металлы',
-  custom:      'Другое',
+  custom:      'Бизнес',
 };

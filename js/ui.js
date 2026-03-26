@@ -70,7 +70,6 @@ function renderSummaryCard() {
   const totalIncome = calcTotalIncome();
   const tax = calcTax();
   const expenses = state.expenses.reduce((s, e) => s + (e.amount || 0), 0);
-  const loans = state.liabilities.reduce((s, l) => s + (l.payment || 0), 0);
   const totalExp = calcTotalExpenses();
   const cashflow = calcCashFlow();
 
@@ -79,7 +78,6 @@ function renderSummaryCard() {
     { label: 'Пассивный доход', value: passive, color: 'var(--green)' },
     { label: `Налог (${Math.round((state.taxRate || 0) * 100)}%)`, value: -tax, color: 'var(--red)' },
     { label: 'Расходы', value: -expenses, color: 'var(--red)' },
-    { label: 'Платежи по долгам', value: -loans, color: loans > 0 ? 'var(--red)' : 'var(--text-3)' },
   ];
 
   const rowsEl = document.getElementById('summary-rows');
