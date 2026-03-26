@@ -397,6 +397,7 @@ function renderBuyForm() {
   const unitPrice = a.pricePerShare || a.pricePerUnit || a.price || 0;
 
   if (isQty) {
+    const is2big = a.key === '2BIGPOWER';
     el.innerHTML = `
       <div style="padding:12px 0 16px;border-bottom:1px solid var(--border);margin-bottom:16px">
         <div style="font-size:16px;font-weight:700">${a.icon} ${a.name}</div>
@@ -404,7 +405,7 @@ function renderBuyForm() {
       </div>
       <div class="form-group">
         <label class="form-label">Цена за штуку</label>
-        <input class="form-input" id="buy-unit-price" type="number" inputmode="numeric" placeholder="${unitPrice}" value="${unitPrice !== 1 ? unitPrice : ''}" />
+        <input class="form-input" id="buy-unit-price" type="number" inputmode="numeric" placeholder="0" value="${is2big ? unitPrice : ''}" ${is2big ? 'readonly style="opacity:0.6"' : ''} />
       </div>
       <div class="form-group">
         <label class="form-label">Количество</label>
@@ -552,7 +553,8 @@ function confirmBuy() {
     const isQty = a.pricePerShare !== undefined || a.pricePerUnit !== undefined;
 
     if (isQty) {
-      const unitPrice = parseInt(document.getElementById('buy-unit-price').value) || a.pricePerShare || a.pricePerUnit || 0;
+      const unitPriceInput = document.getElementById('buy-unit-price');
+      const unitPrice = unitPriceInput.value !== '' ? (parseInt(unitPriceInput.value) || 0) : (a.pricePerShare || a.pricePerUnit || 0);
       const qty = parseInt(document.getElementById('buy-quantity').value) || 0;
       const incomePerEl = document.getElementById('buy-income-per');
       const incomePer = incomePerEl ? (parseInt(incomePerEl.value) || 0) : 0;
