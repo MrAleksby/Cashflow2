@@ -165,7 +165,10 @@ function renderExpenses() {
   }
 
   state.expenses.forEach(e => {
-    items.push({ icon: e.type === 'child' ? '👶' : '💳', name: e.name, sub: e.type === 'child' ? 'Расходы на ребёнка' : 'Ежемесячный расход', amount: e.amount, color: 'var(--red-bg)', removable: true, id: e.id });
+    const isCommission = e.type === 'loan-commission';
+    const icon = e.type === 'child' ? '👶' : isCommission ? '🔒' : '💳';
+    const sub = e.type === 'child' ? 'Расходы на ребёнка' : isCommission ? 'Комиссия по займу (удаляется при погашении)' : 'Ежемесячный расход';
+    items.push({ icon, name: e.name, sub, amount: e.amount, color: 'var(--red-bg)', removable: !isCommission, id: e.id });
   });
 
   state.liabilities.forEach(l => {
