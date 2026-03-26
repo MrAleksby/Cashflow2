@@ -590,7 +590,8 @@ function confirmBuy() {
         newLiabilities = [...newLiabilities, mortgageLiab];
       }
 
-      const cost = downPayment > 0 ? downPayment : price;
+      const downInput = document.getElementById('buy-down').value;
+      const cost = downInput !== '' ? downPayment : price;
       const descParts = mortgage > 0
         ? `взнос ${fmt(downPayment)}, ипотека ${fmt(mortgage)}`
         : `полная оплата ${fmt(price)}`;
