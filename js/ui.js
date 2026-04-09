@@ -76,6 +76,7 @@ function renderSummaryCard() {
   const rows = [
     { label: `Зарплата ${state.job.title ? '(' + state.job.title + ')' : ''}`, value: salary, color: 'var(--green)' },
     { label: 'Пассивный доход', value: passive, color: 'var(--green)' },
+    { label: 'Общий доход', value: totalIncome, color: 'var(--green)' },
     { label: `Налог (${Math.round((state.taxRate || 0) * 100)}%)`, value: -tax, color: 'var(--red)' },
     { label: 'Расходы', value: -expenses, color: 'var(--red)' },
   ];
