@@ -644,6 +644,18 @@ function initSellModal() {
 }
 
 let sellExpandedId = null;
+let sellMortgageMode = 'pay'; // 'pay' | 'transfer'
+
+function setSellMortgageMode(id, mode, mortgageAmount) {
+  sellMortgageMode = mode;
+  const payBtn = document.getElementById(`sell-pay-btn-${id}`);
+  const transferBtn = document.getElementById(`sell-transfer-btn-${id}`);
+  const infoBlock = document.getElementById(`sell-mortgage-info-${id}`);
+  if (payBtn) payBtn.classList.toggle('cashflow-toggle-btn--active', mode === 'pay');
+  if (transferBtn) transferBtn.classList.toggle('cashflow-toggle-btn--active', mode === 'transfer');
+  if (infoBlock) infoBlock.style.display = mode === 'pay' ? '' : 'none';
+  if (mode === 'pay') updateSellProceeds(id, mortgageAmount);
+}
 
 function renderSellList() {
   const el = document.getElementById('sell-asset-list');
@@ -691,13 +703,19 @@ function renderSellList() {
               ${mortgageAmount > 0 ? `oninput="updateSellProceeds('${a.id}', ${mortgageAmount})"` : ''} />
           </div>
           ${mortgageAmount > 0 ? `
-          <div class="sell-mortgage-row">
-            <span class="sell-mortgage-label">Погашение ипотеки:</span>
-            <span class="sell-mortgage-debt">−${fmt(mortgageAmount)}</span>
+          <div class="cashflow-toggle" style="margin:10px 0">
+            <button type="button" class="cashflow-toggle-btn cashflow-toggle-btn--active" id="sell-pay-btn-${a.id}" onclick="setSellMortgageMode('${a.id}', 'pay', ${mortgageAmount})">Погасить ипотеку</button>
+            <button type="button" class="cashflow-toggle-btn" id="sell-transfer-btn-${a.id}" onclick="setSellMortgageMode('${a.id}', 'transfer', ${mortgageAmount})">Передать ипотеку</button>
           </div>
-          <div class="sell-mortgage-row sell-mortgage-row--net">
-            <span class="sell-mortgage-label">Вы получите:</span>
-            <span class="sell-mortgage-net" id="sell-proceeds-${a.id}">—</span>
+          <div id="sell-mortgage-info-${a.id}">
+            <div class="sell-mortgage-row">
+              <span class="sell-mortgage-label">Погашение ипотеки:</span>
+              <span class="sell-mortgage-debt">−${fmt(mortgageAmount)}</span>
+            </div>
+            <div class="sell-mortgage-row sell-mortgage-row--net">
+              <span class="sell-mortgage-label">Вы получите:</span>
+              <span class="sell-mortgage-net" id="sell-proceeds-${a.id}">—</span>
+            </div>
           </div>` : ''}`}
         <div class="sell-form-actions">
           <button class="btn-secondary" onclick="cancelSell()">Отмена</button>
@@ -721,6 +739,7 @@ function renderSellList() {
 
 function openSellForm(id) {
   sellExpandedId = id;
+  sellMortgageMode = 'pay';
   renderSellList();
   // Фокус на первое поле
   setTimeout(() => {
@@ -772,18 +791,25 @@ function confirmSell(id) {
     const sellPrice = parseInt(priceInput?.value) || (asset.price || 0) * (asset.quantity || 1);
     if (sellPrice < 0) return;
 
-    // Ипотека: если есть — гасим автоматически
     const linkedLiab = asset.linkedLiabilityId
       ? state.liabilities.find(l => l.id === asset.linkedLiabilityId)
       : null;
     const mortgage = linkedLiab ? linkedLiab.amount : 0;
-    const proceeds = sellPrice - mortgage;
 
-    const desc = mortgage > 0
-      ? `Продано: ${asset.name} за ${fmt(sellPrice)} (погашена ипотека ${fmt(mortgage)})`
-      : `Продано: ${asset.name} за ${fmt(sellPrice)}`;
+    let proceeds, desc;
+    if (mortgage > 0 && sellMortgageMode === 'transfer') {
+      // Передача ипотеки покупателю — получаем полную сумму, ипотека уходит
+      proceeds = sellPrice;
+      desc = `Продано: ${asset.name} за ${fmt(sellPrice)} (ипотека ${fmt(mortgage)} передана покупателю)`;
+    } else {
+      // Погашение ипотеки из суммы продажи
+      proceeds = sellPrice - mortgage;
+      desc = mortgage > 0
+        ? `Продано: ${asset.name} за ${fmt(sellPrice)} (погашена ипотека ${fmt(mortgage)})`
+        : `Продано: ${asset.name} за ${fmt(sellPrice)}`;
+    }
+
     const entry = { id: nextId(), month: state.monthsCount, description: desc, amount: proceeds, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
-
     setState({
       assets: state.assets.filter(a => a.id !== id),
       liabilities: linkedLiab ? state.liabilities.filter(l => l.id !== linkedLiab.id) : state.liabilities,
