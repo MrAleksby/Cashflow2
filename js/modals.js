@@ -552,7 +552,7 @@ function confirmBuy() {
       linkedLiabilityId = debtLiab.id;
       newLiabilities = [...newLiabilities, debtLiab];
     }
-    const cost = downPayment > 0 ? downPayment : price;
+    const cost = downPayment;
     const descParts = debt > 0 ? `взнос ${fmt(downPayment)}, долг ${fmt(debt)}` : `полная оплата ${fmt(price)}`;
     const entry = { id: nextId(), month: state.monthsCount, description: `Бизнес: ${name} (${descParts})`, amount: -cost, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
     setState({
@@ -704,8 +704,8 @@ function renderSellList() {
           </div>
           ${mortgageAmount > 0 ? `
           <div class="cashflow-toggle" style="margin:10px 0">
-            <button type="button" class="cashflow-toggle-btn cashflow-toggle-btn--active" id="sell-pay-btn-${a.id}" onclick="setSellMortgageMode('${a.id}', 'pay', ${mortgageAmount})">Погасить ипотеку</button>
-            <button type="button" class="cashflow-toggle-btn" id="sell-transfer-btn-${a.id}" onclick="setSellMortgageMode('${a.id}', 'transfer', ${mortgageAmount})">Передать ипотеку</button>
+            <button type="button" class="cashflow-toggle-btn cashflow-toggle-btn--active" id="sell-pay-btn-${a.id}" onclick="setSellMortgageMode('${a.id}', 'pay', ${mortgageAmount})">Погасить долг</button>
+            <button type="button" class="cashflow-toggle-btn" id="sell-transfer-btn-${a.id}" onclick="setSellMortgageMode('${a.id}', 'transfer', ${mortgageAmount})">Передать долг</button>
           </div>
           <div id="sell-mortgage-info-${a.id}">
             <div class="sell-mortgage-row">
@@ -800,12 +800,12 @@ function confirmSell(id) {
     if (mortgage > 0 && sellMortgageMode === 'transfer') {
       // Передача ипотеки покупателю — получаем полную сумму, ипотека уходит
       proceeds = sellPrice;
-      desc = `Продано: ${asset.name} за ${fmt(sellPrice)} (ипотека ${fmt(mortgage)} передана покупателю)`;
+      desc = `Продано: ${asset.name} за ${fmt(sellPrice)} (долг ${fmt(mortgage)} передан покупателю)`;
     } else {
       // Погашение ипотеки из суммы продажи
       proceeds = sellPrice - mortgage;
       desc = mortgage > 0
-        ? `Продано: ${asset.name} за ${fmt(sellPrice)} (погашена ипотека ${fmt(mortgage)})`
+        ? `Продано: ${asset.name} за ${fmt(sellPrice)} (погашен долг ${fmt(mortgage)})`
         : `Продано: ${asset.name} за ${fmt(sellPrice)}`;
     }
 
