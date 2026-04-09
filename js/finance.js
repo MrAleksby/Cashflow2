@@ -17,7 +17,11 @@ function calcTotalIncome() {
 }
 
 function calcTax() {
-  return Math.round(calcTotalIncome() * (state.taxRate || 0));
+  const depositIncome = state.assets
+    .filter(a => a.type === 'deposit')
+    .reduce((sum, a) => sum + (a.monthlyIncome || 0), 0);
+  const taxableIncome = calcTotalIncome() - depositIncome;
+  return Math.round(taxableIncome * (state.taxRate || 0));
 }
 
 function calcTotalExpenses() {
