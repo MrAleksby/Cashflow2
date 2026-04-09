@@ -20,7 +20,7 @@ function calcTax() {
   const depositIncome = state.assets
     .filter(a => a.type === 'deposit')
     .reduce((sum, a) => sum + (a.monthlyIncome || 0), 0);
-  const taxableIncome = calcTotalIncome() - depositIncome;
+  const taxableIncome = Math.max(0, calcTotalIncome() - depositIncome);
   return Math.round(taxableIncome * (state.taxRate || 0));
 }
 
