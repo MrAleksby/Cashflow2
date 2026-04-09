@@ -641,13 +641,15 @@ function renderSellList() {
   }
 
   el.innerHTML = state.assets.map(a => {
-    const isQty = (a.quantity || 1) > 1;
+    const isDeposit = a.type === 'deposit';
+    const isQty = !isDeposit && (a.quantity || 1) > 1;
     const totalValue = (a.price || 0) * (a.quantity || 1);
-    const detail = isQty ? `${fmtNum(a.quantity)} шт · ${fmt(a.price)}/шт` : fmt(totalValue);
+    const detail = isDeposit
+      ? `Депозит: ${fmt(totalValue)}`
+      : isQty ? `${fmtNum(a.quantity)} шт · ${fmt(a.price)}/шт` : fmt(totalValue);
     const incomeText = a.monthlyIncome ? ` · доход ${fmt(a.monthlyIncome)}/мес` : '';
     const isExpanded = sellExpandedId === a.id;
 
-    // Ипотека для недвижимости
     const linkedLiab = a.linkedLiabilityId
       ? state.liabilities.find(l => l.id === a.linkedLiabilityId)
       : null;
@@ -655,7 +657,12 @@ function renderSellList() {
 
     const formHtml = isExpanded ? `
       <div class="sell-form" id="sell-form-${a.id}">
-        ${isQty ? `
+        ${isDeposit ? `
+          <div class="sell-form-row">
+            <label class="sell-form-label">Сумма снятия (макс. ${fmt(totalValue)})</label>
+            <input class="form-input" id="sell-qty-${a.id}" type="number" inputmode="numeric" placeholder="${totalValue}" value="${totalValue}" min="1" max="${totalValue}" />
+          </div>` :
+        isQty ? `
           <div class="sell-form-row">
             <label class="sell-form-label">Цена продажи за шт</label>
             <input class="form-input" id="sell-price-${a.id}" type="number" inputmode="numeric" placeholder="${a.price}" value="${a.price}" />
@@ -680,7 +687,7 @@ function renderSellList() {
           </div>` : ''}`}
         <div class="sell-form-actions">
           <button class="btn-secondary" onclick="cancelSell()">Отмена</button>
-          <button class="btn-primary" onclick="confirmSell('${a.id}')">Подтвердить</button>
+          <button class="btn-primary" onclick="confirmSell('${a.id}')">${isDeposit ? 'Снять' : 'Подтвердить'}</button>
         </div>
       </div>` : '';
 
@@ -691,7 +698,7 @@ function renderSellList() {
             <div class="sell-item-name">${CATEGORY_ICONS[a.category] || '📦'} ${a.name}</div>
             <div class="sell-item-detail">${detail}${incomeText}</div>
           </div>
-          ${!isExpanded ? `<button class="sell-item-btn" onclick="openSellForm('${a.id}')">Продать</button>` : ''}
+          ${!isExpanded ? `<button class="sell-item-btn" onclick="openSellForm('${a.id}')">${isDeposit ? 'Снять' : 'Продать'}</button>` : ''}
         </div>
         ${formHtml}
       </div>`;
@@ -721,7 +728,18 @@ function confirmSell(id) {
   const priceInput = document.getElementById(`sell-price-${id}`);
   const qtyInput = document.getElementById(`sell-qty-${id}`);
 
-  if (isQty) {
+  if (asset.type === 'deposit') {
+    const withdrawQty = Math.min(parseInt(qtyInput?.value) || asset.quantity, asset.quantity);
+    if (withdrawQty <= 0) return;
+    const proceeds = withdrawQty;
+    const remaining = asset.quantity - withdrawQty;
+    const incomeRatio = remaining / asset.quantity;
+    const entry = { id: nextId(), month: state.monthsCount, description: `Снято с депозита: ${asset.name} — ${fmt(proceeds)}`, amount: proceeds, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
+    const updatedAssets = remaining > 0
+      ? state.assets.map(a => a.id === id ? { ...a, quantity: remaining, monthlyIncome: Math.round((a.monthlyIncome || 0) * incomeRatio) } : a)
+      : state.assets.filter(a => a.id !== id);
+    setState({ assets: updatedAssets, cash: state.cash + proceeds, history: [...state.history, entry] });
+  } else if (isQty) {
     const sellPrice = priceInput?.value !== '' ? (parseInt(priceInput.value) || 0) : (asset.price || 0);
     const sellQty = Math.min(parseInt(qtyInput?.value) || asset.quantity, asset.quantity);
     if (sellQty <= 0) return;
