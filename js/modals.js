@@ -347,6 +347,7 @@ function selectBuyAsset(key) {
 function renderBuyForm() {
   const el = document.getElementById('buy-form-content');
   if (!el) return;
+  cashflowSign = 1; // сброс знака при каждом открытии формы
 
   if (buySelectedAsset && buySelectedAsset.custom) {
     el.innerHTML = `
@@ -435,8 +436,12 @@ function renderBuyForm() {
         <span class="mortgage-calc-value" id="mortgage-display">—</span>
       </div>
       <div class="form-group">
-        <label class="form-label">Денежный поток (доход в месяц)</label>
-        <input class="form-input" id="buy-income" type="number" inputmode="numeric" value="${a.monthlyIncome || ''}" placeholder="0" />
+        <label class="form-label">Денежный поток</label>
+        <div class="cashflow-toggle">
+          <button type="button" class="cashflow-toggle-btn cashflow-toggle-btn--active" id="btn-income-positive" onclick="setCashflowSign(1)">Доход</button>
+          <button type="button" class="cashflow-toggle-btn" id="btn-income-negative" onclick="setCashflowSign(-1)">Расход</button>
+        </div>
+        <input class="form-input" id="buy-income" type="number" inputmode="numeric" value="${a.monthlyIncome ? Math.abs(a.monthlyIncome) : ''}" placeholder="0" />
       </div>`;
   } else {
     el.innerHTML = `
@@ -485,6 +490,16 @@ function updateBusinessCalc() {
   const block   = document.getElementById('business-calc-block');
   if (display) display.textContent = debt > 0 ? fmt(debt) : '—';
   if (block)   block.classList.toggle('mortgage-calc--active', debt > 0);
+}
+
+let cashflowSign = 1;
+
+function setCashflowSign(sign) {
+  cashflowSign = sign;
+  const btnPos = document.getElementById('btn-income-positive');
+  const btnNeg = document.getElementById('btn-income-negative');
+  if (btnPos) btnPos.classList.toggle('cashflow-toggle-btn--active', sign === 1);
+  if (btnNeg) btnNeg.classList.toggle('cashflow-toggle-btn--active', sign === -1);
 }
 
 function updateMortgageCalc() {
@@ -578,7 +593,7 @@ function confirmBuy() {
       // ── Недвижимость с ипотекой ──
       const price          = parseInt(document.getElementById('buy-price').value) || a.price || 0;
       const downPayment    = parseInt(document.getElementById('buy-down').value) || 0;
-      const income         = parseInt(document.getElementById('buy-income').value) || 0;
+      const income         = (parseInt(document.getElementById('buy-income').value) || 0) * cashflowSign;
       const mortgage       = Math.max(0, price - downPayment);
       if (price <= 0) return;
 
