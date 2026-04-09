@@ -729,16 +729,16 @@ function confirmSell(id) {
   const qtyInput = document.getElementById(`sell-qty-${id}`);
 
   if (asset.type === 'deposit') {
-    const withdrawQty = Math.min(parseInt(qtyInput?.value) || asset.quantity, asset.quantity);
-    if (withdrawQty <= 0) return;
-    const proceeds = withdrawQty;
-    const remaining = asset.quantity - withdrawQty;
-    const incomeRatio = remaining / asset.quantity;
-    const entry = { id: nextId(), month: state.monthsCount, description: `Снято с депозита: ${asset.name} — ${fmt(proceeds)}`, amount: proceeds, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
+    const totalValue = asset.price || 0;
+    const withdrawAmount = Math.min(parseInt(qtyInput?.value) || totalValue, totalValue);
+    if (withdrawAmount <= 0) return;
+    const remaining = totalValue - withdrawAmount;
+    const incomeRatio = remaining > 0 ? remaining / totalValue : 0;
+    const entry = { id: nextId(), month: state.monthsCount, description: `Снято с депозита: ${asset.name} — ${fmt(withdrawAmount)}`, amount: withdrawAmount, date: new Date().toLocaleTimeString('ru-RU', { hour: '2-digit', minute: '2-digit' }) };
     const updatedAssets = remaining > 0
-      ? state.assets.map(a => a.id === id ? { ...a, quantity: remaining, monthlyIncome: Math.round((a.monthlyIncome || 0) * incomeRatio) } : a)
+      ? state.assets.map(a => a.id === id ? { ...a, price: remaining, monthlyIncome: Math.round((asset.monthlyIncome || 0) * incomeRatio) } : a)
       : state.assets.filter(a => a.id !== id);
-    setState({ assets: updatedAssets, cash: state.cash + proceeds, history: [...state.history, entry] });
+    setState({ assets: updatedAssets, cash: state.cash + withdrawAmount, history: [...state.history, entry] });
   } else if (isQty) {
     const sellPrice = priceInput?.value !== '' ? (parseInt(priceInput.value) || 0) : (asset.price || 0);
     const sellQty = Math.min(parseInt(qtyInput?.value) || asset.quantity, asset.quantity);
