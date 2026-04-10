@@ -299,19 +299,27 @@
 .btn-icon:active { opacity: 0.6; }
 
 /* PayDay button */
+@keyframes payday-pulse {
+  0%, 100% { box-shadow: 0 0 0 0 rgba(0, 200, 150, 0.5); }
+  50%       { box-shadow: 0 0 0 10px rgba(0, 200, 150, 0); }
+}
+
 .btn-payday {
   background: linear-gradient(135deg, var(--green) 0%, #00E0A8 100%);
   color: #fff;
-  font-size: 13px;
-  font-weight: 700;
-  padding: 9px 16px;
+  font-size: 18px;
+  font-weight: 800;
+  padding: 14px 0;
   border-radius: var(--radius-md);
-  letter-spacing: 0.02em;
-  box-shadow: 0 2px 8px rgba(0, 200, 150, 0.35);
+  letter-spacing: 0.04em;
+  box-shadow: 0 4px 16px rgba(0, 200, 150, 0.45);
+  width: 100%;
+  animation: payday-pulse 2s ease-in-out infinite;
 }
 .btn-payday:active {
   transform: scale(0.97);
   box-shadow: none;
+  animation: none;
 }
 
 /* Action buttons row */

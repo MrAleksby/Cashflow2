@@ -53,9 +53,23 @@
   gap: var(--space-sm);
 }
 
+/* ── PayDay bar ── */
+.payday-bar {
+  position: fixed;
+  top: var(--header-h);
+  left: 50%;
+  transform: translateX(-50%);
+  width: 100%;
+  max-width: var(--max-w);
+  padding: 10px var(--space-md);
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  z-index: 99;
+}
+
 /* ── Main screens ── */
 main {
-  padding-top: calc(var(--header-h) + var(--space-md));
+  padding-top: calc(var(--header-h) + 64px + var(--space-md));
   padding-bottom: calc(var(--nav-h) + var(--space-md));
   padding-left: var(--space-md);
   padding-right: var(--space-md);
